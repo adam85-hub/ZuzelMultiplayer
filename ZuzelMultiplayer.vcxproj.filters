@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{77347012-8364-478e-aeb7-eca2e2463633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameManager">
+      <UniqueIdentifier>{2ba2ef20-222e-4a6e-9456-d0ae04f5bd6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{5df5c308-6c99-4ff5-9b93-7da2ef5182c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{46d8d7b5-d32a-4eb5-82a7-670259c38d5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\MenuScene">
+      <UniqueIdentifier>{a4d06695-08cf-4221-a76f-291ab4e4d032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ResourceManager">
+      <UniqueIdentifier>{af3c6265-eb4e-49d5-bf0a-52a6699dd71e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{bcf6e628-600e-45d7-a0f3-311491584263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{e8bf77bc-0e5a-4bd8-b3dc-e31749625e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\RaceScene">
+      <UniqueIdentifier>{3cacfb40-0661-4e33-830b-405dbb232018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects">
+      <UniqueIdentifier>{fde352e3-71fb-4502-ac10-51cf7a6affa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes\DevOnly">
+      <UniqueIdentifier>{8b47c542-6154-4edb-bd78-6270f3b766dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_free_resources.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_init.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_Run_game.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_run_main_loop.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Update.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Init.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Render.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Exit.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Is_running.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="G_Handle_event.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_M_constructor.cpp">
+      <Filter>Source Files\Scenes\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_M_Render.cpp">
+      <Filter>Source Files\Scenes\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_M_Update.cpp">
+      <Filter>Source Files\Scenes\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_M_destructor.cpp">
+      <Filter>Source Files\Scenes\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="G_destructor.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RM_destructor.cpp">
+      <Filter>Source Files\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="RM_Track_resource.cpp">
+      <Filter>Source Files\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_render.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_constructor.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_update_key_states.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_Update.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_Render.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_destructor.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_string_to_polygon.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_read_polygons_from_file.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="check_functions.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="NotImplementedException.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Consts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_polish_text.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandDispatcher.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWithCommands.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="NewTrackScene.h">
+      <Filter>Header Files\Scenes\DevOnly</Filter>
+    </ClInclude>
+    <ClInclude Include="BikeColliderScene.h">
+      <Filter>Header Files\Scenes\DevOnly</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateColliderScene.h">
+      <Filter>Header Files\Scenes\DevOnly</Filter>
+    </ClInclude>
+    <ClInclude Include="round.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
