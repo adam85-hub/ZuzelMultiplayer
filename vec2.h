@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 
 namespace Utils {
 	struct vec2 {
@@ -7,7 +8,7 @@ namespace Utils {
 		float x, y;
 
 		static float Distance(const vec2& v1, const vec2& v2) {
-			return std::sqrt(std::powf(v1.x - v2.x, 2) + std::powf(v1.y - v2.y, 2));
+			return sqrt(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
 		}
 
 		float Distance(const vec2& other) {
@@ -15,7 +16,7 @@ namespace Utils {
 		}
 
 		float Distance(float x, float y) {
-			return std::sqrt(std::powf(this->x - x, 2) + std::powf(this->y - y, 2));
+			return sqrt(powf(this->x - x, 2) + powf(this->y - y, 2));
 		}
 	};
 }
