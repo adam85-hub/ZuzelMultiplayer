@@ -33,8 +33,8 @@ public:
 
 			// skalowanie polygonu aby by³ relatywny do nieprzeskalowanej bitmapy motoru
 			for (int i = 0; i < _polygon_collider.size(); i++) {
-				relative_collider.emplace_back(Utils::round(std::max((_polygon_collider[i].x - _bike_left) / _scale, 0.0f)),
-					relative_collider[i].y = Utils::round(std::max((_polygon_collider[i].y - _bike_top) / _scale, 0.0f)));
+				relative_collider.emplace_back(Utils::roundToNearestInt(std::max((_polygon_collider[i].x - _bike_left) / _scale, 0.0f)),
+					relative_collider[i].y = Utils::roundToNearestInt(std::max((_polygon_collider[i].y - _bike_top) / _scale, 0.0f)));
 			}
 
 			save_to_file("bike_collider.txt", &relative_collider);
