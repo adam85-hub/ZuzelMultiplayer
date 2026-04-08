@@ -20,6 +20,7 @@ private:
 
 	short _number_of_players;
 	Player** _players;
+	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;
 	Utils::vec2* _inner_track_collider = nullptr;

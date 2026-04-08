@@ -11,12 +11,19 @@ namespace Utils {
 			return sqrt(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
 		}
 
-		float Distance(const vec2& other) {
+		float Distance(const vec2& other) const {
 			return Utils::vec2::Distance(*this, other);
 		}
 
-		float Distance(float x, float y) {
+		float Distance(float x, float y) const {
 			return sqrt(powf(this->x - x, 2) + powf(this->y - y, 2));
+		}
+
+		vec2& operator+(const vec2& other) {
+			x += other.x;
+			y += other.y;
+
+			return *this;
 		}
 	};
 }

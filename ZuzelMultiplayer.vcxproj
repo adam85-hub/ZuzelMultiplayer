@@ -142,6 +142,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BikeModel.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClInclude Include="BikeModel.h" />
     <ClInclude Include="CreateColliderScene.h" />
     <ClInclude Include="BikeColliderScene.h" />
     <ClInclude Include="draw_polish_text.h" />

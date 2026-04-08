@@ -6,14 +6,18 @@
 #include "LOG.h"
 #include "check_functions.h"
 
-RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : SceneWithCommands(gameCommands), _number_of_players(number_of_players) {
+RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : 
+	SceneWithCommands(gameCommands), 
+	_number_of_players(number_of_players),
+	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN}
+{
 	_font_score_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 10, 0);
 	_resourceManager.Track_resource(_font_score_table);
 
 	// inicjalizacja wszystkich polygonów
 	read_polygons_from_file();
 
-	// inicjalizacja obiektów graczy:
+	// inicjalizacja i ustawienie graczy na starcie:
 	_players = new Player * [_number_of_players];
 	std::filesystem::path path_to_bitmap;
 	ALLEGRO_BITMAP* bike_bitmap;
