@@ -49,6 +49,9 @@
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{5f32e874-6a91-4356-a609-d521ee651eb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Models">
+      <UniqueIdentifier>{baf09337-45c2-4563-819b-b4c3c76e2139}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -136,7 +139,7 @@
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="BikeModel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +173,7 @@
     <ClInclude Include="draw_polish_text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CommandDispatcher.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="RaceScene.h">

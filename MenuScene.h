@@ -7,7 +7,6 @@
 #include "SceneWithCommands.h"
 #include "MenuModel.h"
 #include "ResourceManager.h"
-#include "CommandDispatcher.h"
 
 class MenuScene : public SceneWithCommands {
 public:

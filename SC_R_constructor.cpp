@@ -12,7 +12,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN}
 {
 	_font_score_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 10, 0);
-	_resourceManager.Track_resource(_font_score_table);
+	_resource_manager.Track_resource(_font_score_table);
 
 	// inicjalizacja wszystkich polygonów
 	read_polygons_from_file();
@@ -38,5 +38,5 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	constexpr const char* track_path = "./Assets/track.png";
 	_race_track = al_load_bitmap(track_path);
 	Utils::check_resource_loaded(_race_track, track_path);
-	_resourceManager.Track_resource(_race_track);
+	_resource_manager.Track_resource(_race_track);
 }

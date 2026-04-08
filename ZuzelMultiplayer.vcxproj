@@ -186,7 +186,7 @@
   <ItemGroup>
     <ClInclude Include="check_functions.h" />
     <ClInclude Include="Consts.h" />
-    <ClInclude Include="CommandDispatcher.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameManager.h" />

@@ -16,7 +16,7 @@ private:
 	// (u¿ywaæ tylko je¿eli pamiêæ na któr¹ wskazuje parametr out zosta³a zwolniona)
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
 
-	Utils::ResourceManager _resourceManager;
+	Utils::ResourceManager _resource_manager;
 
 	short _number_of_players;
 	Player** _players;
