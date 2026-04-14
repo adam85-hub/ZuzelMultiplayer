@@ -16,12 +16,12 @@ public:
 private:
 	float acceleration_staights(float v);
 
-	const float _max_acceleration = 0.7;
-	const float _optimal_engine_velocity = 3;
+	const float _max_acceleration = 0.3;
+	const float _optimal_engine_velocity = 3.5;
 
 	const float _rotation_velocity = 1.f/c_FPS * .5f * M_PI;
 
 	float _velocity;
 	float _rotation;
 	bool _is_sliding;
-}; 
+};

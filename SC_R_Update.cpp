@@ -11,4 +11,6 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		bool is_turning = key_states[_turn_buttons[i]] & c_KEY_DOWN;
 		_players[i]->Update(is_turning);
 	}
+
+	// w tym miejscu funkcja do obs³ugi kolizji Fabiana
 }

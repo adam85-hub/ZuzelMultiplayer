@@ -36,8 +36,8 @@ float BikeModel::acceleration_staights(float velocity) {
 	if (velocity == 0)
 		return _max_acceleration;
 
-	float _engine_acceleration = _max_acceleration * (1 - 0.4 * powf((velocity - _optimal_engine_velocity) / _optimal_engine_velocity, 2));
-	float a = std::min(_max_acceleration, _engine_acceleration);
+	//float a = _max_acceleration * (1 - powf((velocity - _optimal_engine_velocity) / _optimal_engine_velocity, 2));
+	float a = _max_acceleration * powf(velocity/_optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie by³o ujemne
 }
