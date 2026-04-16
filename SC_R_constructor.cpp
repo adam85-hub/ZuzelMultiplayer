@@ -6,7 +6,7 @@
 #include "LOG.h"
 #include "check_functions.h"
 
-RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : SceneWithCommands(gameCommands), _number_of_players(number_of_players) {
+RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : Scene(gameCommands), _number_of_players(number_of_players) {
 	_font_score_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 10, 0);
 	_resourceManager.Track_resource(_font_score_table);
 

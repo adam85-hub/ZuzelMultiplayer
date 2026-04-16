@@ -1,6 +1,7 @@
 #pragma once
 #include "CommandDispatcher.h"
-#include "Scene.h"
+
+class Scene;
 
 // zawiera obiekty CommandDispatcher
 // s³u¿y do wywo³ywania okreœlonych zachowañ w obiekcie klasy Game

@@ -1,9 +1,9 @@
 #pragma once
-#include "SceneWithCommands.h"
+#include "Scene.h"
 #include "ResourceManager.h"
 #include "Player.h"
 
-class RaceScene : public SceneWithCommands {
+class RaceScene : public Scene {
 public:
 	RaceScene(GameCommands*, short number_of_players);
 	~RaceScene();

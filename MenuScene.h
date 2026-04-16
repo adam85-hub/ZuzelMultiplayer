@@ -4,12 +4,11 @@
 #include <allegro5/allegro_ttf.h>
 #include <memory>
 
-#include "SceneWithCommands.h"
 #include "MenuModel.h"
 #include "ResourceManager.h"
-#include "CommandDispatcher.h"
+#include "Scene.h"
 
-class MenuScene : public SceneWithCommands {
+class MenuScene : public Scene {
 public:
 	MenuScene(GameCommands* gameCommands);
 	~MenuScene();

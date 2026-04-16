@@ -178,7 +178,6 @@
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
-    <ClInclude Include="SceneWithCommands.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
   <ItemGroup>
