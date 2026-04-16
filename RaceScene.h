@@ -3,12 +3,14 @@
 #include "ResourceManager.h"
 #include "Player.h"
 
+
 class RaceScene : public Scene {
 public:
 	RaceScene(GameCommands*, short number_of_players);
 	~RaceScene();
 	void Update(KeyStatesTable);
 	void Render();
+
 private:
 	// usuwa poligony je¿eli nie s¹ nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
@@ -30,6 +32,8 @@ private:
 	Utils::vec2* _start_line = nullptr;
 	Utils::vec2* _bike_collider = nullptr;
 	int _bike_collider_len = 0;
+
+	bool _test_collision_active = false; // test
 
 	ALLEGRO_FONT* _font_score_table;
 };
