@@ -1,7 +1,7 @@
 #include "MenuScene.h"
 #include "Consts.h"
 
-MenuScene::MenuScene(GameCommands* gameCommands) : SceneWithCommands(gameCommands) {
+MenuScene::MenuScene(GameCommands* gameCommands) : Scene(gameCommands) {
 	_font_title = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT/10, 0);
 	_resource_manager.Track_resource(_font_title);
 

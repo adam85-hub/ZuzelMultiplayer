@@ -174,13 +174,11 @@
     <ClCompile Include="SC_M_destructor.cpp" />
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
-    <ClInclude Include="SceneWithCommands.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
   <ItemGroup>

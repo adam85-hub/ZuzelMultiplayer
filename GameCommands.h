@@ -3,7 +3,7 @@
 #include "Scene.h"
 
 // zawiera obiekty Command
-// s³u¿y do wywo³ywania okreœlonych zachowañ w obiekcie klasy Game
+// sÂ³uÂ¿y do wywoÂ³ywania okreÅ“lonych zachowaÃ± w obiekcie klasy Game
 struct GameCommands {
 	Utils::Command<bool> exit;
 	Utils::Command<Scene*> switch_scene;

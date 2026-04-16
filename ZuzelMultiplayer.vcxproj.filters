@@ -49,9 +49,6 @@
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{5f32e874-6a91-4356-a609-d521ee651eb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Models">
-      <UniqueIdentifier>{baf09337-45c2-4563-819b-b4c3c76e2139}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

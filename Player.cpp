@@ -5,8 +5,8 @@
 
 #include "draw_polish_text.h"
 
-// z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
-Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : GameObject(initial_position) {
+// z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoÃ±czeniu wykonywania siÃª konstruktora bitmapa pod adresem bike_bitmap nie jest juÂ¿ potrzebna
+Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : _position(initial_position) {
 	constexpr float scale = 1.7;
 	_bike_bitmap_size.x = al_get_bitmap_width(bike_bitmap) * scale;
 	_bike_bitmap_size.y = al_get_bitmap_height(bike_bitmap) * scale;
@@ -30,6 +30,6 @@ void Player::Update(bool is_turning) {
 }
 
 void Player::Render() {
-	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, position.x, position.y,
+	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, _position.x, _position.y,
 		-_bike_model.Get_rotation(), 0);
 }
