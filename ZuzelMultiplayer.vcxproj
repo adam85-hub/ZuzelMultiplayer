@@ -142,7 +142,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BikeModel.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
