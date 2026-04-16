@@ -6,7 +6,8 @@
 Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : 
 	position(initial_position),
 	_linear_velocity(0),
-	_rotation(0)
+	_rotation(0),
+	_velocity_offset(0)
 {
 	constexpr float scale = 1.7;
 	_bike_bitmap_size.x = al_get_bitmap_width(bike_bitmap) * scale;
@@ -29,14 +30,18 @@ void Player::Update(bool is_turning) {
 
 	if (is_turning) {
 		_rotation = _rotation + _rotation_velocity;
+		_velocity_offset = std::min(_velocity_offset + (float)(M_PI / 3) / c_FPS, (float)M_PI / 3); //drifty
 
 		if (_rotation > 2 * M_PI)
 			_rotation -= 2 * M_PI; // żeby wartość kąta nie zrobiła się zbyt duża
 	}
+	else
+		_velocity_offset = std::max(_velocity_offset * 0.96f, 0.f); // zmniejszanie driftu
 
 	Utils::vec2 velocity;
-	velocity.x = _linear_velocity * cosf(_rotation);
-	velocity.y = -1 * _linear_velocity * sinf(_rotation);
+	velocity.x = _linear_velocity * cosf(_rotation - _velocity_offset);
+	velocity.y = -1 * _linear_velocity * sinf(_rotation - _velocity_offset);
+	velocity = velocity;
 
 	position = position + velocity;
 }
