@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : GameObject(initial_position) {
+Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : _position(initial_position) {
 	constexpr float scale = 2;
 	_bike_bitmap_size.x = al_get_bitmap_width(bike_bitmap) * scale;
 	_bike_bitmap_size.y = al_get_bitmap_height(bike_bitmap) * scale;
@@ -25,5 +25,5 @@ void Player::Update() {
 }
 
 void Player::Render() {
-	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, position.x, position.y, 0, 0);
+	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, _position.x, _position.y, 0, 0);
 }
