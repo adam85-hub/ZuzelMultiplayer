@@ -1,11 +1,10 @@
 #pragma once
-#include "CommandDispatcher.h"
+#include "Command.h"
+#include "Scene.h"
 
-class Scene;
-
-// zawiera obiekty CommandDispatcher
-// s³u¿y do wywo³ywania okreœlonych zachowañ w obiekcie klasy Game
+// zawiera obiekty Command
+// sÂ³uÂ¿y do wywoÂ³ywania okreÅ“lonych zachowaÃ± w obiekcie klasy Game
 struct GameCommands {
-	Utils::CommandDispatcher<bool> exit;
-	Utils::CommandDispatcher<Scene*> switch_scene;
+	Utils::Command<bool> exit;
+	Utils::Command<Scene*> switch_scene;
 };

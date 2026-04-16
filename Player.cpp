@@ -3,8 +3,11 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "draw_polish_text.h"
+
+// z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
 Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : _position(initial_position) {
-	constexpr float scale = 2;
+	constexpr float scale = 1.7;
 	_bike_bitmap_size.x = al_get_bitmap_width(bike_bitmap) * scale;
 	_bike_bitmap_size.y = al_get_bitmap_height(bike_bitmap) * scale;
 
@@ -20,10 +23,13 @@ Player::~Player() {
 	al_destroy_bitmap(_bike_bitmap);
 }
 
-void Player::Update() {
+void Player::Update(bool is_turning) {
+	Utils::vec2 velocity = _bike_model.Update(is_turning);
 
+	position = position + velocity;
 }
 
 void Player::Render() {
-	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, _position.x, _position.y, 0, 0);
+	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, _position.x, _position.y,
+		-_bike_model.Get_rotation(), 0);
 }

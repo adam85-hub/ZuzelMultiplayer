@@ -20,7 +20,7 @@ private:
 
 	ALLEGRO_FONT* _font_title;
 	ALLEGRO_FONT* _font_menu_options;
-	// Zmienne u¿ywane do renderowania (wyci¹gniête w celu optymalizacji):
+	// Zmienne uÂ¿ywane do renderowania (wyciÂ¹gniÃªte w celu optymalizacji):
 #pragma region Render Variables
 	int _title_height;
 	std::vector<std::string> _menu_options;

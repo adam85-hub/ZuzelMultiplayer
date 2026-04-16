@@ -135,6 +135,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="BikeModel.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -167,7 +170,7 @@
     <ClInclude Include="draw_polish_text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CommandDispatcher.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="RaceScene.h">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="round.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BikeModel.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
