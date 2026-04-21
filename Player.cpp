@@ -26,7 +26,7 @@ Player::~Player() {
 }
 
 void Player::Update(bool is_turning) {
-	_linear_velocity += acceleration_staights(_linear_velocity);
+	_linear_velocity += acceleration(_linear_velocity);
 
 	if (is_turning) {
 		_rotation = _rotation + _rotation_velocity;
@@ -36,7 +36,7 @@ void Player::Update(bool is_turning) {
 			_rotation -= 2 * M_PI; // żeby wartość kąta nie zrobiła się zbyt duża
 	}
 	else
-		_velocity_offset = std::max(_velocity_offset * 0.96f, 0.f); // zmniejszanie driftu
+		_velocity_offset = std::max(_velocity_offset * 0.955f, 0.f); // zmniejszanie driftu
 
 	Utils::vec2 velocity;
 	velocity.x = _linear_velocity * cosf(_rotation - _velocity_offset);
@@ -50,11 +50,10 @@ void Player::Render() {
 	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, position.x, position.y, -_rotation, 0);
 }
 
-float Player::acceleration_staights(float velocity) {
+float Player::acceleration(float velocity) {
 	if (velocity == 0)
 		return _max_acceleration;
 
-	//float a = _max_acceleration * (1 - powf((velocity - _optimal_engine_velocity) / _optimal_engine_velocity, 2));
 	float a = _max_acceleration * powf(velocity / _optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie było ujemne

@@ -14,13 +14,13 @@ public:
 	void Render();
 
 private:
-	float acceleration_staights(float v);
+	float acceleration(float v);
 
 	ALLEGRO_BITMAP* _bike_bitmap;
 	Utils::vec2 _bike_bitmap_size;
 
 	const float _max_acceleration = 0.3;
-	const float _optimal_engine_velocity = 5;
+	const float _optimal_engine_velocity = 6;
 	const float _rotation_velocity = 1.f / c_FPS * .6f * M_PI;
 
 	float _linear_velocity;
