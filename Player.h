@@ -6,6 +6,7 @@
 #include <math.h>
 #include "Consts.h"
 
+
 class Player {
 public:
 	Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap);
@@ -30,4 +31,10 @@ public:
 	const float& bike_width = _bike_bitmap_size.x;
 
 	Utils::vec2 position;
+
+	//--- Getter ---
+	float GetRotation() const { return _rotation; }
+
+	//--- Setter ---
+	void Move(Utils::vec2 force);
 };

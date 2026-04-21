@@ -3,7 +3,7 @@
 #include <algorithm>
 
 // z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
-Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : 
+Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) :
 	position(initial_position),
 	_linear_velocity(0),
 	_rotation(0)
@@ -18,7 +18,7 @@ Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) :
 		0, 0, _bike_bitmap_size.x, _bike_bitmap_size.y, 0);
 	al_convert_mask_to_alpha(_bike_bitmap, al_map_rgb(0, 0, 0));
 	al_set_target_backbuffer(al_get_current_display());
-};
+}
 
 Player::~Player() {
 	al_destroy_bitmap(_bike_bitmap);
@@ -53,4 +53,9 @@ float Player::acceleration_staights(float velocity) {
 	float a = _max_acceleration * powf(velocity / _optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie było ujemne
+}
+
+void Player::Move(Utils::vec2 force)
+{
+	position = position + force;
 }

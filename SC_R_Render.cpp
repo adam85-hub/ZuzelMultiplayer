@@ -34,6 +34,6 @@ void RaceScene::Render() {
 	al_draw_line(_start_line[0].x, _start_line[0].y,
 		_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
 
-
-	CollisionDetector::displayDebugInfo(_font_score_table, _test_collision_active);
+	// drawing colliders (only dev):
+	_collision_manager.DrawColliders();
 }

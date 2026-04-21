@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "ResourceManager.h"
 #include "Player.h"
-
+#include "CollisionManager.h"
 
 class RaceScene : public Scene {
 public:
@@ -22,6 +22,7 @@ private:
 
 	short _number_of_players;
 	Player** _players;
+	CollisionManager _collision_manager;
 	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;
@@ -33,7 +34,6 @@ private:
 	Utils::vec2* _bike_collider = nullptr;
 	int _bike_collider_len = 0;
 
-	bool _test_collision_active = false; // test
 
 	ALLEGRO_FONT* _font_score_table;
 };

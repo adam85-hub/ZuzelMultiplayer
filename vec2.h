@@ -7,6 +7,11 @@ namespace Utils {
 		vec2() : x(0), y(0) {};
 		float x, y;
 
+
+		float Length() const {
+			return sqrt(x * x + y * y);
+		}
+
 		static float Distance(const vec2& v1, const vec2& v2) {
 			return sqrt(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
 		}
@@ -25,5 +30,26 @@ namespace Utils {
 
 			return *this;
 		}
+
+
+		vec2& operator-(const vec2& other) {
+			x -= other.x;
+			y -= other.y;
+
+			return *this;
+		}
+
+
+		vec2& operator*(float scalar) {
+			x *= scalar;
+			y *= scalar;
+
+			return *this;
+		}
+
+		float dot(const vec2& other) const {
+			return (x * other.x) + (y * other.y);
+		}
+
 	};
 }
