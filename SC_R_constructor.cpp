@@ -63,8 +63,6 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	wall->SetStartPoint(_outer_track_collider[_outer_track_collider_len - 1]);
 	wall->SetEndPoint(_outer_track_collider[0]);
 	_collision_manager.AddCollider(wall);
-	///========================================================================================================
-
 
 	// za³adowanie bitmapy trasy:
 	constexpr const char* track_path = "./Assets/track.png";

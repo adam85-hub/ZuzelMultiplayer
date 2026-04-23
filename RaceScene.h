@@ -12,10 +12,10 @@ public:
 	void Render();
 
 private:
-	// usuwa poligony je¿eli nie s¹ nullptr i wczytuje nowe z pliku
+	// usuwa poligony jeÂ¿eli nie sÂ¹ nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
-	// tworzy now¹ tablicê i ustawia wartoœæ zmiennej out na jej adres 
-	// (u¿ywaæ tylko je¿eli pamiêæ na któr¹ wskazuje parametr out zosta³a zwolniona)
+	// tworzy nowÂ¹ tablicÃª i ustawia wartoÅ“Ã¦ zmiennej out na jej adres 
+	// (uÂ¿ywaÃ¦ tylko jeÂ¿eli pamiÃªÃ¦ na ktÃ³rÂ¹ wskazuje parametr out zostaÂ³a zwolniona)
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
 
 	Utils::ResourceManager _resource_manager;

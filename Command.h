@@ -18,11 +18,6 @@ namespace Utils {
 		}
 
 		void Execute(T data) {
-
-
-			
-			
-			
 			for (CommandFn commandFn : _commandFunctions) {
 				commandFn(data);
 			}

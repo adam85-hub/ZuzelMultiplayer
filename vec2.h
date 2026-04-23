@@ -22,7 +22,7 @@ namespace Utils {
 
 		float Distance(float x, float y) const {
 			return sqrt(powf(this->x - x, 2) + powf(this->y - y, 2));
-		}
+    }
 
 		vec2& operator+(const vec2& other) {
 			x += other.x;
