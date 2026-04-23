@@ -15,6 +15,7 @@ private:
 	void free_resources(); // zwalnia zaalokowane zasoby todo: usun¹æ t¹ funkcjê(stwarza niebezpieczeñstwo podwójnego zwolnienia pamiêci)
 private:
 	void update_key_states(KeyStatesTable key_states, ALLEGRO_EVENT_TYPE event_type, int keycode);
+	void set_display_scaling();
 
 	std::unique_ptr<Game> _game;
 	ALLEGRO_TIMER* _timer = nullptr;

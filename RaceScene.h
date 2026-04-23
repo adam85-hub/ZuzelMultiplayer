@@ -1,9 +1,9 @@
 #pragma once
-#include "SceneWithCommands.h"
+#include "Scene.h"
 #include "ResourceManager.h"
 #include "Player.h"
 
-class RaceScene : public SceneWithCommands {
+class RaceScene : public Scene {
 public:
 	RaceScene(GameCommands*, short number_of_players);
 	~RaceScene();
@@ -16,10 +16,11 @@ private:
 	// (u¿ywaæ tylko je¿eli pamiêæ na któr¹ wskazuje parametr out zosta³a zwolniona)
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
 
-	Utils::ResourceManager _resourceManager;
+	Utils::ResourceManager _resource_manager;
 
 	short _number_of_players;
 	Player** _players;
+	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;
 	Utils::vec2* _inner_track_collider = nullptr;

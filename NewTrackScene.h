@@ -1,14 +1,14 @@
 #pragma once
-#include "SceneWithCommands.h"
+#include "Scene.h"
 #include "vec2.h"
 #include "ResourceManager.h"
 #include "CreateColliderScene.h"
 
 // Ta scena s³u¿y tylko do stworzenia i zapisania poligonów s³u¿¹cych do obs³ugi kolizji
 // (czyli tak naprawdê zaznaczenia krawêdzi toru)
-class NewTrackScene : public SceneWithCommands, CreateColliderScene {
+class NewTrackScene : public Scene, CreateColliderScene {
 public:
-	NewTrackScene(GameCommands* gameCommands) : SceneWithCommands(gameCommands), CreateColliderScene() {
+	NewTrackScene(GameCommands* gameCommands) : Scene(gameCommands), CreateColliderScene() {
 		ALLEGRO_BITMAP* race_track = al_load_bitmap("./Assets/track.png");
 		_race_track = al_create_bitmap(c_RENDER_WIDTH, c_RENDER_HEIGHT);
 		_resource_manager.Track_resource(_race_track);

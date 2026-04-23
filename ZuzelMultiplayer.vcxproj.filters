@@ -40,14 +40,14 @@
     <Filter Include="Source Files\Scenes\RaceScene">
       <UniqueIdentifier>{3cacfb40-0661-4e33-830b-405dbb232018}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameObjects">
-      <UniqueIdentifier>{fde352e3-71fb-4502-ac10-51cf7a6affa6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scenes\DevOnly">
       <UniqueIdentifier>{8b47c542-6154-4edb-bd78-6270f3b766dc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{5f32e874-6a91-4356-a609-d521ee651eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes\RaceScene">
+      <UniqueIdentifier>{b0562c18-6be9-467f-a52b-f1c73b0a23af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +135,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GM_set_display_scaling.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -167,11 +170,8 @@
     <ClInclude Include="draw_polish_text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CommandDispatcher.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceScene.h">
-      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameCommands.h">
       <Filter>Header Files</Filter>
@@ -184,15 +184,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneWithCommands.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="vec2.h">
       <Filter>Header Files\Utils</Filter>
@@ -208,6 +199,12 @@
     </ClInclude>
     <ClInclude Include="round.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScene.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
