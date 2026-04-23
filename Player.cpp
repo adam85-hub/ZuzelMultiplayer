@@ -1,5 +1,4 @@
 #include "Player.h"
-
 #include <algorithm>
 
 // z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
