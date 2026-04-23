@@ -29,18 +29,20 @@ void Player::Update(bool is_turning) {
 
 	if (is_turning) {
 		_rotation = _rotation + _rotation_velocity;
-		_velocity_offset = std::min(_velocity_offset + (float)(M_PI / 3) / c_FPS, (float)M_PI / 3); //drifty
+		_velocity_offset = std::min(_velocity_offset + (float)(M_PI / 3) / c_FPS, _max_velocity_offset); //drifty
 
 		if (_rotation > 2 * M_PI)
 			_rotation -= 2 * M_PI; // żeby wartość kąta nie zrobiła się zbyt duża
 	}
 	else
-		_velocity_offset = std::max(_velocity_offset * 0.955f, 0.f); // zmniejszanie driftu
+		_velocity_offset = std::max(_velocity_offset * 0.96f, 0.f); // zmniejszanie driftu
 
-	Utils::vec2 velocity;
-	velocity.x = _linear_velocity * cosf(_rotation - _velocity_offset);
-	velocity.y = -1 * _linear_velocity * sinf(_rotation - _velocity_offset);
-	velocity = velocity;
+	// zmniejszanie prędkości przy skręcaniu:
+	float updated_linear_velocity = 0.82f * _linear_velocity + 0.18f * _linear_velocity * (_max_velocity_offset - _velocity_offset) / _max_velocity_offset; 
+
+	Utils::vec2 velocity;	
+	velocity.x = updated_linear_velocity * cosf(_rotation - _velocity_offset);
+	velocity.y = -1 * updated_linear_velocity * sinf(_rotation - _velocity_offset);
 
 	position = position + velocity;
 }
@@ -53,7 +55,6 @@ float Player::acceleration(float velocity) {
 	if (velocity == 0)
 		return _max_acceleration;
 
-	//float a = _max_acceleration * (1 - powf((velocity - _optimal_engine_velocity) / _optimal_engine_velocity, 2));
 	float a = _max_acceleration * powf(velocity / _optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie było ujemne
