@@ -49,11 +49,17 @@ void Player::Render() {
 	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, position.x, position.y, -_rotation, 0);
 }
 
-float Player::acceleration(float velocity) {
+float Player::acceleration_staights(float velocity) {
 	if (velocity == 0)
 		return _max_acceleration;
 
+	//float a = _max_acceleration * (1 - powf((velocity - _optimal_engine_velocity) / _optimal_engine_velocity, 2));
 	float a = _max_acceleration * powf(velocity / _optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie było ujemne
+}
+
+void Player::Move(Utils::vec2 force)
+{
+	position = position + force;
 }

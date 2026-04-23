@@ -31,4 +31,10 @@ public:
 	const float& bike_width = _bike_bitmap_size.x;
 
 	Utils::vec2 position;
+
+	//--- Getter ---
+	float GetRotation() const { return _rotation; }
+
+	//--- Setter ---
+	void Move(Utils::vec2 force);
 };

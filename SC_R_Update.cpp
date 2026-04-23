@@ -1,8 +1,9 @@
 #include "RaceScene.h"
 #include "Consts.h"
+#include "CollisionDetector.h"
 
 void RaceScene::Update(KeyStatesTable key_states) {
-	// restart wyœcigu:
+	// restart wyÅ“cigu:
 	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
 		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players));
 	}
@@ -12,5 +13,6 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		_players[i]->Update(is_turning);
 	}
 
-	// w tym miejscu funkcja do obs³ugi kolizji Fabiana
+	//--- COLLISION ACTION---
+	_collision_manager.Update();
 }

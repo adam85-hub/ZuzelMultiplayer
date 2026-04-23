@@ -1,4 +1,5 @@
 #include "RaceScene.h"
+#include "CollisionDetector.h"
 #include "draw_polish_text.h"
 
 #include <allegro5/allegro_primitives.h>
@@ -32,4 +33,7 @@ void RaceScene::Render() {
 	// drawing start line (only dev):
 	al_draw_line(_start_line[0].x, _start_line[0].y,
 		_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
+
+	// drawing colliders (only dev):
+	_collision_manager.DrawColliders();
 }

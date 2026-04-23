@@ -2,11 +2,11 @@
 #include "MenuScene.h"
 #include "Game.h"
 
-#include "BikeColliderScene.h"
+#include "NewTrackScene.h"
 
 void Game::Init() {
 	_currentScene = new MenuScene(&_game_commands);
-	//_currentScene = new BikeColliderScene(&_game_commands); // only for development purposes
+	//_currentScene = new NewTrackScene(&_game_commands); // only for development purposes
 	
 	_isRunning = true;
 
