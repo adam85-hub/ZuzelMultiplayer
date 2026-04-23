@@ -1,5 +1,14 @@
 #include "CollisionManager.h"
 
+
+
+CollisionManager::~CollisionManager()
+{
+    for(auto* c : _colliders) {
+        delete c;
+	}
+}
+
 // --- Add/Remove Colidier ---
 void CollisionManager::AddCollider(Collider* c)
 {

@@ -45,7 +45,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		wall->SetEndPoint(_inner_track_collider[i + 1]);
 		_collision_manager.AddCollider(wall);
 	}
-	
+
 	Collider* wall = new Collider(ColliderType::Wall, nullptr, 0.05);
 	wall->SetStartPoint(_inner_track_collider[_inner_track_collider_len - 1]);
 	wall->SetEndPoint(_inner_track_collider[0]);

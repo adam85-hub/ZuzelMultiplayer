@@ -35,5 +35,5 @@ void RaceScene::Render() {
 		_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
 
 	// drawing colliders (only dev):
-	_collision_manager.DrawColliders();
+	//_collision_manager.DrawColliders();
 }
