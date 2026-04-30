@@ -25,7 +25,10 @@ Player::~Player() {
 }
 
 void Player::Update(bool is_turning) {
-	_linear_velocity += acceleration(_linear_velocity);
+	if (not touching_wall)
+		_linear_velocity += acceleration(_linear_velocity);
+	else
+		_linear_velocity += wall_deceleration(_linear_velocity);
 
 	if (is_turning) {
 		_rotation = _rotation + _rotation_velocity;
@@ -45,6 +48,7 @@ void Player::Update(bool is_turning) {
 	velocity.y = -1 * updated_linear_velocity * sinf(_rotation - _velocity_offset);
 
 	position = position + velocity;
+	touching_wall = false;
 }
 
 void Player::Render() {
@@ -58,6 +62,13 @@ float Player::acceleration(float velocity) {
 	float a = _max_acceleration * powf(velocity / _optimal_engine_velocity - 1, 2);
 
 	return std::max(.0f, a); // zabezpieczenie aby przyspieszenie nie było ujemne
+}
+
+float Player::wall_deceleration(float velocity) {
+	if (velocity <= 2.f)
+		return .0f;
+
+	return -0.08f;
 }
 
 void Player::Move(Utils::vec2 force)

@@ -15,6 +15,7 @@ public:
 
 private:
 	float acceleration(float v);
+	float wall_deceleration(float v);
 
 	ALLEGRO_BITMAP* _bike_bitmap;
 	Utils::vec2 _bike_bitmap_size;
@@ -30,6 +31,7 @@ private:
 public:
 	const float& bike_height = _bike_bitmap_size.y;
 	const float& bike_width = _bike_bitmap_size.x;
+	bool touching_wall = false;
 
 	Utils::vec2 position;
 
