@@ -40,6 +40,8 @@ void CollisionManager::DrawColliders()
 
 
 
+
+
 // --- Move ---
 void CollisionManager::HandleCollision(Collider* a, Collider* b)
 {
@@ -70,11 +72,17 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
         a->GetOwnerPlayer()->Move(pushForce);
 		///obs³uga bandy przez adama
     }
-    else
+	if (b->GetType() == ColliderType::Player)
     {
         a->GetOwnerPlayer()->Move({ pushForce.x * 0.5f, pushForce.y * 0.5f });
         b->GetOwnerPlayer()->Move({ pushForce.x * -0.5f, pushForce.y * -0.5f });
     }
+
+    if(b->GetType() == ColliderType::Checkpoint)
+    {
+        a->GetOwnerPlayer()->updateCheckpointAndLap(b->GetCheckpointIndex());
+    }
+
 }
 
 
@@ -101,8 +109,8 @@ void CollisionManager::Update()
 
                         HandleCollision(_colliders[i], _colliders[j]);
 
-						_colliders[i]->UpdateHitbox(); //test
-                        _colliders[j]->UpdateHitbox(); //test
+						_colliders[i]->UpdateHitbox(); //test DZIA£A LEPIEJ Z TYM
+                        _colliders[j]->UpdateHitbox(); //test DZIA£A LEPIEJ Z TYM
                     }
                 }
             }
@@ -163,7 +171,7 @@ ClosestPoints CollisionManager::CalculateClosestPoints(Utils::vec2 p1, Utils::ve
 Utils::vec2 CollisionManager::CalculateNormal(Utils::vec2 collisionVector, float distance, Utils::vec2 wallVec)
 {
     if (distance < 0.0001f) {
-        // Fallback: prostopad³a do œciany
+        
         float nx = -wallVec.y;
         float ny = wallVec.x;
         float nLen = std::sqrt(nx * nx + ny * ny);

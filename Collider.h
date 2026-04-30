@@ -6,16 +6,14 @@
 enum class ColliderType {
     Player,
     Wall,
-
-    /// w celu okreœlania jak gracz dotyka linii startu
-    Start,
-    /// w celu okreœlania jak gracz dotyka linii mety
-    Meta
+    Checkpoint
 };
 
 class Collider {
 private:
     ColliderType _type;
+	int _checkpointIndex = -1; //oznacza który checkpoint, -1 jeœli nie jest checkpointem
+
     Player* _owner;
     bool _isColliding = false;
 
@@ -36,13 +34,14 @@ public:
     float GetRadius() const { return _radius; }
     bool GetColliding() const { return _isColliding; }
     ColliderType GetType() const { return _type; }
+    int GetCheckpointIndex() const { return _checkpointIndex; }
 
     // --- SETTERY ---
     void SetStartPoint(const Utils::vec2& start) { _start_point = start; }
     void SetEndPoint(const Utils::vec2& end) { _end_point = end; }
     void SetRadius(float radius) { _radius = radius; }
     void SetColliding(bool state) { _isColliding = state; }
-
+    void SetCheckpointIndex(int index) { _checkpointIndex = index; }
 
 	// --- Collision Detection ---
     void UpdateHitbox();

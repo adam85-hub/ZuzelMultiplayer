@@ -2,7 +2,10 @@
 #include "Scene.h"
 #include "ResourceManager.h"
 #include "Player.h"
+
 #include "CollisionManager.h"
+#include "WallDetector.h"
+#include "ScoreTable.h"
 
 class RaceScene : public Scene {
 public:
@@ -23,6 +26,8 @@ private:
 	short _number_of_players;
 	Player** _players;
 	CollisionManager _collision_manager;
+	WallDetector _wall_detector;
+	ScoreTable _score_table;
 	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;

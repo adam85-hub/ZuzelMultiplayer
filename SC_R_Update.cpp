@@ -1,6 +1,5 @@
 #include "RaceScene.h"
 #include "Consts.h"
-#include "CollisionDetector.h"
 
 void RaceScene::Update(KeyStatesTable key_states) {
 	// restart wyœcigu:
@@ -13,6 +12,10 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		_players[i]->Update(is_turning);
 	}
 
-	//--- COLLISION ACTION---
+	//--- COLLISION/CHECKPOINT ACTION---
 	_collision_manager.Update();
+	//--- UPDATE SENSORS ---
+	_wall_detector.Update();
+	//--- UPDATE SCORE TABLE ---
+	_score_table.updateTable();
 }
