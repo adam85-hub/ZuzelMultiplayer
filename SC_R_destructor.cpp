@@ -9,5 +9,4 @@ RaceScene::~RaceScene() {
 	delete[] _inner_track_collider;
 	delete[] _outer_track_collider;
 	delete[] _start_line;
-	delete[] _bike_collider;
 }

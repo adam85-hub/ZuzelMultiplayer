@@ -64,7 +64,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	wall->SetEndPoint(_outer_track_collider[0]);
 	_collision_manager.AddCollider(wall);
 
-	// za³adowanie bitmapy trasy:
+	// załadowanie bitmapy trasy:
 	constexpr const char* track_path = "./Assets/track.png";
 	_race_track = al_load_bitmap(track_path);
 	Utils::check_resource_loaded(_race_track, track_path);
