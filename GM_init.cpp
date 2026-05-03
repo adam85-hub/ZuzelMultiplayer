@@ -20,15 +20,9 @@ void GameManager::init() {
 	Utils::check_created(_timer, "timer");
 
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	_display = al_create_display(500, 600); // przekazane parametry nie maj¹ znaczenia je¿eli okno jest pe³noekranowe
-	
-	//Skalowanie renderowanego obrazu do rozdzielczoœci wyœwietlacza:
-	const float scale_factor_y = ((float)al_get_display_height(_display) / c_RENDER_HEIGHT);
-	const float scale_factor_x = 16 / 9 * scale_factor_y;
-	ALLEGRO_TRANSFORM scale_transform;
-	al_identity_transform(&scale_transform);
-	al_scale_transform(&scale_transform, scale_factor_x, scale_factor_y);
-	al_use_transform(&scale_transform);
+	_display = al_create_display(1000, 300); // przekazane parametry nie maj¹ znaczenia je¿eli okno jest pe³noekranowe
+
+	set_display_scaling(); // skalowanie renderowanego obrazu do rozdzielczoœci wyœwietlacza
 
 	_event_queue = al_create_event_queue();
 	Utils::check_created(_event_queue, "event queue");

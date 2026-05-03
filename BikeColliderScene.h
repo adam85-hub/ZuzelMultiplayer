@@ -1,14 +1,14 @@
 #pragma once
-#include "SceneWithCommands.h"
+#include "Scene.h"
 #include "CreateColliderScene.h"
 #include "round.h"
 
 #include <filesystem>
 
 // Ta scena s³u¿y tylko do stworzenia polygonu kolizji motoru
-class BikeColliderScene : public SceneWithCommands, CreateColliderScene {
+class BikeColliderScene : public Scene, CreateColliderScene {
 public:
-	BikeColliderScene(GameCommands* game_commads) : SceneWithCommands(game_commads), CreateColliderScene() {
+	BikeColliderScene(GameCommands* game_commads) : Scene(game_commads), CreateColliderScene() {
 		ALLEGRO_BITMAP* bike_bitmap = al_load_bitmap("./Assets/bike_1.bmp");
 		_bike_w = al_get_bitmap_width(bike_bitmap) * _scale;
 		_bike_h = al_get_bitmap_height(bike_bitmap) * _scale;

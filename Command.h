@@ -8,7 +8,7 @@ namespace Utils {
 	concept FunctionParameter = not std::is_void_v<T>;
 
 	template <FunctionParameter T>
-	class CommandDispatcher {
+	class Command {
 		using CommandFn = std::function<void(T)>;
 
 		std::vector<CommandFn> _commandFunctions;

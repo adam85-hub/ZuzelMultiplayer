@@ -142,13 +142,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
     <ClCompile Include="SC_R_destructor.cpp" />
     <ClCompile Include="SC_R_read_polygons_from_file.cpp" />
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClInclude Include="BikeModel.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CreateColliderScene.h" />
     <ClInclude Include="BikeColliderScene.h" />
     <ClInclude Include="draw_polish_text.h" />
@@ -171,19 +178,17 @@
     <ClCompile Include="SC_M_destructor.cpp" />
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
-    <ClInclude Include="SceneWithCommands.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="check_functions.h" />
     <ClInclude Include="Consts.h" />
-    <ClInclude Include="CommandDispatcher.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameManager.h" />
