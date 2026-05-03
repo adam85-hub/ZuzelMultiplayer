@@ -7,7 +7,6 @@ namespace Utils {
 		vec2() : x(0), y(0) {};
 		float x, y;
 
-
 		float Length() const {
 			return sqrt(x * x + y * y);
 		}
@@ -38,6 +37,24 @@ namespace Utils {
 
 		float dot(const vec2& other) const {
 			return (x * other.x) + (y * other.y);
+		}
+
+		// zamienia wektor na jednostkowy (normalizuje)
+		void Normalize() {
+			float len = Length();
+			x /= len; y /= len;
+		}
+
+		// zwraca znormalizowany wektor
+		vec2 GetNormalized() const {
+			float len = Length();
+			return vec2(x / len, y / len);
+		}
+
+		// Zwraca projekcjê wektorow¹ wektora na kierunek direction
+		vec2 ProjectOnto(vec2 direction) const {
+			direction.Normalize();
+			return direction * dot(direction);
 		}
 	};
 }

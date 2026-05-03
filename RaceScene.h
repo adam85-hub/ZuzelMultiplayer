@@ -32,5 +32,7 @@ private:
 	int _outer_track_collider_len = 0;
 	Utils::vec2* _start_line = nullptr;
 
+	bool _paused = false;
+
 	ALLEGRO_FONT* _font_score_table;
 };

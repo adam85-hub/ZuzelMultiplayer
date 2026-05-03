@@ -66,7 +66,7 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
     if (b->GetType() == ColliderType::Wall)
     {
         a->GetOwnerPlayer()->Move(pushForce);
-		///obs³uga bandy przez adama
+		//obs³uga bandy przez adama
         a->GetOwnerPlayer()->touching_wall = true;
     }
     else

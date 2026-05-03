@@ -34,7 +34,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		al_destroy_bitmap(bike_bitmap);
 
 		//--- set colliders for players ---
-		_collision_manager.AddCollider(new Collider(ColliderType::Player,_players[i], 11)); ///tutaj sie ustala promien hitboxa
+		_collision_manager.AddCollider(new Collider(ColliderType::Player, _players[i], 11)); ///tutaj sie ustala promien hitboxa
 	}
 	
 	///============================================COLLIDERES============================================================
