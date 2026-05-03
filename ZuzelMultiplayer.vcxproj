@@ -153,6 +153,9 @@
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClCompile Include="ScoreTable.cpp" />
+    <ClCompile Include="WallDetector.cpp" />
+    <ClInclude Include="BikeModel.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CreateColliderScene.h" />
@@ -182,7 +185,9 @@
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
+    <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="vec2.h" />
+    <ClInclude Include="WallDetector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="check_functions.h" />

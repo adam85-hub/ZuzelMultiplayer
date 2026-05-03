@@ -38,6 +38,8 @@ void CollisionManager::DrawColliders()
 
 
 
+
+
 // --- Move ---
 void CollisionManager::HandleCollision(Collider* a, Collider* b)
 {
@@ -57,7 +59,7 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
 
     if (overlap <= 0) return;
 
-    // 4. Oblicz normaln¹ i si³ê wypchniêcia
+    // 4. Oblicz normalnÂ¹ i siÂ³Ãª wypchniÃªcia
     Utils::vec2 wallVec = { b->GetEndPoint().x - b->GetStartPoint().x, b->GetEndPoint().y - b->GetStartPoint().y };
     Utils::vec2 normal = CalculateNormal(colVec, distance, wallVec);
     Utils::vec2 pushForce = { normal.x * overlap, normal.y * overlap };
@@ -66,14 +68,20 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
     if (b->GetType() == ColliderType::Wall)
     {
         a->GetOwnerPlayer()->Move(pushForce);
-		//obs³uga bandy przez adama
+		//obsÂ³uga bandy przez adama
         a->GetOwnerPlayer()->touching_wall = true;
     }
-    else
+	if (b->GetType() == ColliderType::Player)
     {
         a->GetOwnerPlayer()->Move({ pushForce.x * 0.5f, pushForce.y * 0.5f });
         b->GetOwnerPlayer()->Move({ pushForce.x * -0.5f, pushForce.y * -0.5f });
     }
+
+    if(b->GetType() == ColliderType::Checkpoint)
+    {
+        a->GetOwnerPlayer()->updateCheckpointAndLap(b->GetCheckpointIndex());
+    }
+
 }
 
 
@@ -86,7 +94,7 @@ void CollisionManager::Update()
         if (c != nullptr) c->UpdateHitbox();
     }
 
-	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrów mo¿e poprawiæ stabilnoœæ kolizji
+	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrÃ³w moÂ¿e poprawiÃ¦ stabilnoÅ“Ã¦ kolizji
         for (size_t i = 0; i < _colliders.size(); ++i)
         {
             for (size_t j = i + 1; j < _colliders.size(); ++j)
@@ -100,8 +108,8 @@ void CollisionManager::Update()
 
                         HandleCollision(_colliders[i], _colliders[j]);
 
-						_colliders[i]->UpdateHitbox(); //test
-                        _colliders[j]->UpdateHitbox(); //test
+						_colliders[i]->UpdateHitbox(); //test DZIAÂ£A LEPIEJ Z TYM
+                        _colliders[j]->UpdateHitbox(); //test DZIAÂ£A LEPIEJ Z TYM
                     }
                 }
             }
@@ -162,7 +170,7 @@ ClosestPoints CollisionManager::CalculateClosestPoints(Utils::vec2 p1, Utils::ve
 Utils::vec2 CollisionManager::CalculateNormal(Utils::vec2 collisionVector, float distance, Utils::vec2 wallVec)
 {
     if (distance < 0.0001f) {
-        // Fallback: prostopad³a do œciany
+        
         float nx = -wallVec.y;
         float ny = wallVec.x;
         float nLen = std::sqrt(nx * nx + ny * ny);

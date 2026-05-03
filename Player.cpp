@@ -1,6 +1,9 @@
 #include "Player.h"
 #include <algorithm>
 
+//danie tyle checkpointów ile jest w mapie
+int Player::max_checkpoint = 4;
+
 // z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
 Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : 
 	position(initial_position),
@@ -74,4 +77,18 @@ float Player::wall_deceleration(float velocity) {
 void Player::Move(Utils::vec2 force)
 {
 	position = position + force;
+}
+
+void Player::SetColor(ALLEGRO_COLOR new_color) {
+	this->color = new_color; 
+}
+
+void Player::updateCheckpointAndLap(int checkpointIndex)
+{
+	if (checkpointIndex == _current_checkpoint_index)
+	{
+		_current_checkpoint_index = (_current_checkpoint_index + 1) % max_checkpoint;
+		if (_current_checkpoint_index == 0)
+			_laps_completed++;
+	}
 }

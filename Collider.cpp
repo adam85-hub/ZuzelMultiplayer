@@ -99,3 +99,4 @@ void Collider::DrawDebug(ALLEGRO_COLOR color)
 	}
 
 }
+

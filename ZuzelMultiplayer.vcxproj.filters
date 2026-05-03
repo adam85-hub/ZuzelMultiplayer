@@ -140,6 +140,11 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
+    <ClCompile Include="WallDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreTable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,10 +214,19 @@
     <ClInclude Include="RaceScene.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
+    <ClInclude Include="BikeModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WallDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
