@@ -7,7 +7,6 @@ namespace Utils {
 		vec2() : x(0), y(0) {};
 		float x, y;
 
-
 		float Length() const {
 			return sqrt(x * x + y * y);
 		}
@@ -24,32 +23,38 @@ namespace Utils {
 			return sqrt(powf(this->x - x, 2) + powf(this->y - y, 2));
     }
 
-		vec2& operator+(const vec2& other) {
-			x += other.x;
-			y += other.y;
-
-			return *this;
+		vec2 operator+(const vec2& other) const {
+			return vec2(x + other.x, y+other.y);
 		}
 
-
-		vec2& operator-(const vec2& other) {
-			x -= other.x;
-			y -= other.y;
-
-			return *this;
+		vec2 operator-(const vec2& other) const {
+			return vec2(x - other.x, y - other.y);
 		}
 
-
-		vec2& operator*(float scalar) {
-			x *= scalar;
-			y *= scalar;
-
-			return *this;
+		vec2 operator*(float scalar) const {
+			return vec2(x * scalar, y * scalar);
 		}
 
 		float dot(const vec2& other) const {
 			return (x * other.x) + (y * other.y);
 		}
 
+		// zamienia wektor na jednostkowy (normalizuje)
+		void Normalize() {
+			float len = Length();
+			x /= len; y /= len;
+		}
+
+		// zwraca znormalizowany wektor
+		vec2 GetNormalized() const {
+			float len = Length();
+			return vec2(x / len, y / len);
+		}
+
+		// Zwraca projekcjê wektorow¹ wektora na kierunek direction
+		vec2 ProjectOnto(vec2 direction) const {
+			direction.Normalize();
+			return direction * dot(direction);
+		}
 	};
 }

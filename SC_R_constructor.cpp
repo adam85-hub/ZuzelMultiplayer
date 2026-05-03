@@ -34,7 +34,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		al_destroy_bitmap(bike_bitmap);
 
 		//--- set colliders for players ---
-		_collision_manager.AddCollider(new Collider(ColliderType::Player,_players[i], 11)); ///tutaj sie ustala promien hitboxa
+		_collision_manager.AddCollider(new Collider(ColliderType::Player, _players[i], 11)); ///tutaj sie ustala promien hitboxa
 	}
 	
 	///============================================COLLIDERES============================================================
@@ -45,7 +45,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		wall->SetEndPoint(_inner_track_collider[i + 1]);
 		_collision_manager.AddCollider(wall);
 	}
-	
+
 	Collider* wall = new Collider(ColliderType::Wall, nullptr, 0.05);
 	wall->SetStartPoint(_inner_track_collider[_inner_track_collider_len - 1]);
 	wall->SetEndPoint(_inner_track_collider[0]);
@@ -64,7 +64,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	wall->SetEndPoint(_outer_track_collider[0]);
 	_collision_manager.AddCollider(wall);
 
-	// za³adowanie bitmapy trasy:
+	// załadowanie bitmapy trasy:
 	constexpr const char* track_path = "./Assets/track.png";
 	_race_track = al_load_bitmap(track_path);
 	Utils::check_resource_loaded(_race_track, track_path);

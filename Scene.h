@@ -7,6 +7,7 @@ class Scene {
 public:
 	virtual void Update(KeyStatesTable key_states) = 0;
 	virtual void Render() = 0;
+	virtual ~Scene() {};
 protected:
 	Scene(GameCommands* game_commands) : _game_commands(game_commands) {}
 	GameCommands* _game_commands;

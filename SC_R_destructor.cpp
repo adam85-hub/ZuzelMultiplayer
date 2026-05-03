@@ -8,4 +8,5 @@ RaceScene::~RaceScene() {
 	delete[] _players;
 	delete[] _inner_track_collider;
 	delete[] _outer_track_collider;
+	delete[] _start_line;
 }
