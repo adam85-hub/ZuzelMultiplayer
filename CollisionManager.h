@@ -17,7 +17,7 @@ private:
     void HandleCollision(Collider* a, Collider* b);
     static ClosestPoints CalculateClosestPoints(Utils::vec2 p1, Utils::vec2 p2, Utils::vec2 p3, Utils::vec2 p4);
 
-    static Utils::vec2 CalculateNormal(Utils::vec2 collisionVector, float distance, Utils::vec2 wallVec);
+    static Utils::vec2 CalculateNormal(Utils::vec2 collisionVector, Utils::vec2 wallVec);
 
 public:
 

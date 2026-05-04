@@ -44,26 +44,21 @@ void CollisionManager::DrawColliders()
 
 // --- Move ---
 void CollisionManager::HandleCollision(Collider* a, Collider* b)
-{
-    
+{    
     ClosestPoints points = CalculateClosestPoints(
         a->GetStartPoint(), a->GetEndPoint(),
         b->GetStartPoint(), b->GetEndPoint()
     );
 
-
     Utils::vec2 colVec = points.a - points.b;
-    float distance = std::sqrt(colVec.x * colVec.x + colVec.y * colVec.y);
 
     //is colision
     float combinedRadius = a->GetRadius() + b->GetRadius();
-    float overlap = (combinedRadius - distance) + 0.05f;
-
-    if (overlap <= 0) return;
+    float overlap = (combinedRadius - colVec.Length()) + 0.05f;
 
     // 4. Oblicz normaln¹ i si³ê wypchniêcia
     Utils::vec2 wallVec = { b->GetEndPoint().x - b->GetStartPoint().x, b->GetEndPoint().y - b->GetStartPoint().y };
-    Utils::vec2 normal = CalculateNormal(colVec, distance, wallVec);
+    Utils::vec2 normal = CalculateNormal(colVec, wallVec);
     Utils::vec2 pushForce = { normal.x * overlap, normal.y * overlap };
     
 
@@ -168,8 +163,9 @@ ClosestPoints CollisionManager::CalculateClosestPoints(Utils::vec2 p1, Utils::ve
 }
 
 
-Utils::vec2 CollisionManager::CalculateNormal(Utils::vec2 collisionVector, float distance, Utils::vec2 wallVec)
+Utils::vec2 CollisionManager::CalculateNormal(Utils::vec2 collisionVector, Utils::vec2 wallVec)
 {
+    float distance = collisionVector.Length();
     if (distance < 0.0001f) {
         
         float nx = -wallVec.y;
