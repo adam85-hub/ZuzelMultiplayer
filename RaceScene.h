@@ -15,10 +15,10 @@ public:
 	void Render();
 
 private:
-	// usuwa poligony je¿eli nie s¹ nullptr i wczytuje nowe z pliku
+	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
-	// tworzy now¹ tablicê i ustawia wartoœæ zmiennej out na jej adres 
-	// (u¿ywaæ tylko je¿eli pamiêæ na któr¹ wskazuje parametr out zosta³a zwolniona)
+	// tworzy nową tablicę i ustawia wartoœæ zmiennej out na jej adres 
+	// (używać tylko jeżeli pamięć na którą wskazuje parametr out została zwolniona)
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
 
 	Utils::ResourceManager _resource_manager;
@@ -36,9 +36,8 @@ private:
 	Utils::vec2* _outer_track_collider = nullptr;
 	int _outer_track_collider_len = 0;
 	Utils::vec2* _start_line = nullptr;
-	Utils::vec2* _bike_collider = nullptr;
-	int _bike_collider_len = 0;
 
+	bool _paused = false;
 
 	ALLEGRO_FONT* _font_score_table;
 };

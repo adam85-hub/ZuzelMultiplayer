@@ -43,9 +43,6 @@
     <Filter Include="Header Files\Scenes\DevOnly">
       <UniqueIdentifier>{8b47c542-6154-4edb-bd78-6270f3b766dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObjects">
-      <UniqueIdentifier>{5f32e874-6a91-4356-a609-d521ee651eb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scenes\RaceScene">
       <UniqueIdentifier>{b0562c18-6be9-467f-a52b-f1c73b0a23af}</UniqueIdentifier>
     </Filter>
@@ -132,9 +129,6 @@
     <ClCompile Include="SC_R_read_polygons_from_file.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="GM_set_display_scaling.cpp">
       <Filter>Source Files\GameManager</Filter>
     </ClCompile>
@@ -144,6 +138,8 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
     <ClCompile Include="WallDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

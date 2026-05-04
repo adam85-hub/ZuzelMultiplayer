@@ -16,13 +16,15 @@ public:
 
 private:
 	float acceleration(float v);
+	float wall_deceleration(float v);
 
 	ALLEGRO_BITMAP* _bike_bitmap;
 	Utils::vec2 _bike_bitmap_size;
 
 	const float _max_acceleration = 0.3;
-	const float _optimal_engine_velocity = 6;
+	const float _optimal_engine_velocity = 7;
 	const float _rotation_velocity = 1.f / c_FPS * .6f * M_PI;
+	const float _max_velocity_offset = M_PI / 3;
 
 	float _linear_velocity;
 	float _rotation;
@@ -38,6 +40,7 @@ public:
 	std::array<float, 7> sensorDistances;
 	const float& bike_height = _bike_bitmap_size.y;
 	const float& bike_width = _bike_bitmap_size.x;
+	bool touching_wall = false;
 
 	Utils::vec2 position;
 

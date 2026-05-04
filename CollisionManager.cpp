@@ -1,7 +1,5 @@
 #include "CollisionManager.h"
 
-
-
 CollisionManager::~CollisionManager()
 {
     for(auto* c : _colliders) {
@@ -56,7 +54,7 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
     float combinedRadius = a->GetRadius() + b->GetRadius();
     float overlap = (combinedRadius - colVec.Length()) + 0.05f;
 
-    // 4. Oblicz normaln¹ i si³ê wypchniêcia
+    // 4. Oblicz normalnÂ¹ i siÂ³Ãª wypchniÃªcia
     Utils::vec2 wallVec = { b->GetEndPoint().x - b->GetStartPoint().x, b->GetEndPoint().y - b->GetStartPoint().y };
     Utils::vec2 normal = CalculateNormal(colVec, wallVec);
     Utils::vec2 pushForce = { normal.x * overlap, normal.y * overlap };
@@ -65,7 +63,8 @@ void CollisionManager::HandleCollision(Collider* a, Collider* b)
     if (b->GetType() == ColliderType::Wall)
     {
         a->GetOwnerPlayer()->Move(pushForce);
-		///obs³uga bandy przez adama
+		//obsÂ³uga bandy przez adama
+        a->GetOwnerPlayer()->touching_wall = true;
     }
 	if (b->GetType() == ColliderType::Player)
     {
@@ -90,7 +89,7 @@ void CollisionManager::Update()
         if (c != nullptr) c->UpdateHitbox();
     }
 
-	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrów mo¿e poprawiæ stabilnoœæ kolizji
+	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrÃ³w moÂ¿e poprawiÃ¦ stabilnoÅ“Ã¦ kolizji
         for (size_t i = 0; i < _colliders.size(); ++i)
         {
             for (size_t j = i + 1; j < _colliders.size(); ++j)
@@ -104,8 +103,8 @@ void CollisionManager::Update()
 
                         HandleCollision(_colliders[i], _colliders[j]);
 
-						_colliders[i]->UpdateHitbox(); //test DZIA£A LEPIEJ Z TYM
-                        _colliders[j]->UpdateHitbox(); //test DZIA£A LEPIEJ Z TYM
+						_colliders[i]->UpdateHitbox(); //test DZIAÂ£A LEPIEJ Z TYM
+                        _colliders[j]->UpdateHitbox(); //test DZIAÂ£A LEPIEJ Z TYM
                     }
                 }
             }
