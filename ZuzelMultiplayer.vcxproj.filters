@@ -141,6 +141,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreTable.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreTable.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

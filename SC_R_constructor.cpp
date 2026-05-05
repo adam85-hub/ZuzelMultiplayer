@@ -1,4 +1,3 @@
-#include <allegro5/allegro_ttf.h>
 #include <filesystem>
 
 #include "RaceScene.h"
@@ -11,9 +10,6 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	_number_of_players(number_of_players),
 	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN}
 {
-	_font_score_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 10, 0);
-	_resource_manager.Track_resource(_font_score_table);
-
 	// inicjalizacja wszystkich polygonów
 	read_polygons_from_file();
 
@@ -36,6 +32,8 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		//--- set colliders for players ---
 		_collision_manager.AddCollider(new Collider(ColliderType::Player, _players[i], 11)); ///tutaj sie ustala promien hitboxa
 	}
+
+	_score_table = std::make_unique<ScoreTable>(_players, number_of_players);
 	
 	///============================================COLLIDERES============================================================
 	//--- set colliders for inner track ---

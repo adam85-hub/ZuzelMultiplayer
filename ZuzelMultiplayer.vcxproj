@@ -147,6 +147,7 @@
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ScoreTable.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
     <ClCompile Include="SC_R_destructor.cpp" />
     <ClCompile Include="SC_R_read_polygons_from_file.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
+    <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
   <ItemGroup>

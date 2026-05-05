@@ -11,6 +11,8 @@ void RaceScene::Render() {
 		_players[i]->Render();
 	}
 
+	_score_table->Render();
+
 	// drawing colliders (only dev):
 	for (int i = 1; i < _inner_track_collider_len; i++) {
 		al_draw_line(_inner_track_collider[i - 1].x, _inner_track_collider[i - 1].y,

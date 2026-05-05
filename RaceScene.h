@@ -1,8 +1,11 @@
 #pragma once
+#include <memory>
+
 #include "Scene.h"
 #include "ResourceManager.h"
 #include "Player.h"
 #include "CollisionManager.h"
+#include "ScoreTable.h"
 
 class RaceScene : public Scene {
 public:
@@ -22,7 +25,9 @@ private:
 
 	short _number_of_players;
 	Player** _players;
+	
 	CollisionManager _collision_manager;
+	std::unique_ptr<ScoreTable> _score_table;
 	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;
@@ -33,6 +38,4 @@ private:
 	Utils::vec2* _start_line = nullptr;
 
 	bool _paused = false;
-
-	ALLEGRO_FONT* _font_score_table;
 };
