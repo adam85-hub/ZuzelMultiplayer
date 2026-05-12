@@ -4,9 +4,6 @@
 
 
 ScoreTable::~ScoreTable(){
-	for (auto c : _players) {
-		delete c;
-	}
 }
 
 void ScoreTable::addPlayer(Player* player) {
@@ -19,11 +16,11 @@ void ScoreTable::updateTable()
 {
     std::sort(_players.begin(), _players.end(), [](Player* a, Player* b) {
 
-        if (a->GetLaps() != b->GetLaps()) {
-            return a->GetLaps() > b->GetLaps();
+        if (a->Get_laps() != b->Get_laps()) {
+            return a->Get_laps() > b->Get_laps();
         }
 
-        return a->GetCurrentCheckpointIndex() > b->GetCurrentCheckpointIndex();
+        return a->Get_current_check_point_index() > b->Get_current_check_point_index();
     });
 }
 
@@ -31,11 +28,11 @@ void ScoreTable::render()
 {
 
     for (int i = 0; i < (int)_players.size(); i++) {
-        int laps = _players[i]->GetLaps();
-        int cp = _players[i]->GetCurrentCheckpointIndex();
+        int laps = _players[i]->Get_laps();
+        int cp = _players[i]->Get_current_check_point_index();
 
        
-        ALLEGRO_COLOR pColor = _players[i]->GetColor();
+        ALLEGRO_COLOR pColor = _players[i]->Get_color();
 
         std::string stats = std::to_string(i + 1) + ". Miejsce, " +
             std::to_string(laps) + " okr¹¿eñ";

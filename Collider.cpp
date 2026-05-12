@@ -1,11 +1,20 @@
 #include "Collider.h"
-#include <allegro5/allegro_primitives.h>
 
-float Collider::GetDistanceBetweenSegments(Utils::vec2 p1, Utils::vec2 p2, Utils::vec2 p3, Utils::vec2 p4)
+#include <allegro5/allegro_primitives.h>
+#include <stdexcept>
+
+Collider::~Collider()
 {
-    Utils::vec2 u = p2 - p1;
-    Utils::vec2 v = p4 - p3;
-    Utils::vec2 w = p1 - p3;
+    if(_type == ColliderType::Player) {
+        delete _line;
+    }
+}
+
+float Collider::Get_distance_between_lines(const Utils::line& l1, const Utils::line& l2)
+{
+    Utils::vec2 u = l1.b - l1.a;
+    Utils::vec2 v = l2.b - l2.a;
+    Utils::vec2 w = l1.a - l2.a;
 
     float a = u.dot(u);
     float b = u.dot(v);
@@ -15,6 +24,7 @@ float Collider::GetDistanceBetweenSegments(Utils::vec2 p1, Utils::vec2 p2, Utils
     float D = a * c - b * b;
     float sc, sN, sD = D;
     float tc, tN, tD = D;
+
 
     if (D < 1e-4f) {
         sN = 0.0f; sD = 1.0f;
@@ -45,58 +55,63 @@ float Collider::GetDistanceBetweenSegments(Utils::vec2 p1, Utils::vec2 p2, Utils
 
     Utils::vec2 dP = w + (u * sc) - (v * tc);
     return std::sqrt(dP.dot(dP));
-
 }
 
-///  stala
-void Collider::UpdateHitbox()
+
+void Collider::Update_hitbox()
 {
-	if (_owner == nullptr || _type == ColliderType::Wall) return;
+    if (_type != ColliderType::Player) {
+        throw std::runtime_error("Update_hitbox called on non-player collider");
+    }
+
+    if (_owner == nullptr) {
+        throw std::logic_error("Update_hitbox called on collider with null owner");
+    }
+
+    //if (_owner == nullptr || _type == ColliderType::Wall)return;
+
 
 	Utils::vec2 center = _owner->position;
-	float angle = _owner->GetRotation();
+	float angle = _owner->Get_rotation();
 
 	float halfLength = _owner->bike_height / 2.0f;
 
 	float dirX = cos(-angle);
 	float dirY = sin(-angle);
 
-	_start_point.x = center.x - (dirX * halfLength)*1.7f;
-	_start_point.y = center.y - (dirY * halfLength)*1.7f;
+    _line->a.x = center.x - (dirX * halfLength)*1.7f;
+    _line->a.y = center.y - (dirY * halfLength)*1.7f;
 
-	_end_point.x = center.x + (dirX * halfLength)*1.7f;
-	_end_point.y = center.y + (dirY * halfLength)*1.7f;
+    _line->b.x = center.x + (dirX * halfLength)*1.7f;
+    _line->b.y = center.y + (dirY * halfLength)*1.7f;
 }
 
 
 // --- COLLISION CHECKING ---
-bool Collider::CheckCollision(const Collider& other) const
+bool Collider::Check_collision(const Collider& other) const
 {
 	float combinedRadius = this->_radius + other._radius;
 
-	float dist = GetDistanceBetweenSegments(
-		this->_start_point, this->_end_point,
-		other._start_point, other._end_point
-	);
+    float dist = Get_distance_between_lines(*this->_line, *other._line);
 	
 	return dist <= combinedRadius;
 }
 
 // --- DEBUG ---
-void Collider::DrawDebug(ALLEGRO_COLOR color)
+void Collider::Draw_debug(ALLEGRO_COLOR color)
 {
 	float thickness = _radius * 2.0f;
 	if (thickness < 1.0f) thickness = 1.0f;
 
-	al_draw_line(
-		_start_point.x, _start_point.y,
-		_end_point.x, _end_point.y,
-		color,thickness);
+    al_draw_line(
+        _line->a.x, _line->a.y,
+        _line->b.x, _line->b.y,
+        color, thickness);
 
-	if (_radius > 1.0f) {
-		al_draw_filled_circle(_start_point.x, _start_point.y, _radius, color);
-		al_draw_filled_circle(_end_point.x, _end_point.y, _radius, color);
-	}
+    if (_radius > 1.0f) {
+        al_draw_filled_circle(_line->a.x, _line->a.y, _radius, color);
+        al_draw_filled_circle(_line->b.x, _line->b.y, _radius, color);
+    }
 
 }
 

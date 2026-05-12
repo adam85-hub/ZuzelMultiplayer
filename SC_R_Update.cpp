@@ -20,8 +20,9 @@ void RaceScene::Update(KeyStatesTable key_states) {
 
 	//--- COLLISION/CHECKPOINT ACTION---
 	_collision_manager.Update();
-	//--- UPDATE SENSORS ---
-	_wall_detector.Update();
+
 	//--- UPDATE SCORE TABLE ---
 	_score_table.updateTable();
+
+
 }

@@ -42,112 +42,36 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		bike_bitmap = al_load_bitmap(path_to_bitmap.string().c_str());
 		Utils::check_resource_loaded(bike_bitmap, path_to_bitmap.string());
 
-		_players[i] = new Player(initial_position, bike_bitmap);
+		if(_only_ai_mode)
+			_players[i] = new PlayerAI(initial_position, bike_bitmap);
+		else
+			_players[i] = new Player(initial_position, bike_bitmap);
+		
 		_players[i]->position.y += start_h / _number_of_players * i + start_h / (2*_number_of_players);
 		_players[i]->position.x -= _players[i]->bike_width / 2;
-		_players[i]->SetColor(player_colors[i % 4]);
+		_players[i]->Set_color(player_colors[i % 4]);
 		al_destroy_bitmap(bike_bitmap);
 
-		//--- set colliders for players ---
-		_collision_manager.AddCollider(new Collider(ColliderType::Player,_players[i], 11)); ///tutaj sie ustala promien hitboxa
-		//--- set players for wall detector ---
-		_wall_detector.AddPlayer(_players[i]);
+		//--- set colliders for players --- 
+		_collision_manager.Add_player(_players[i]);
 
 		//--- add player to ScoreTable ---
 		_score_table.addPlayer(_players[i]);
 	}
 	
-	///============================================COLLIDERES============================================================
-	//--- set colliders for inner track ---
-	for (int i = 0; i < _inner_track_collider_len - 1; ++i) {
-		Collider* wall = new Collider(ColliderType::Wall, nullptr,0.05);
-		wall->SetStartPoint(_inner_track_collider[i]);
-		wall->SetEndPoint(_inner_track_collider[i + 1]);
-		_collision_manager.AddCollider(wall);
+	//--- dodanie barier ---
+	_collision_manager.Add_walls(_barriers.get(), _barriers_count);
+
+	// --- AI LASERS---
+	if (_only_ai_mode)PlayerAI::Add_walls(_barriers.get(), _barriers_count);
+
+	//--- dodanie checkpointów ---
+	_collision_manager.Add_checkpoints(_checkpoints.get(), _checkpoints_count);
+	Player::checkpoint_count = _checkpoints_count;
 
 
 
-		///////////////////////////////////
-		Wall* w = new Wall();
-		w->a = _inner_track_collider[i];
-		w->b = _inner_track_collider[i + 1];
 
-		// Dodanie do detektora
-		_wall_detector.AddWall(w);
-	}
-
-	Collider* wall = new Collider(ColliderType::Wall, nullptr, 0.05);
-	wall->SetStartPoint(_inner_track_collider[_inner_track_collider_len - 1]);
-	wall->SetEndPoint(_inner_track_collider[0]);
-	_collision_manager.AddCollider(wall);
-
-
-	///////////////////////////////////
-	Wall* w = new Wall();
-	w->a = _inner_track_collider[_inner_track_collider_len - 1];
-	w->b = _inner_track_collider[0];
-
-	// Dodanie do detektora
-	_wall_detector.AddWall(w);
-
-
-	//--- set colliders for outer track ---
-	for (int i = 0; i < _outer_track_collider_len - 1; ++i) {
-		Collider* wall = new Collider(ColliderType::Wall, nullptr, 0.05);
-		wall->SetStartPoint(_outer_track_collider[i]);
-		wall->SetEndPoint(_outer_track_collider[i + 1]);
-		_collision_manager.AddCollider(wall);
-
-
-		///////////////////////////////////
-		Wall* w = new Wall();
-		w->a = _outer_track_collider[i];
-		w->b = _outer_track_collider[i + 1];
-
-		// Dodanie do detektora
-		_wall_detector.AddWall(w);
-	}
-
-	wall = new Collider(ColliderType::Wall, nullptr, 0.05);
-	wall->SetStartPoint(_outer_track_collider[_outer_track_collider_len - 1]);
-	wall->SetEndPoint(_outer_track_collider[0]);
-	_collision_manager.AddCollider(wall);
-	
-	///////////////////////////////////
-	w = new Wall(); 
-	w->a = _outer_track_collider[_outer_track_collider_len - 1];
-	w->b = _outer_track_collider[0];
-
-	// Dodanie do detektora
-	_wall_detector.AddWall(w);
-	
-	//=============================================== dodanie checkpointów =================================
-	Collider* checkpoint = new Collider(ColliderType::Checkpoint, nullptr, 0.05);
-	checkpoint->SetStartPoint({ 1650, 500 });
-	checkpoint->SetEndPoint({ 1900, 500 });
-	checkpoint->SetCheckpointIndex(0);
-	_collision_manager.AddCollider(checkpoint);
-
-	checkpoint = new Collider(ColliderType::Checkpoint, nullptr, 0.05);
-	checkpoint->SetStartPoint({ 910, 800 }); 
-	checkpoint->SetEndPoint({ 910, 1020 });   
-	checkpoint->SetCheckpointIndex(3);
-	_collision_manager.AddCollider(checkpoint);
-
-	checkpoint = new Collider(ColliderType::Checkpoint, nullptr, 0.05);
-	checkpoint->SetStartPoint({ 50, 500 });
-	checkpoint->SetEndPoint({ 300, 500 });
-	checkpoint->SetCheckpointIndex(2);
-	_collision_manager.AddCollider(checkpoint);
-
-	
-	checkpoint = new Collider(ColliderType::Checkpoint, nullptr, 0.05);
-	checkpoint->SetStartPoint({ 910, 50 }); 
-	checkpoint->SetEndPoint({ 910, 280 });   
-	checkpoint->SetCheckpointIndex(1);
-	_collision_manager.AddCollider(checkpoint);
-
-	
 	// za³adowanie bitmapy trasy:
 	constexpr const char* track_path = "./Assets/track.png";
 	_race_track = al_load_bitmap(track_path);

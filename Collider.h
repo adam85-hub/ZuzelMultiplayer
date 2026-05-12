@@ -1,53 +1,49 @@
-#include "vec2.h"
+#pragma once
 #include <allegro5/allegro.h>
-#include "Player.h"
 #include <cmath>
+
+#include "Player.h"
+#include "vec2.h"
+#include "line.h"
 
 enum class ColliderType {
     Player,
     Wall,
-    Checkpoint
+	Checkpoint
 };
 
 class Collider {
 private:
-    ColliderType _type;
-	int _checkpointIndex = -1; //oznacza który checkpoint, -1 jeœli nie jest checkpointem
+    const ColliderType _type;
+    Utils::line* const _line;
+    const float _radius;
 
-    Player* _owner;
-    bool _isColliding = false;
+    Player* const _owner;
+	
 
-    Utils::vec2 _start_point;
-    Utils::vec2 _end_point;
-    float _radius;
 
 public:
-    static float GetDistanceBetweenSegments(Utils::vec2 p1, Utils::vec2 p2, Utils::vec2 p3, Utils::vec2 p4);
-    Collider(ColliderType type, Player* owner, float radius = 0.0f) : _owner(owner), _radius(radius), _type(type) {}
+    Collider(ColliderType type, Utils::line* line, float radius = 0.0f, Player* owner = nullptr) : 
+            _type(type),_line(line), _owner(owner), _radius(radius){};
+    ~Collider();
+    
+    // debug
+    bool is_colliding = false;
+
+    //algorytm Dan Sunday
+    static float Get_distance_between_lines(const Utils::line& l1, const Utils::line& l2);
 
     // --- GETTERY ---
-    Utils::vec2 GetCenter() const { return (_owner->position); }
-    Player* GetOwnerPlayer() const { return _owner; }
-    Utils::vec2 GetStartPoint() const { return _start_point; }
-    Utils::vec2 GetEndPoint() const { return _end_point; }
-    float GetRadius() const { return _radius; }
-    bool GetColliding() const { return _isColliding; }
-    ColliderType GetType() const { return _type; }
-    Utils::vec2 GetColliderDirection() const { return _end_point - _start_point; }
-    int GetCheckpointIndex() const { return _checkpointIndex; }
+    Player* Get_owner_player() const { return _owner; }
+	const Utils::line* Get_line() const { return _line; }
 
-    // --- SETTERY ---
-    void SetStartPoint(const Utils::vec2& start) { _start_point = start; }
-    void SetEndPoint(const Utils::vec2& end) { _end_point = end; }
-    void SetRadius(float radius) { _radius = radius; }
-    void SetColliding(bool state) { _isColliding = state; }
-    void SetCheckpointIndex(int index) { _checkpointIndex = index; }
+    float Get_radius() const { return _radius; }
+    ColliderType Get_type() const { return _type; }
 
 	// --- Collision Detection ---
-    void UpdateHitbox();
-	bool CheckCollision(const Collider& other) const;
+    void Update_hitbox();
+	bool Check_collision(const Collider& other) const;
 
 	// --- Debug ---
-    void DrawDebug(ALLEGRO_COLOR color);
-    void ResetCollision() { _isColliding = false; }
+    void Draw_debug(ALLEGRO_COLOR color);
 };

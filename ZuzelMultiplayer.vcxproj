@@ -142,20 +142,24 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Checkpoint.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAI.cpp" />
+    <ClCompile Include="SC_R_add_checkpoints.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
     <ClCompile Include="SC_R_destructor.cpp" />
+    <ClCompile Include="SC_R_add_barriers.cpp" />
     <ClCompile Include="SC_R_read_polygons_from_file.cpp" />
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
     <ClCompile Include="ScoreTable.cpp" />
-    <ClCompile Include="WallDetector.cpp" />
     <ClInclude Include="BikeModel.h" />
+    <ClInclude Include="Checkpoint.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CreateColliderScene.h" />
@@ -180,14 +184,15 @@
     <ClCompile Include="SC_M_destructor.cpp" />
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
+    <ClInclude Include="line.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAI.h" />
     <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="vec2.h" />
-    <ClInclude Include="WallDetector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="check_functions.h" />

@@ -10,9 +10,9 @@
 class Player {
 public:
 	Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap);
-	~Player();
-	void Update(bool is_turning);
-	void Render();
+	virtual ~Player();
+	virtual void Update(bool is_turning);
+	virtual void Render();
 
 private:
 	float acceleration(float v);
@@ -30,14 +30,13 @@ private:
 	float _rotation;
 	float _velocity_offset;
 
-	static int max_checkpoint;
-	ALLEGRO_COLOR color;
+	ALLEGRO_COLOR _color;
 
 	int _current_checkpoint_index = 0;
 	int _laps_completed = 0;
 
 public:
-	std::array<float, 7> sensorDistances;
+	static int checkpoint_count;
 	const float& bike_height = _bike_bitmap_size.y;
 	const float& bike_width = _bike_bitmap_size.x;
 	bool touching_wall = false;
@@ -45,15 +44,15 @@ public:
 	Utils::vec2 position;
 
 	//--- Getter ---
-	float GetRotation() const { return _rotation; }
-	int GetCurrentCheckpointIndex() const { return _current_checkpoint_index; }
-	int GetLaps() const { return _laps_completed; }
-	ALLEGRO_COLOR GetColor() const { return color; };
+	float Get_rotation() const { return _rotation; }
+	int Get_current_check_point_index() const { return _current_checkpoint_index; }
+	int Get_laps() const { return _laps_completed; }
+	ALLEGRO_COLOR Get_color() const { return _color; };
 
 	//--- Setter ---
-	void Move(Utils::vec2 force);
-	void SetColor(ALLEGRO_COLOR new_color);
+	void Move(Utils::vec2 v);
+	void Set_color(ALLEGRO_COLOR new_color);
 
 	//--- Checkpoint and Lap Management ---
-	void updateCheckpointAndLap(int checkpointIndex);
+	void Update_checkpoint_and_lap(int checkpointIndex);
 };
