@@ -21,7 +21,6 @@ private:
     Player* const _owner;
 	
 
-
 public:
     Collider(ColliderType type, Utils::line* line, float radius = 0.0f, Player* owner = nullptr) : 
             _type(type),_line(line), _owner(owner), _radius(radius){};

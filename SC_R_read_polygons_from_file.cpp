@@ -32,13 +32,11 @@ void RaceScene::read_polygons_from_file() {
 	}
 	temp.clear();
 
-
 	//--- obsluga linii startowej ---
 	std::getline(file, line); //linia 3
 	int discard; string_to_polygon(line, _start_line, discard);
 
-
-	//--- obsluga checkpointów ---
+	//--- obsluga checkpointï¿½w ---
 	std::getline(file, line); //linia 4
 	add_checkpoints(line);
 }

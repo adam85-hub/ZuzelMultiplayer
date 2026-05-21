@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+
 #include "Scene.h"
 #include "ResourceManager.h"
 
@@ -11,6 +13,7 @@
 #include "line.h"
 #include <vector>
 #include <memory>
+#include "Countdown.h"
 
 class RaceScene : public Scene {
 public:
@@ -22,8 +25,7 @@ public:
 private:
 	bool _only_ai_mode = false;
 	bool _dev_mode = true;
-
-
+  
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
 	// tworzy nową tablicę i ustawia wartoœæ zmiennej out na jej adres 
@@ -36,6 +38,11 @@ private:
 
 	short _number_of_players;
 	Player** _players;
+	
+	CollisionManager _collision_manager;
+	std::unique_ptr<ScoreTable> _score_table;
+	Countdown _start_countdown;
+	Timer _race_timer;
 	unsigned int _turn_buttons[4];
 	
 	// --- SCORE TABLE ---
@@ -54,6 +61,4 @@ private:
 	Utils::vec2* _start_line = nullptr;
 
 	bool _paused = false;
-
-	ALLEGRO_FONT* _font_score_table;
 };
