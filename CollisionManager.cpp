@@ -67,7 +67,7 @@ void CollisionManager::handle_collision(Collider* a, Collider* b)
     const Utils::line& lineA = *a->Get_line();
     const Utils::line& lineB = *b->Get_line();
 
-    ClosestPoints points = calculate_closest_points(lineA, lineB);
+    Utils::line points = calculate_closest_points(lineA, lineB);
 
     Utils::vec2 colVec = points.a - points.b;
 
