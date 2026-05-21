@@ -11,16 +11,15 @@ void RaceScene::Render() {
 		_players[i]->Render();
 	}
 
-	_score_table->Render();
-
+#pragma region Only dev
 	// drawing colliders (only dev):
 	for (int i = 1; i < _inner_track_collider_len; i++) {
 		al_draw_line(_inner_track_collider[i - 1].x, _inner_track_collider[i - 1].y,
 			_inner_track_collider[i].x, _inner_track_collider[i].y, _color_text_default, 2);
 	}
 
-	al_draw_line(_inner_track_collider[0].x, _inner_track_collider[0].y, 
-		_inner_track_collider[_inner_track_collider_len-1].x, _inner_track_collider[_inner_track_collider_len - 1].y, 
+	al_draw_line(_inner_track_collider[0].x, _inner_track_collider[0].y,
+		_inner_track_collider[_inner_track_collider_len - 1].x, _inner_track_collider[_inner_track_collider_len - 1].y,
 		_color_text_default, 2);
 
 	for (int i = 1; i < _outer_track_collider_len; i++) {
@@ -38,4 +37,12 @@ void RaceScene::Render() {
 
 	// drawing colliders (only dev):
 	//_collision_manager.DrawColliders();
+#pragma endregion
+
+	if (_start_countdown.Has_ended() == false) {
+		_start_countdown.Render();
+		return;
+	}
+	// po starcie wyœcigu:
+	_score_table->Render();
 }

@@ -31,19 +31,9 @@ namespace Utils {
 		}
 	}
 
-	static void draw_polish_text(ALLEGRO_FONT* font, ALLEGRO_COLOR color, float x, float y, int flags, std::string text) {
-		al_hold_bitmap_drawing(true);
-		int codepoint = 0, prevcodepoint = 0, advance = 0;
-		for (int i = 0; i < text.size(); i++) {
-			codepoint = get_jersey_codepoint(text[i]);
-
-			if (i > 0)
-				advance += al_get_glyph_advance(font, prevcodepoint, codepoint);
-			al_draw_glyph(font, color, x + advance, y, codepoint);
-			prevcodepoint = codepoint;
-		}
-		al_hold_bitmap_drawing(false);
-	}
+	static enum {
+		ALIGN_CENTER_XY = 3
+	};
 
 	static int get_polish_text_width(ALLEGRO_FONT* font, std::string text) {
 		int codepoint = 0, prevcodepoint = 0, advance = 0;
@@ -56,4 +46,27 @@ namespace Utils {
 		}
 		return advance + al_get_glyph_width(font, codepoint);
 	}
+
+	static void draw_polish_text(ALLEGRO_FONT* font, ALLEGRO_COLOR color, float x, float y, int flags, std::string text) {
+		if (flags & ALLEGRO_ALIGN_CENTER || flags & ALIGN_CENTER_XY) {
+			x -= get_polish_text_width(font, text) / 2.f;
+			if (flags & ALIGN_CENTER_XY)
+				y -= al_get_font_line_height(font) / 2.f;
+		}
+		else if (flags & ALLEGRO_ALIGN_RIGHT) {
+			x -= get_polish_text_width(font, text);
+		}
+
+		al_hold_bitmap_drawing(true);
+		int codepoint = 0, prevcodepoint = 0, advance = 0;
+		for (int i = 0; i < text.size(); i++) {
+			codepoint = get_jersey_codepoint(text[i]);
+
+			if (i > 0)
+				advance += al_get_glyph_advance(font, prevcodepoint, codepoint);
+			al_draw_glyph(font, color, x + advance, y, codepoint);
+			prevcodepoint = codepoint;
+		}
+		al_hold_bitmap_drawing(false);
+	}	
 }
