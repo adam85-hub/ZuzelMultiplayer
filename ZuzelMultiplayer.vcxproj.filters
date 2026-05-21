@@ -138,6 +138,17 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SC_R_add_barriers.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Checkpoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_add_checkpoints.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAI.cpp">
+      <Filter>Source Files</Filter>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
@@ -224,6 +235,14 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="line.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Checkpoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAI.h">
+      <Filter>Header Files</Filter>
     <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>

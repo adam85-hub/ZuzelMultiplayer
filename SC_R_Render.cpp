@@ -1,5 +1,4 @@
 #include "RaceScene.h"
-#include "CollisionDetector.h"
 #include "draw_polish_text.h"
 
 #include <allegro5/allegro_primitives.h>
@@ -22,20 +21,13 @@ void RaceScene::Render() {
 		_inner_track_collider[_inner_track_collider_len - 1].x, _inner_track_collider[_inner_track_collider_len - 1].y,
 		_color_text_default, 2);
 
-	for (int i = 1; i < _outer_track_collider_len; i++) {
-		al_draw_line(_outer_track_collider[i - 1].x, _outer_track_collider[i - 1].y,
-			_outer_track_collider[i].x, _outer_track_collider[i].y, _color_text_default, 2);
-	}
-
-	al_draw_line(_outer_track_collider[0].x, _outer_track_collider[0].y,
-		_outer_track_collider[_outer_track_collider_len - 1].x, _outer_track_collider[_outer_track_collider_len - 1].y,
-		_color_text_default, 2);
-
 	// drawing start line (only dev):
-	al_draw_line(_start_line[0].x, _start_line[0].y,
-		_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
+	//al_draw_line(_start_line[0].x, _start_line[0].y,
+	//	_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
 
 	// drawing colliders (only dev):
+	if (_dev_mode)_collision_manager.Draw_colliders();
+	
 	//_collision_manager.DrawColliders();
 #pragma endregion
 
@@ -43,6 +35,6 @@ void RaceScene::Render() {
 		_start_countdown.Render();
 		return;
 	}
-	// po starcie wyœcigu:
+	// po starcie wyÅ“cigu:
 	_score_table->Render();
 }

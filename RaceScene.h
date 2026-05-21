@@ -3,9 +3,16 @@
 
 #include "Scene.h"
 #include "ResourceManager.h"
+
 #include "Player.h"
 #include "CollisionManager.h"
 #include "ScoreTable.h"
+
+#include "PlayerAI.h"
+
+#include "line.h"
+#include <vector>
+#include <memory>
 #include "Countdown.h"
 
 class RaceScene : public Scene {
@@ -16,11 +23,16 @@ public:
 	void Render();
 
 private:
+	bool _only_ai_mode = false;
+	bool _dev_mode = true;
+  
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
 	// tworzy nową tablicę i ustawia wartoœæ zmiennej out na jej adres 
 	// (używać tylko jeżeli pamięć na którą wskazuje parametr out została zwolniona)
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
+	void add_barriers(const std::string &str, std::vector<Utils::line>& temp);
+	void add_checkpoints(const std::string &str);
 
 	Utils::ResourceManager _resource_manager;
 
@@ -32,12 +44,20 @@ private:
 	Countdown _start_countdown;
 	Timer _race_timer;
 	unsigned int _turn_buttons[4];
+	
+	// --- SCORE TABLE ---
+	ScoreTable _score_table;
+
+	// --- COLLISION & CHECKPOINT ---
+	CollisionManager _collision_manager;
+	std::unique_ptr<Utils::line[]> _barriers;
+	int _barriers_count = 0;
+
+	std::unique_ptr<Utils::line[]> _checkpoints;
+	int _checkpoints_count = 0;
+
 
 	ALLEGRO_BITMAP* _race_track;
-	Utils::vec2* _inner_track_collider = nullptr;
-	int _inner_track_collider_len = 0;
-	Utils::vec2* _outer_track_collider = nullptr;
-	int _outer_track_collider_len = 0;
 	Utils::vec2* _start_line = nullptr;
 
 	bool _paused = false;

@@ -1,6 +1,7 @@
-#include <vector>
 #include "Collider.h"
+#include "Checkpoint.h"
 
+#include <vector>
 
 struct ClosestPoints {
     Utils::vec2 a;
@@ -14,21 +15,22 @@ private:
 
 
     // --- Move ---
-    void HandleCollision(Collider* a, Collider* b);
-    static ClosestPoints CalculateClosestPoints(Utils::vec2 p1, Utils::vec2 p2, Utils::vec2 p3, Utils::vec2 p4);
+    void handle_collision(Collider* a, Collider* b);
+    static ClosestPoints calculate_closest_points(const Utils::line& l1, const Utils::line& l2);
 
-    static Utils::vec2 CalculateNormal(Utils::vec2 collisionVector, float distance, Utils::vec2 wallVec);
+    static Utils::vec2 calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec);
 
 public:
 
     ~CollisionManager();
 
-	// --- Add/Remove Colidier ---
-    void AddCollider(Collider* c);
-    void RemoveCollider(Collider* c);
+	// --- Add Colidier ---
+	void Add_player(Player* player);
+    void Add_walls(Utils::line* barriers_ptr, int count);
+	void Add_checkpoints(Utils::line* checkpoint_ptr, int count);
 
     // --- Debug ---
-    void DrawColliders();
+    void Draw_colliders();
 
 
 	// --- Main Collision Check Loop ---

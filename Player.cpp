@@ -1,6 +1,9 @@
 #include "Player.h"
 #include <algorithm>
 
+
+int Player::checkpoint_count = 0; //Tylko definicja
+
 // z bike_bitmap jest tworzona jej przeskalowana kopia. Po zakoñczeniu wykonywania siê konstruktora bitmapa pod adresem bike_bitmap nie jest ju¿ potrzebna
 Player::Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : 
 	position(initial_position),
@@ -74,4 +77,19 @@ float Player::wall_deceleration(float velocity) {
 void Player::Move(Utils::vec2 force)
 {
 	position = position + force;
+}
+
+void Player::Set_color(ALLEGRO_COLOR new_color) {
+	this->_color = new_color; 
+}
+
+void Player::Update_checkpoint_and_lap(int checkpointIndex)
+{
+
+	if (checkpointIndex == _current_checkpoint_index)
+	{
+		_current_checkpoint_index = (_current_checkpoint_index + 1) % checkpoint_count;
+		if (_current_checkpoint_index == 0)
+			_laps_completed++;
+	}
 }
