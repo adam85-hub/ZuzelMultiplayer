@@ -147,8 +147,9 @@
     <ClCompile Include="SC_R_add_checkpoints.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAI.cpp">
-      <Filter>Source Files</Filter>
+	<ClCompile Include="PlayerAI.cpp">
+		<Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
@@ -241,8 +242,9 @@
     <ClInclude Include="Checkpoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAI.h">
-      <Filter>Header Files</Filter>
+	<ClInclude Include="PlayerAI.h">
+		<Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
