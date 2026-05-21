@@ -11,24 +11,12 @@ void RaceScene::Render() {
 	}
 
 #pragma region Only dev
-	// drawing colliders (only dev):
-	for (int i = 1; i < _inner_track_collider_len; i++) {
-		al_draw_line(_inner_track_collider[i - 1].x, _inner_track_collider[i - 1].y,
-			_inner_track_collider[i].x, _inner_track_collider[i].y, _color_text_default, 2);
-	}
-
-	al_draw_line(_inner_track_collider[0].x, _inner_track_collider[0].y,
-		_inner_track_collider[_inner_track_collider_len - 1].x, _inner_track_collider[_inner_track_collider_len - 1].y,
-		_color_text_default, 2);
-
 	// drawing start line (only dev):
 	//al_draw_line(_start_line[0].x, _start_line[0].y,
 	//	_start_line[1].x, _start_line[1].y, al_map_rgb(255, 0, 0), 2);
 
 	// drawing colliders (only dev):
 	if (_dev_mode)_collision_manager.Draw_colliders();
-	
-	//_collision_manager.DrawColliders();
 #pragma endregion
 
 	if (_start_countdown.Has_ended() == false) {

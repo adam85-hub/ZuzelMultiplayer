@@ -9,7 +9,6 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	Scene(gameCommands), 
 	_number_of_players(number_of_players),
 	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN},
-	_score_table(number_of_players, nullptr),
 	_start_countdown(3)
 {
 	// inicjalizacja wszystkich polygonów

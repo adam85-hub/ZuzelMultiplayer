@@ -11,7 +11,7 @@ public:
 	PlayerAI(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : Player(initial_position, bike_bitmap) {}
 	~PlayerAI() override = default;
 	void Update(bool is_turning) override;
-	void Render() override;
+	void Render() const override;
 
 	static void Add_walls(Utils::line* barriers_ptr, int count);
 	
@@ -24,7 +24,7 @@ private:
 
 	
 	void update_sensors();
-	void draw_sensors();
+	void draw_sensors() const;
 	
 	float calculate_distance(const Utils::line* wall, float angle);
 };

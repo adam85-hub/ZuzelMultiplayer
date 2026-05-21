@@ -12,7 +12,7 @@ public:
 	Player(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap);
 	virtual ~Player();
 	virtual void Update(bool is_turning);
-	virtual void Render();
+	virtual void Render() const;
 
 private:
 	float acceleration(float v);

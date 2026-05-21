@@ -1,18 +1,14 @@
 #pragma once
 #include <memory>
+#include <vector>
 
 #include "Scene.h"
 #include "ResourceManager.h"
-
 #include "Player.h"
 #include "CollisionManager.h"
 #include "ScoreTable.h"
-
 #include "PlayerAI.h"
-
 #include "line.h"
-#include <vector>
-#include <memory>
 #include "Countdown.h"
 
 class RaceScene : public Scene {
@@ -39,14 +35,10 @@ private:
 	short _number_of_players;
 	Player** _players;
 	
-	CollisionManager _collision_manager;
 	std::unique_ptr<ScoreTable> _score_table;
 	Countdown _start_countdown;
 	Timer _race_timer;
 	unsigned int _turn_buttons[4];
-	
-	// --- SCORE TABLE ---
-	ScoreTable _score_table;
 
 	// --- COLLISION & CHECKPOINT ---
 	CollisionManager _collision_manager;

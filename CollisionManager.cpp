@@ -141,7 +141,7 @@ void CollisionManager::Update()
 
 
 
-ClosestPoints CollisionManager::calculate_closest_points(const Utils::line& l1, const Utils::line& l2)
+Utils::line CollisionManager::calculate_closest_points(const Utils::line& l1, const Utils::line& l2)
 {
     Utils::vec2 u = l1.b - l1.a;
     Utils::vec2 v = l2.b - l2.a;

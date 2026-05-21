@@ -69,7 +69,7 @@ void PlayerAI::Update(bool is_turning) {
 };
 
 // --- Render ---
-void PlayerAI::draw_sensors() {
+void PlayerAI::draw_sensors() const {
     ALLEGRO_COLOR laserColor = al_map_rgb(255, 0, 0);
 
     float playerRot = this->Get_rotation();
@@ -88,7 +88,7 @@ void PlayerAI::draw_sensors() {
     }
 }
 
-void PlayerAI::Render() {
+void PlayerAI::Render() const {
     Player::Render();
     this->draw_sensors();
 }
