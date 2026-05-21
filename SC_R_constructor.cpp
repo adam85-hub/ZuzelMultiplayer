@@ -34,7 +34,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		_collision_manager.AddCollider(new Collider(ColliderType::Player, _players[i], 11)); ///tutaj sie ustala promien hitboxa
 	}
 
-	_score_table = std::make_unique<ScoreTable>(_players, number_of_players);
+	_score_table = std::make_unique<ScoreTable>(_players, number_of_players, &_race_timer);
 	
 	///============================================COLLIDERES============================================================
 	//--- set colliders for inner track ---
@@ -70,4 +70,5 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	_resource_manager.Track_resource(_race_track);
 
 	_start_countdown.Start();
+	_start_countdown.Execute_on_start([this]() -> void {_race_timer.Start(); });
 }

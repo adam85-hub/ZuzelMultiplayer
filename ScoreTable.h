@@ -5,11 +5,12 @@
 
 #include "Player.h"
 #include "ResourceManager.h"
+#include "Timer.h"
 
 class ScoreTable
 {
 public:
-	ScoreTable(Player** players, short players_count);
+	ScoreTable(Player** players, short players_count, Timer* race_timer);
 	~ScoreTable();
 	void Update();
 	void Render() const;
@@ -19,8 +20,9 @@ private:
 	const Player *const *const _players; // sta³a tablica
 	short* _player_order;
 	int _players_count;
-	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Liczba okr¹¿eñ"};
-
+	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Liczba okr¹¿eñ", "Czas"};
+	Timer* _race_timer;
+	
 	Utils::ResourceManager _resource_manager;
 	ALLEGRO_FONT* _font_table;
 

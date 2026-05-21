@@ -7,9 +7,10 @@
 #include "draw_polish_text.h"
 #include "vec2.h"
 
-ScoreTable::ScoreTable(Player** players, short players_count) :
+ScoreTable::ScoreTable(Player** players, short players_count, Timer* race_timer) :
 	_players(players),
-	_players_count(players_count)
+	_players_count(players_count),
+	_race_timer(race_timer)
 {
 	_font_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 20, 0);
 	_resource_manager.Track_resource(_font_table);
@@ -24,6 +25,7 @@ ScoreTable::ScoreTable(Player** players, short players_count) :
 	for (std::string column : _columns)
 		_column_width.push_back(Utils::get_polish_text_width(_font_table, column));
 	_column_width[1] = Utils::get_polish_text_width(_font_table, "Czerwony"); // najszerszy napis
+	_column_width[3] = Utils::get_polish_text_width(_font_table, "55:55:55");
 
 	for (float width : _column_width) {
 		_size.x += width + _margin_col;
@@ -79,5 +81,10 @@ void ScoreTable::Render() const {
 		Utils::draw_polish_text(_font_table, white, _left_top.x, y, 0, std::to_string(i + 1));
 		advance = _column_width[0] + _margin_col;
 		Utils::draw_polish_text(_font_table, c_PLAYER_COLOR[p_index], _left_top.x + advance, y, 0, c_PLAYER_NAME[p_index]);
+		advance += _column_width[1] + _margin_col;
+		advance += _column_width[2] + _margin_col;
+		if (i == 0) {
+			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, _race_timer->Get_time_str());
+		}
 	}
 }

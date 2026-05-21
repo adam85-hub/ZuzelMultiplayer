@@ -30,6 +30,7 @@ private:
 	CollisionManager _collision_manager;
 	std::unique_ptr<ScoreTable> _score_table;
 	Countdown _start_countdown;
+	Timer _race_timer;
 	unsigned int _turn_buttons[4];
 
 	ALLEGRO_BITMAP* _race_track;

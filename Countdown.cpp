@@ -30,8 +30,10 @@ void Countdown::Update() {
 	double time_elapsed = al_get_time() - _start_time;
 	_current_count = _from - std::floor(time_elapsed);
 
-	if (time_elapsed > _from)
+	if (time_elapsed > _from && !_race_started) {
 		_race_started = true;
+		_to_execute_on_start(); // wywo³anie funkcji
+	}
 	if (time_elapsed > _from + 1)
 		_ended = true;
 }
@@ -54,4 +56,8 @@ bool Countdown::Has_ended() const {
 
 bool Countdown::Has_race_started() const {
 	return _race_started;
+}
+
+void Countdown::Execute_on_start(std::function<void()> to_execute) {
+	_to_execute_on_start = to_execute;
 }

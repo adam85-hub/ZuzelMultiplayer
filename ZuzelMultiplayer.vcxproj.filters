@@ -147,6 +147,9 @@
     <ClCompile Include="Countdown.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
     <ClInclude Include="Countdown.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
   </ItemGroup>
