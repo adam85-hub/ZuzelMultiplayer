@@ -51,7 +51,7 @@ void Player::Update(bool is_turning) {
 	touching_wall = false;
 }
 
-void Player::Render() {
+void Player::Render() const {
 	al_draw_rotated_bitmap(_bike_bitmap, _bike_bitmap_size.x / 2, _bike_bitmap_size.y / 2, position.x, position.y, -_rotation, 0);
 }
 

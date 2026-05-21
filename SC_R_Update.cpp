@@ -14,6 +14,11 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	if (_paused)
 		return;
 
+	_start_countdown.Update();
+	if (!_start_countdown.Has_race_started())
+		return;
+	// po starcie wyścigu:
+
 	for (int i = 0; i < _number_of_players; i++) {
 		bool is_turning = key_states[_turn_buttons[i]] & c_KEY_DOWN;
 		_players[i]->Update(is_turning);
