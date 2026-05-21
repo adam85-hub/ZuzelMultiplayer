@@ -69,15 +69,11 @@ void CollisionManager::handle_collision(Collider* a, Collider* b)
 
     ClosestPoints points = calculate_closest_points(lineA, lineB);
 
-
-    const Utils::vec2 colVec = points.a - points.b;
-    float distance = std::sqrt(colVec.x * colVec.x + colVec.y * colVec.y);
+    Utils::vec2 colVec = points.a - points.b;
 
     //is colision
-    float combinedRadius = a->Get_radius() + b->Get_radius();
-    float overlap = (combinedRadius - distance) + 0.05f;
-
-    if (overlap <= 0) return;
+    float combinedRadius = a->GetRadius() + b->GetRadius();
+    float overlap = (combinedRadius - colVec.Length()) + 0.05f;
 
     const Utils::vec2 wallVec = lineB.b - lineB.a;
     const Utils::vec2 normal = calculate_normal(colVec, distance, wallVec);
@@ -194,8 +190,9 @@ ClosestPoints CollisionManager::calculate_closest_points(const Utils::line& l1, 
 }
 
 
-Utils::vec2 CollisionManager::calculate_normal(const Utils::vec2& collisionVector, float distance, const Utils::vec2& wallVec)
+Utils::vec2 CollisionManager::CalculateNormal(Utils::vec2 collisionVector, Utils::vec2 wallVec)
 {
+    float distance = collisionVector.Length();
     if (distance < 0.0001f) {
         
         float nx = -wallVec.y;
