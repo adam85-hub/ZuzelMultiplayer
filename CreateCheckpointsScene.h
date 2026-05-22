@@ -8,6 +8,8 @@
 #include <fstream>
 #include "vec2.h"
 
+#include "LOG.h"
+
 class CreateCheckpointsScene : public Scene {
 public:
 	CreateCheckpointsScene(GameCommands* gameCommands) : Scene(gameCommands) {
@@ -34,6 +36,10 @@ public:
 				_cursor_pos.x = _points[_points.size() - 1].x;
 			}
 
+			if (_points.size() % 2 == 0 and (_mouse_state.buttons & ALLEGRO_MOUSE_BUTTON_RIGHT)) {
+				_multiple_mode = true;
+			}
+
 			if ((key_states[ALLEGRO_KEY_BACKSPACE] & c_KEY_PRESSED) and _points.size() > 0) {
 				_points.pop_back();
 			}
@@ -42,12 +48,47 @@ public:
 				save_to_file("checkpoints.txt");
 			}
 		}		
+		
+		if (_multiple_mode and (_points.size() == 0 or _points.size() % 2 == 1)) {
+			if (_mm_points.size() > 0)
+				_mm_points.clear();
+
+			_multiple_mode = false;
+		}
 
 		if ((_mouse_state.buttons & ALLEGRO_MOUSE_BUTTON_LEFT) and 
 			(_points.size() == 0 or _points[_points.size() - 1].Distance(_cursor_pos.x, _cursor_pos.y) > _circle_radius * 3)) 
 		{
-			_points.emplace_back(_cursor_pos.x, _cursor_pos.y);
+			if (_multiple_mode) {
+				_multiple_mode = false;
+				for (auto point : _mm_points) {
+					_points.push_back(point);
+				}
+				_mm_points.clear();
+			}
+			else
+				_points.emplace_back(_cursor_pos.x, _cursor_pos.y);
 		}
+
+		if (_multiple_mode) {
+			int delta_z = _last_z - _mouse_state.z;
+			_mm_number_of_lines = std::max(2, _mm_number_of_lines - delta_z);
+			_last_z = _mouse_state.z;
+
+			Utils::vec2 a = _points[_points.size() - 1];
+			Utils::vec2 b = _points[_points.size() - 2];
+			Utils::vec2 line_vec = b - a;
+			Utils::vec2 advance = (_cursor_pos - a) / _mm_number_of_lines;
+
+			_mm_points.clear();
+			_mm_points.reserve(_mm_number_of_lines);
+			for (int i = 1; i <= _mm_number_of_lines; i++) {
+				_mm_points.emplace_back(a + advance * i);
+				_mm_points.emplace_back(a + advance * i + line_vec);
+			}
+		}
+
+		
 	}
 
 	void Render() {
@@ -66,7 +107,15 @@ public:
 			Utils::vec2 a = _points[i];
 			al_draw_filled_circle(a.x, a.y, _circle_radius, _color_line);
 			al_draw_line(a.x, a.y, _cursor_pos.x, _cursor_pos.y, _color_line, 2);
-		}	
+		}
+
+		for (i = 0; i < _mm_points.size() / 2; i++) {
+			Utils::vec2 a = _mm_points[2 * i];
+			Utils::vec2 b = _mm_points[2 * i + 1];
+			al_draw_filled_circle(a.x, a.y, _circle_radius, _color_mm_line);
+			al_draw_filled_circle(b.x, b.y, _circle_radius, _color_mm_line);
+			al_draw_line(a.x, a.y, b.x, b.y, _color_mm_line, 2);
+		}
 
 		al_draw_filled_circle(_cursor_pos.x, _cursor_pos.y, _circle_radius, _color_cursor);
 	} 
@@ -94,9 +143,18 @@ public:
 	std::vector<Utils::vec2> _points;
 	int _circle_radius = 4;
 
+	bool _multiple_mode = false;
+	int _mm_number_of_lines = 4;
+	std::vector<Utils::vec2> _mm_points;
+	int _last_z = 0;
+
 	ALLEGRO_MOUSE_STATE _mouse_state{};
 	Utils::vec2 _cursor_pos;
 	ALLEGRO_COLOR _color_line = al_map_rgb(255, 0, 0);
 	ALLEGRO_COLOR _color_cursor = al_map_rgb(0, 0, 255);
+	ALLEGRO_COLOR _color_mm_line = al_map_rgb(60, 60, 60);
 	Utils::ResourceManager _resource_manager;
 };
+
+// todo: add keybinding to create multiple checkpoints at once (right mouse button?) 
+// todo: add changing number of lines with scroll wheel
