@@ -141,9 +141,6 @@
     <ClCompile Include="SC_R_add_barriers.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-    <ClCompile Include="Checkpoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SC_R_add_checkpoints.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
