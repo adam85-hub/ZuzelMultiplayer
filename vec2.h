@@ -51,10 +51,11 @@ namespace Utils {
 			return vec2(x / len, y / len);
 		}
 
-		// Zwraca projekcjê wektorow¹ wektora na kierunek direction
+		// Zwraca projekcjï¿½ wektorowï¿½ wektora na kierunek direction
 		vec2 ProjectOnto(vec2 direction) const {
 			direction.Normalize();
 			return direction * dot(direction);
 		}
+
 	};
 }
