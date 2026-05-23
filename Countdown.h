@@ -12,6 +12,8 @@ public:
 	void Start();
 	void Update();
 	void Render() const;
+	void Pause();
+	void Unpause();
 	bool Has_ended() const;
 	bool Has_race_started() const;
 
@@ -23,6 +25,9 @@ private:
 	bool _started = false;
 	bool _ended = false;
 	bool _race_started = false;
+
+	double _pause_time = 0;
+	double _pause_start_time = -1;
 
 	std::function<void()> _to_execute_on_start;
 	ALLEGRO_FONT* _font_countdown;

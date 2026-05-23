@@ -24,10 +24,10 @@ void Countdown::Start() {
 }
 
 void Countdown::Update() {
-	if (!_started || _ended)
+	if (!_started || _ended || _pause_start_time != -1)
 		return;
 
-	double time_elapsed = al_get_time() - _start_time;
+	double time_elapsed = al_get_time() - _start_time - _pause_time;
 	_current_count = _from - std::floor(time_elapsed);
 
 	if (time_elapsed > _from && !_race_started) {
@@ -60,4 +60,13 @@ bool Countdown::Has_race_started() const {
 
 void Countdown::Execute_on_start(std::function<void()> to_execute) {
 	_to_execute_on_start = to_execute;
+}
+
+void Countdown::Pause() {
+	_pause_start_time = al_get_time();
+}
+
+void Countdown::Unpause() {
+	_pause_time += al_get_time() - _pause_start_time;
+	_pause_start_time = -1;
 }

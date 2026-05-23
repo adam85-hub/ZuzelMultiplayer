@@ -21,6 +21,8 @@ void RaceScene::Render() {
 
 	if (_start_countdown.Has_ended() == false) {
 		_start_countdown.Render();
+		if (_paused)
+			_pause_scene.Render();
 		return;
 	}
 
