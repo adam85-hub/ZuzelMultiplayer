@@ -7,6 +7,7 @@
 
 RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : 
 	Scene(gameCommands), 
+	_pause_scene(gameCommands),
 	_number_of_players(number_of_players),
 	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN},
 	_start_countdown(3)

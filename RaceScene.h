@@ -10,6 +10,7 @@
 #include "PlayerAI.h"
 #include "line.h"
 #include "Countdown.h"
+#include "PauseScene.h"
 
 class RaceScene : public Scene {
 public:
@@ -44,6 +45,8 @@ private:
 	CollisionManager _collision_manager;
 	std::unique_ptr<Utils::line[]> _barriers;
 	int _barriers_count = 0;
+
+	PauseScene _pause_scene;
 
 	std::unique_ptr<Utils::line[]> _checkpoints;
 	int _checkpoints_count = 0;

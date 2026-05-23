@@ -23,6 +23,10 @@ void RaceScene::Render() {
 		_start_countdown.Render();
 		return;
 	}
+
 	// po starcie wyœcigu:
 	_score_table->Render();
+
+	if (_paused)
+		_pause_scene.Render();
 }

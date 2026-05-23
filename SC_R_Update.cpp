@@ -10,8 +10,10 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		_paused = !_paused;
 	}
 
-	if (_paused)
+	if (_paused) {
+		_pause_scene.Update(key_states);
 		return;
+	}
 
 	_start_countdown.Update();
 	if (!_start_countdown.Has_race_started())
