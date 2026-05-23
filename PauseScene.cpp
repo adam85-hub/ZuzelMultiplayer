@@ -4,14 +4,18 @@
 #include "allegro5/allegro_ttf.h"
 #include "allegro5/allegro_primitives.h"
 
-PauseScene::PauseScene(GameCommands* gameCommands) : Scene(gameCommands)
+PauseScene::PauseScene(GameCommands* gameCommands, Utils::Command<bool>* unpause_cmd) : 
+	Scene(gameCommands),
+	_unpause_cmd(unpause_cmd)
 {
 	_font_title = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 10, 0);
 	_resource_manager.Track_resource(_font_title);
 }
 
 void PauseScene::Update(KeyStatesTable key_states) {
-
+	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
+		_unpause_cmd->Execute(true);
+	}
 }
 
 void PauseScene::Render() {

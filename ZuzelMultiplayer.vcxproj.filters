@@ -147,9 +147,9 @@
     <ClCompile Include="SC_R_add_checkpoints.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-	<ClCompile Include="PlayerAI.cpp">
-		<Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="PlayerAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
@@ -160,6 +160,12 @@
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_pause.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,9 +248,9 @@
     <ClInclude Include="Checkpoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="PlayerAI.h">
-		<Filter>Header Files</Filter>
-	</ClInclude>
+    <ClInclude Include="PlayerAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
@@ -253,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="BikeModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScene.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

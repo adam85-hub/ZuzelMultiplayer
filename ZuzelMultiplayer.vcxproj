@@ -156,6 +156,7 @@
     <ClCompile Include="SC_R_constructor.cpp" />
     <ClCompile Include="SC_R_destructor.cpp" />
     <ClCompile Include="SC_R_add_barriers.cpp" />
+    <ClCompile Include="SC_R_pause.cpp" />
     <ClCompile Include="SC_R_read_polygons_from_file.cpp" />
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
