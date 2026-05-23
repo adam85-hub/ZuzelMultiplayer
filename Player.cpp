@@ -79,13 +79,8 @@ void Player::Move(Utils::vec2 force)
 	position = position + force;
 }
 
-void Player::Set_color(ALLEGRO_COLOR new_color) {
-	this->_color = new_color; 
-}
-
 void Player::Update_checkpoint_and_lap(int checkpointIndex)
 {
-
 	if (checkpointIndex == _current_checkpoint_index)
 	{
 		_current_checkpoint_index = (_current_checkpoint_index + 1) % checkpoint_count;
