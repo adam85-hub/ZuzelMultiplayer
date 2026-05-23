@@ -260,9 +260,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
-    <ClInclude Include="BikeModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PauseScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>

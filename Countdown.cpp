@@ -7,7 +7,6 @@
 
 Countdown::Countdown(int from) :
 	_from(from),
-	_start_time(-1),
 	_current_count(-1)
 {
 	_font_countdown = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 5, 0);
@@ -19,15 +18,15 @@ Countdown::~Countdown() {
 
 void Countdown::Start() {
 	_started = true;
-	_start_time = al_get_time();
 	_current_count = _from;
+	_timer.Start();
 }
 
 void Countdown::Update() {
-	if (!_started || _ended || _pause_start_time != -1)
+	if (!_started || _ended)
 		return;
 
-	double time_elapsed = al_get_time() - _start_time - _pause_time;
+	double time_elapsed = _timer.Get_time();
 	_current_count = _from - std::floor(time_elapsed);
 
 	if (time_elapsed > _from && !_race_started) {
@@ -63,10 +62,9 @@ void Countdown::Execute_on_start(std::function<void()> to_execute) {
 }
 
 void Countdown::Pause() {
-	_pause_start_time = al_get_time();
+	_timer.Pause();
 }
 
 void Countdown::Unpause() {
-	_pause_time += al_get_time() - _pause_start_time;
-	_pause_start_time = -1;
+	_timer.Unpause();
 }
