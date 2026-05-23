@@ -42,7 +42,7 @@ void CollisionManager::Add_checkpoints(Utils::line* checkpoint_ptr, int count)
 {
     for (int i = 0; i < count; ++i)
     {
-        _colliders.emplace_back(new Checkpoint(&checkpoint_ptr[i], c_THICKNESS_HITBOX_CHECKPOINT));
+        _colliders.emplace_back(new Checkpoint(&checkpoint_ptr[i], i, c_THICKNESS_HITBOX_CHECKPOINT));
     }
 }
 
@@ -102,8 +102,6 @@ void CollisionManager::handle_collision(Collider* a, Collider* b)
     }
 
 }
-
-
 
 // --- Main Collision Check Loop ---
 void CollisionManager::Update()

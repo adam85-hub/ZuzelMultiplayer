@@ -6,13 +6,12 @@
 
 class Checkpoint : public Collider {
 private:
-    static int _next_id;
     const int _index;
 public:
 
-    Checkpoint(Utils::line* line, float radius = 0.0f)
+    Checkpoint(Utils::line* line, int index, float radius = 0.0f)
         : Collider(ColliderType::Checkpoint, line, radius, nullptr),
-        _index(_next_id++)
+        _index(index)
     {}
 
 	// --- Getter ---
