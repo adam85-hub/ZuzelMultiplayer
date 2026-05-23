@@ -10,6 +10,15 @@
 
 #include "LOG.h"
 
+// Instrukcja obs³ugi:
+// Lewy przycisk myszy - dodaj punkt
+// Backspace - usuñ ostatni punkt
+// Enter - zapisz do pliku
+// Prawy przycisk myszy - tryb dodawania kilku lini na raz
+// w tym trybie lewy przycisk myszy - zatwierdŸ
+// Alt - przesuniêcie w poziomie
+// Shift - przesuniêcie w pionie
+
 class CreateCheckpointsScene : public Scene {
 public:
 	CreateCheckpointsScene(GameCommands* gameCommands) : Scene(gameCommands) {
@@ -87,8 +96,6 @@ public:
 				_mm_points.emplace_back(a + advance * i + line_vec);
 			}
 		}
-
-		
 	}
 
 	void Render() {
@@ -155,6 +162,3 @@ public:
 	ALLEGRO_COLOR _color_mm_line = al_map_rgb(60, 60, 60);
 	Utils::ResourceManager _resource_manager;
 };
-
-// todo: add keybinding to create multiple checkpoints at once (right mouse button?) 
-// todo: add changing number of lines with scroll wheel
