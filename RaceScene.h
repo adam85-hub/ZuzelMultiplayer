@@ -10,6 +10,7 @@
 #include "PlayerAI.h"
 #include "line.h"
 #include "Countdown.h"
+#include "PauseScene.h"
 
 class RaceScene : public Scene {
 public:
@@ -29,6 +30,8 @@ private:
 	void string_to_polygon(std::string str, Utils::vec2*& out, int& out_len);
 	void add_barriers(const std::string &str, std::vector<Utils::line>& temp);
 	void add_checkpoints(const std::string &str);
+	void pause();
+	void unpause();
 
 	Utils::ResourceManager _resource_manager;
 
@@ -47,10 +50,11 @@ private:
 
 	std::unique_ptr<Utils::line[]> _checkpoints;
 	int _checkpoints_count = 0;
-
-
 	ALLEGRO_BITMAP* _race_track;
 	Utils::vec2* _start_line = nullptr;
 
+	// Pauza:
+	Utils::Command<bool> _unpause_cmd;
+	PauseScene _pause_scene;
 	bool _paused = false;
 };

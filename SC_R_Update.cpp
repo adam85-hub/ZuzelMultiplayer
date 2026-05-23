@@ -2,17 +2,19 @@
 #include "Consts.h"
 
 void RaceScene::Update(KeyStatesTable key_states) {
+	if (_paused) {
+		_pause_scene.Update(key_states);
+		return;
+	}
+
 	// restart wyœcigu:
 	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
 		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players));
 	}
 	else if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
-		_paused = !_paused;
+		pause();
 	}
-
-	if (_paused)
-		return;
-
+	
 	_start_countdown.Update();
 	if (!_start_countdown.Has_race_started())
 		return;

@@ -148,6 +148,7 @@
     <ClCompile Include="Countdown.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
+    <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAI.cpp" />
     <ClCompile Include="SC_R_add_checkpoints.cpp" />
@@ -155,11 +156,11 @@
     <ClCompile Include="SC_R_constructor.cpp" />
     <ClCompile Include="SC_R_destructor.cpp" />
     <ClCompile Include="SC_R_add_barriers.cpp" />
+    <ClCompile Include="SC_R_pause.cpp" />
     <ClCompile Include="SC_R_read_polygons_from_file.cpp" />
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
-    <ClInclude Include="BikeModel.h" />
     <ClInclude Include="Checkpoint.h" />
     <ClCompile Include="Timer.cpp" />
     <ClInclude Include="Collider.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="SC_M_Update.cpp" />
     <ClInclude Include="line.h" />
     <ClInclude Include="NewTrackScene.h" />
+    <ClInclude Include="PauseScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAI.h" />
     <ClInclude Include="PlayerModel.h" />
