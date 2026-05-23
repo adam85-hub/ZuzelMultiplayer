@@ -2,16 +2,18 @@
 #include "Consts.h"
 
 void RaceScene::Update(KeyStatesTable key_states) {
+	// restart wyœcigu:
+	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players));
+		return;
+	}
+
 	if (_paused) {
 		_pause_scene.Update(key_states);
 		return;
 	}
-
-	// restart wyœcigu:
-	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
-		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players));
-	}
-	else if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
+	
+	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
 		pause();
 	}
 	
@@ -27,4 +29,5 @@ void RaceScene::Update(KeyStatesTable key_states) {
 
 	//--- COLLISION/CHECKPOINT ACTION---
 	_collision_manager.Update();
+	_score_table->Update();
 }

@@ -42,16 +42,20 @@ ScoreTable::~ScoreTable()
 }
 
 void ScoreTable::sort_players() {
-	//std::sort(_player_order, _player_order + _players_count, [this](short ai, short bi) {
-	//	const Player* a = _players[ai];
-	//	const Player* b = _players[bi];
+	std::sort(_player_order, _player_order + _players_count, [this](short ai, short bi) {
+		const Player* a = _players[ai];
+		const Player* b = _players[bi];
 
-	//	//if (a->GetLaps() != b->GetLaps()) {
-	//	//	return a->GetLaps() > b->GetLaps();
-	//	//}
+		if (a->Get_laps() != b->Get_laps()) {
+			return a->Get_laps() > b->Get_laps();
+		}
 
-	//	//return a->GetCurrentCheckpointIndex() > b->GetCurrentCheckpointIndex();
-	//});
+		return a->Get_current_checkpoint_index() > b->Get_current_checkpoint_index();
+	});
+}
+
+void ScoreTable::Update() {
+	sort_players();
 }
 
 void ScoreTable::Render() const {
@@ -82,6 +86,7 @@ void ScoreTable::Render() const {
 		advance = _column_width[0] + _margin_col;
 		Utils::draw_polish_text(_font_table, c_PLAYER_COLOR[p_index], _left_top.x + advance, y, 0, c_PLAYER_NAME[p_index]);
 		advance += _column_width[1] + _margin_col;
+		Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, std::to_string(_players[p_index]->Get_laps()));
 		advance += _column_width[2] + _margin_col;
 		if (i == 0) {
 			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, _race_timer->Get_time_str());

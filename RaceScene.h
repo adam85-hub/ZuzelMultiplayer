@@ -21,7 +21,7 @@ public:
 
 private:
 	bool _only_ai_mode = false;
-	bool _dev_mode = true;
+	bool _dev_mode = false;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
 	void read_polygons_from_file();
