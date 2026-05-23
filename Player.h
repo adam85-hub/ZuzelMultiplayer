@@ -45,6 +45,7 @@ public:
 	float Get_rotation() const { return _rotation; }
 	int Get_current_checkpoint_index() const { return _current_checkpoint_index; }
 	int Get_laps() const { return _laps_completed; }
+	int Get_laps_to_display() const;
 
 	//--- Setter ---
 	void Move(Utils::vec2 v);

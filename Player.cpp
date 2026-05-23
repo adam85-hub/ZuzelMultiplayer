@@ -88,3 +88,9 @@ void Player::Update_checkpoint_and_lap(int checkpointIndex)
 			_laps_completed++;
 	}
 }
+
+int Player::Get_laps_to_display() const {
+	if (_current_checkpoint_index == 0)
+		return _laps_completed - 1;
+	return _laps_completed;
+}

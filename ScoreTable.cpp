@@ -86,7 +86,7 @@ void ScoreTable::Render() const {
 		advance = _column_width[0] + _margin_col;
 		Utils::draw_polish_text(_font_table, c_PLAYER_COLOR[p_index], _left_top.x + advance, y, 0, c_PLAYER_NAME[p_index]);
 		advance += _column_width[1] + _margin_col;
-		Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, std::to_string(_players[p_index]->Get_laps()));
+		Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, std::to_string(_players[p_index]->Get_laps_to_display()));
 		advance += _column_width[2] + _margin_col;
 		if (i == 0) {
 			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, _race_timer->Get_time_str());
