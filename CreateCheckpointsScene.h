@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <fstream>
 #include "vec2.h"
+#include "round.h"
 
 #include "LOG.h"
 
@@ -140,7 +141,7 @@ public:
 			throw std::runtime_error("Couldnt open file: " + filename.string());
 
 		for (Utils::vec2 point : *points_to_save) {
-			output_file << point.x << " " << point.y << ",";
+			output_file << Utils::roundToNearestInt(point.x) << " " << Utils::roundToNearestInt(point.y) << ",";
 		}
 
 		output_file.close();
