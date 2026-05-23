@@ -1,5 +1,4 @@
 #include "RaceScene.h"
-#include "CollisionDetector.h"
 #include "draw_polish_text.h"
 
 #include <allegro5/allegro_primitives.h>

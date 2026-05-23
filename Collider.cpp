@@ -25,6 +25,7 @@ float Collider::Get_distance_between_lines(const Utils::line& l1, const Utils::l
     float sc, sN, sD = D;
     float tc, tN, tD = D;
 
+
     if (D < 1e-4f) {
         sN = 0.0f; sD = 1.0f;
         tN = e; tD = c;

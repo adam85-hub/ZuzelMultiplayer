@@ -116,7 +116,7 @@ void CollisionManager::Update()
         } 
     }
 
-	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrÃƒÂ³w moÃ‚Â¿e poprawiÃƒÂ¦ stabilnoÃ…â€œÃƒÂ¦ kolizji
+	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrÃ³w moÂ¿e poprawiÃ¦ stabilnoÅ“Ã¦ kolizji
         for (size_t i = 0; i < _colliders.size(); ++i)
         {   
             if (_colliders[i]->Get_type() != ColliderType::Player) continue;
