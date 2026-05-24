@@ -11,12 +11,21 @@ void PlayerAI::Add_walls(Utils::line* barriers_ptr, int count)
 	}
 }
 
-float PlayerAI::calculate_distance(const Utils::line* wall, float angle)
+void PlayerAI::Add_checkpoints(Utils::line* checkpoints_ptr, int count)
+{
+    for (int i = 0; i < count; ++i)
+    {
+        //_checkpoints.push_back(&checkpoints_ptr[i]);
+    }
+}
+
+
+float PlayerAI::calculate_distance(const Utils::line* line, float angle)
 {
     Utils::vec2 dir = { cosf(-angle), sinf(-angle) };
 
-    Utils::vec2 start = wall->a;
-    Utils::vec2 end = wall->b;
+    Utils::vec2 start = line->a;
+    Utils::vec2 end = line->b;
     Utils::vec2 wallVec = { end.x - start.x, end.y - start.y };
 
     float det = dir.x * wallVec.y - dir.y * wallVec.x;
@@ -60,6 +69,7 @@ void PlayerAI::update_sensors() {
     }
 }
 
+
 void PlayerAI::Update(bool is_turning) {
 
     Player::Update(is_turning);
@@ -67,6 +77,7 @@ void PlayerAI::Update(bool is_turning) {
     this->update_sensors();
    
 };
+
 
 // --- Render ---
 void PlayerAI::draw_sensors() const {

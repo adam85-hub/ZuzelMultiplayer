@@ -10,7 +10,7 @@ private:
 
     // --- Move ---
     void handle_collision(Collider* a, Collider* b);
-    static Utils::line calculate_closest_points(const Utils::line& l1, const Utils::line& l2);
+    //static Utils::line calculate_closest_points(const Utils::line& l1, const Utils::line& l2);
 
     static Utils::vec2 calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec);
 

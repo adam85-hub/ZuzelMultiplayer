@@ -17,7 +17,7 @@ const ALLEGRO_COLOR c_PLAYER_COLOR[4] = { al_map_rgb(255, 43, 0), al_map_rgb(56,
 
 
 constexpr float c_THICKNESS_HITBOX_PLAYER = 11.5f;
-constexpr float c_THICKNESS_HITBOX_WALL = 1.15f;
+constexpr float c_THICKNESS_HITBOX_WALL = 1.5f;
 constexpr float c_THICKNESS_HITBOX_CHECKPOINT = 1.0f;
 
 
