@@ -1,7 +1,10 @@
 #include "PlayerAI.h"
+#include <iostream>
 
 std::vector<Utils::line*> PlayerAI::_walls;
-const std::array<float, 7> PlayerAI::_offsets = { -0.5f, -0.3f, -0.1f, 0.0f, 0.1f, 0.3f, 0.5f };
+std::vector<Utils::line*> PlayerAI::_checkpoints;
+
+const std::array<float, 8> PlayerAI::_offsets = { -1.5f, -0.5f, -0.25f, 0.0f, 0.25f, 0.50f, 1.5f ,2.4f};
 
 void PlayerAI::Add_walls(Utils::line* barriers_ptr, int count)
 {
@@ -15,7 +18,7 @@ void PlayerAI::Add_checkpoints(Utils::line* checkpoints_ptr, int count)
 {
     for (int i = 0; i < count; ++i)
     {
-        //_checkpoints.push_back(&checkpoints_ptr[i]);
+        _checkpoints.push_back(&checkpoints_ptr[i]);
     }
 }
 
@@ -65,7 +68,7 @@ void PlayerAI::update_sensors() {
             }
         }
 
-        _sensor_distances[i] = hit ? minDistance : -1.0f;
+        _distances[i] = hit ? minDistance : -1.0f;
     }
 }
 
@@ -75,9 +78,16 @@ void PlayerAI::Update(bool is_turning) {
     Player::Update(is_turning);
 
     this->update_sensors();
-   
+    this->update_player_line();
+    this->update_distance_to_next_checkpoint();
+	this->update_degree_to_next_checkpoint();
 };
 
+void PlayerAI::Render() const {
+    Player::Render();
+    this->draw_sensors();
+    this->show_stats();
+}
 
 // --- Render ---
 void PlayerAI::draw_sensors() const {
@@ -88,7 +98,7 @@ void PlayerAI::draw_sensors() const {
     for (size_t i = 0; i < _offsets.size(); ++i) {
         float angle = playerRot + _offsets[i];
 
-        float dist = _sensor_distances[i];
+        float dist = _distances[i];
 
         float lineLength = (dist > 0) ? dist : 150.0f;
 
@@ -99,11 +109,55 @@ void PlayerAI::draw_sensors() const {
     }
 }
 
-void PlayerAI::Render() const {
-    Player::Render();
-    this->draw_sensors();
+void PlayerAI::update_distance_to_next_checkpoint()
+{
+	Utils::line nextCheckpoint = *_checkpoints[this->Get_current_check_point_index()];
+    Utils::line points = _player_line.get_closest_points(nextCheckpoint);
+
+    Utils::vec2 colVec = points.a - points.b;
+
+    this->_checkpoint_distance=colVec.Length();
 }
 
+void PlayerAI::update_degree_to_next_checkpoint()
+{
+    Utils::line nextCheckpoint = *_checkpoints[this->Get_current_check_point_index()];
+	Utils::vec2 v1 = _player_line.b - _player_line.a; // wektor kierunku gracza
+    Utils::vec2 v2 = nextCheckpoint.b - nextCheckpoint.a; // wektor kierunku checkpointu
+
+	float dot = v1.dot(v2);
+	float det = v1.x * v2.y - v1.y * v2.x;
+
+	_checkpoint_angle = atan2f(det, dot);
+
+    //float angle_degrees = _degree_to_next_checkpoint * (180.0f / M_PI);
+	//_degree_to_next_checkpoint = angle_degrees;
+}
+
+
+
+void PlayerAI::show_stats() const
+{
+    std::cout << "isHitting: " << this->touching_wall << " Obecny CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | Kat: " << _checkpoint_angle << std::endl;
+
+}
+
+void PlayerAI::update_player_line()
+{
+        Utils::vec2 center = this->position;
+        float angle = this->Get_rotation();
+
+        float halfLength = this->bike_height / 2.0f;
+
+        float dirX = cos(-angle);
+        float dirY = sin(-angle);
+
+        _player_line.a.x = center.x - (dirX * halfLength) * 1.7f;
+        _player_line.a.y = center.y - (dirY * halfLength) * 1.7f;
+
+        _player_line.b.x = center.x + (dirX * halfLength) * 1.7f;
+        _player_line.b.y = center.y + (dirY * halfLength) * 1.7f;
+}
 
 
 

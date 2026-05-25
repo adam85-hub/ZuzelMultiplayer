@@ -21,7 +21,7 @@ namespace Utils {
 
 		float Distance(float x, float y) const {
 			return sqrt(powf(this->x - x, 2) + powf(this->y - y, 2));
-    }
+		}
 
 		vec2 operator+(const vec2& other) const {
 			return vec2(x + other.x, y+other.y);
@@ -56,5 +56,11 @@ namespace Utils {
 			direction.Normalize();
 			return direction * dot(direction);
 		}
+
+		// Zwraca wektor prostopad³y do tego wektora 
+		vec2 GetPerpendicular() const {
+			return vec2(-y, x);
+		}
+
 	};
 }

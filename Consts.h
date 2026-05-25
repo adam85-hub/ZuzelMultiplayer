@@ -15,7 +15,6 @@ const Utils::vec2 c_MIDDLE = Utils::vec2(c_RENDER_WIDTH / 2.f, c_RENDER_HEIGHT /
 const std::string c_PLAYER_NAME[4] = {"Czerwony", "Zielony", "Niebieski", "¯ó³ty"};
 const ALLEGRO_COLOR c_PLAYER_COLOR[4] = { al_map_rgb(255, 43, 0), al_map_rgb(56, 176, 25), al_map_rgb(0, 115, 219), al_map_rgb(194, 205, 0) };
 
-
 constexpr float c_THICKNESS_HITBOX_PLAYER = 11.5f;
 constexpr float c_THICKNESS_HITBOX_WALL = 1.5f;
 constexpr float c_THICKNESS_HITBOX_CHECKPOINT = 1.0f;

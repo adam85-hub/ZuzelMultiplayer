@@ -8,7 +8,7 @@ namespace Utils {
         Utils::vec2 a, b;
 
         //Zwraca strukturê line, gdzie 'a' to punkt na bie¿¹cej linii, a 'b' na linii 'other'.
-        inline line calculate_closest_points(const line& other) const {
+        line get_closest_points(const line& other) const {
             Utils::vec2 u = b - a;
             Utils::vec2 v = other.b - other.a;
             Utils::vec2 w = a - other.a;
@@ -67,6 +67,12 @@ namespace Utils {
                 a + (u * sc),         // Punkt na l1
                 other.a + (v * tc)    // Punkt na l2
             };
+        }
+
+        float get_distance(const line& other) const {
+            line closest = get_closest_points(other);
+            Utils::vec2 diff = closest.b - closest.a;
+            return std::sqrt(diff.dot(diff));
         }
     };
 }

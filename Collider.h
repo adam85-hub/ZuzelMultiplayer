@@ -29,9 +29,6 @@ public:
     // debug
     bool is_colliding = false;
 
-    //algorytm Dan Sunday
-    static float Get_distance_between_lines(const Utils::line& l1, const Utils::line& l2);
-
     // --- GETTERY ---
     Player* Get_owner_player() const { return _owner; }
 	const Utils::line* Get_line() const { return _line; }

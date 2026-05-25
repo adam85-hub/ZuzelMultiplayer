@@ -19,7 +19,7 @@ public:
 	void Render();
 
 private:
-	bool _only_ai_mode = false;
+	bool _only_ai_mode = true;
 	bool _dev_mode = true;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku

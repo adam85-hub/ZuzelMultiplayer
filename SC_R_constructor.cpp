@@ -55,7 +55,10 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 	_collision_manager.Add_walls(_barriers.get(), _barriers_count);
 
 	// --- AI LASERS---
-	if (_only_ai_mode)PlayerAI::Add_walls(_barriers.get(), _barriers_count);
+	if (_only_ai_mode){
+		PlayerAI::Add_walls(_barriers.get(), _barriers_count);
+		PlayerAI::Add_checkpoints(_checkpoints.get(), _checkpoints_count);
+	}
 
 	//--- dodanie checkpointów ---
 	_collision_manager.Add_checkpoints(_checkpoints.get(), _checkpoints_count);

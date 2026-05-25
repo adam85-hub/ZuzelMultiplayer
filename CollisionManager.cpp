@@ -60,14 +60,13 @@ void CollisionManager::Draw_colliders()
     }
 }
 
-
 // --- Move ---
 void CollisionManager::handle_collision(Collider* a, Collider* b)
 {
     const Utils::line& lineA = *a->Get_line();
     const Utils::line& lineB = *b->Get_line();
 
-    Utils::line points = lineA.calculate_closest_points(lineB);
+    Utils::line points = lineA.get_closest_points(lineB);
 
     Utils::vec2 colVec = points.a - points.b;
 
@@ -103,8 +102,6 @@ void CollisionManager::handle_collision(Collider* a, Collider* b)
 
 }
 
-
-
 // --- Main Collision Check Loop ---
 void CollisionManager::Update()
 {
@@ -112,7 +109,11 @@ void CollisionManager::Update()
         if (c != nullptr){
             c->is_colliding = false;//debug info
 
-            if(c->Get_type() == ColliderType::Player) c->Update_hitbox();
+            if (c->Get_type() == ColliderType::Player){
+                c->Update_hitbox();
+				//c->Get_owner_player->touching_wall = false;
+            }
+            
         } 
     }
 
@@ -139,66 +140,22 @@ void CollisionManager::Update()
 
 }
 
-
-
-//Utils::line CollisionManager::calculate_closest_points(const Utils::line& l1, const Utils::line& l2)
-//{
-//    Utils::vec2 u = l1.b - l1.a;
-//    Utils::vec2 v = l2.b - l2.a;
-//    Utils::vec2 w = l1.a - l2.a;
-//
-//    float a_dot = u.dot(u);
-//    float b_dot = u.dot(v);
-//    float c_dot = v.dot(v);
-//    float d_dot = u.dot(w);
-//    float e_dot = v.dot(w);
-//
-//    float D = a_dot * c_dot - b_dot * b_dot;
-//    float sc, sN, sD = D;
-//    float tc, tN, tD = D;
-//
-//    if (D < 0.0001f) {
-//        sN = 0.0f; sD = 1.0f; tN = e_dot; tD = c_dot;
-//    }
-//    else {
-//        sN = (b_dot * e_dot - c_dot * d_dot);
-//        tN = (a_dot * e_dot - b_dot * d_dot);
-//        if (sN < 0.0f) { sN = 0.0f; tN = e_dot; tD = c_dot; }
-//        else if (sN > sD) { sN = sD; tN = e_dot + b_dot; tD = c_dot; }
-//    }
-//
-//    if (tN < 0.0f) {
-//        tN = 0.0f;
-//        if (-d_dot < 0.0f) sN = 0.0f;
-//        else if (-d_dot > a_dot) sN = sD;
-//        else { sN = -d_dot; sD = a_dot; }
-//    }
-//    else if (tN > tD) {
-//        tN = tD;
-//        if ((-d_dot + b_dot) < 0.0f) sN = 0;
-//        else if ((-d_dot + b_dot) > a_dot) sN = sD;
-//        else { sN = (-d_dot + b_dot); sD = a_dot; }
-//    }
-//
-//    sc = (std::abs(sN) < 0.0001f ? 0.0f : sN / sD);
-//    tc = (std::abs(tN) < 0.0001f ? 0.0f : tN / tD);
-//
-//    return {
-//        l1.a + (u * sc),
-//        l2.a + (v * tc)
-//    };
-//}
-
-
 Utils::vec2 CollisionManager::calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec)
 {
-    float distance = collisionVector.Length();
-    if (distance < 0.0001f) {
-        
-        float nx = -wallVec.y;
-        float ny = wallVec.x;
-        float nLen = std::sqrt(nx * nx + ny * ny);
-        return (nLen > 0.0001f) ? Utils::vec2{ nx / nLen, ny / nLen } : Utils::vec2{ 0, 0 };
+    //float distance = collisionVector.Length();
+    //if (distance < 0.0001f) {
+    //    
+    //    float nx = -wallVec.y;
+    //    float ny = wallVec.x;
+    //    float nLen = std::sqrt(nx * nx + ny * ny);
+    //    return (nLen > 0.0001f) ? Utils::vec2{ nx / nLen, ny / nLen } : Utils::vec2{ 0, 0 };
+    //}
+    //return { collisionVector.x / distance, collisionVector.y / distance };
+
+    if (collisionVector.Length() < 0.0001f)
+    {
+        return wallVec.GetPerpendicular().GetNormalized();
     }
-    return { collisionVector.x / distance, collisionVector.y / distance };
+
+    return collisionVector.GetNormalized();
 }
