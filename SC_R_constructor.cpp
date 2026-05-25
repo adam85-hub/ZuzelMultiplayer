@@ -5,10 +5,11 @@
 #include "LOG.h"
 #include "check_functions.h"
 
-RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) : 
+RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_laps) : 
 	Scene(gameCommands), 
 	_pause_scene(gameCommands, &_unpause_cmd),
 	_number_of_players(number_of_players),
+	_number_of_laps(number_of_laps),
 	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN},
 	_start_countdown(3)
 {
@@ -40,7 +41,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		_collision_manager.Add_player(_players[i]);
 	}
 
-	_score_table = std::make_unique<ScoreTable>(_players, number_of_players, &_race_timer);
+	_score_table = std::make_unique<ScoreTable>(_players, number_of_players, number_of_laps, &_race_timer);
 	
 	//--- dodanie barier ---
 	_collision_manager.Add_walls(_barriers.get(), _barriers_count);

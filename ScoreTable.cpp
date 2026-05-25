@@ -7,10 +7,11 @@
 #include "draw_polish_text.h"
 #include "vec2.h"
 
-ScoreTable::ScoreTable(Player** players, short players_count, Timer* race_timer) :
+ScoreTable::ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer) :
 	_players(players),
 	_players_count(players_count),
-	_race_timer(race_timer)
+	_race_timer(race_timer),
+	_number_of_laps(number_of_laps)
 {
 	_font_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 20, 0);
 	_resource_manager.Track_resource(_font_table);
@@ -25,7 +26,7 @@ ScoreTable::ScoreTable(Player** players, short players_count, Timer* race_timer)
 	for (std::string column : _columns)
 		_column_width.push_back(Utils::get_polish_text_width(_font_table, column));
 	_column_width[1] = Utils::get_polish_text_width(_font_table, "Czerwony"); // najszerszy napis
-	_column_width[3] = Utils::get_polish_text_width(_font_table, "55:55:55");
+	_column_width[3] = Utils::get_polish_text_width(_font_table, "22:22:22");
 
 	for (float width : _column_width) {
 		_size.x += width + _margin_col;
@@ -62,13 +63,15 @@ void ScoreTable::Render() const {
 	static const ALLEGRO_COLOR white = al_map_rgb(255, 255, 255);
 	static const ALLEGRO_COLOR black = al_map_rgb(0, 0, 0);
 	static const ALLEGRO_COLOR bg_color = al_map_rgba(49, 50, 50, 200);
+	static const ALLEGRO_COLOR grey = al_map_rgb(180, 180, 180);
 
 	// t³o:
-	static const float bg_margin = 40;
-	al_draw_filled_rectangle(_left_top.x - bg_margin, _left_top.y - bg_margin, 
-		_left_top.x + _size.x + bg_margin, _left_top.y + _size.y + bg_margin, bg_color);
-	al_draw_rectangle(_left_top.x - bg_margin, _left_top.y - bg_margin,
-		_left_top.x + _size.x + bg_margin, _left_top.y + _size.y + bg_margin, black, 15);
+	static const float bg_margin_x = 40;
+	static const float bg_margin_y = 20;
+	al_draw_filled_rectangle(_left_top.x - bg_margin_x, _left_top.y - bg_margin_y, 
+		_left_top.x + _size.x + bg_margin_x, _left_top.y + _size.y + bg_margin_y, bg_color);
+	al_draw_rectangle(_left_top.x - bg_margin_x, _left_top.y - bg_margin_y,
+		_left_top.x + _size.x + bg_margin_x, _left_top.y + _size.y + bg_margin_y, black, 15);
 
 	// wiersz nag³ówkowy:
 	float advance = 0;
@@ -83,12 +86,21 @@ void ScoreTable::Render() const {
 		short p_index = _player_order[i];
 
 		Utils::draw_polish_text(_font_table, white, _left_top.x, y, 0, std::to_string(i + 1));
+
 		advance = _column_width[0] + _margin_col;
 		Utils::draw_polish_text(_font_table, c_PLAYER_COLOR[p_index], _left_top.x + advance, y, 0, c_PLAYER_NAME[p_index]);
+
 		advance += _column_width[1] + _margin_col;
-		Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, std::to_string(_players[p_index]->Get_laps_to_display()));
+		if (_players[p_index]->Has_finished())
+			Utils::draw_polish_text(_font_table, grey, _left_top.x + advance, y, 0, "Koniec");
+		else
+			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, 
+				std::to_string(_players[p_index]->Get_laps_to_display()) + " / " + std::to_string(_number_of_laps));
+
 		advance += _column_width[2] + _margin_col;
-		if (i == 0) {
+		if(_players[p_index]->Has_finished())
+			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, Timer::Time_to_str(_players[p_index]->race_time));
+		else if (i == 0) {
 			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, _race_timer->Get_time_str());
 		}
 	}

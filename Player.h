@@ -14,6 +14,10 @@ public:
 	virtual void Update(bool is_turning);
 	virtual void Render() const;
 
+	void Move(Utils::vec2 v);
+	void Update_checkpoint_and_lap(int checkpointIndex);
+	void Finish(double time);
+
 private:
 	float acceleration(float v);
 	float wall_deceleration(float v);
@@ -32,11 +36,14 @@ private:
 
 	int _current_checkpoint_index = 0;
 	int _laps_completed = 0;
+	bool _finished_race = false;
+	double _race_time = -1;
 
 public:
 	static int checkpoint_count;
 	const float& bike_height = _bike_bitmap_size.y;
 	const float& bike_width = _bike_bitmap_size.x;
+	const double& race_time = _race_time;
 	bool touching_wall = false;
 
 	Utils::vec2 position;
@@ -46,10 +53,5 @@ public:
 	int Get_current_checkpoint_index() const { return _current_checkpoint_index; }
 	int Get_laps() const { return _laps_completed; }
 	int Get_laps_to_display() const;
-
-	//--- Setter ---
-	void Move(Utils::vec2 v);
-
-	//--- Checkpoint and Lap Management ---
-	void Update_checkpoint_and_lap(int checkpointIndex);
+	bool Has_finished() const { return _finished_race; }
 };

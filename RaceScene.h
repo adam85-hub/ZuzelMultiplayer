@@ -14,7 +14,7 @@
 
 class RaceScene : public Scene {
 public:
-	RaceScene(GameCommands*, short number_of_players);
+	RaceScene(GameCommands*, short number_of_players, short number_of_laps);
 	~RaceScene();
 	void Update(KeyStatesTable);
 	void Render();
@@ -35,7 +35,8 @@ private:
 
 	Utils::ResourceManager _resource_manager;
 
-	short _number_of_players;
+	const short _number_of_laps;
+	const short _number_of_players;
 	Player** _players;
 	
 	std::unique_ptr<ScoreTable> _score_table;

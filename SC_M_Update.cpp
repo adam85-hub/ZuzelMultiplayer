@@ -14,7 +14,7 @@ void MenuScene::Update(KeyStatesTable key_states) {
 	if (key_states[ALLEGRO_KEY_ENTER] & c_KEY_PRESSED) {
 		switch (_menu_model->Get_selected_option_index()) {
 			case 0:
-				_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _menu_model->number_of_players));
+				_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _menu_model->number_of_players, _menu_model->number_of_laps));
 				break;
 			case 2:
 				_game_commands->exit.Execute(true);

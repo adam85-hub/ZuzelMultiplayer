@@ -10,7 +10,7 @@
 class ScoreTable
 {
 public:
-	ScoreTable(Player** players, short players_count, Timer* race_timer);
+	ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer);
 	~ScoreTable();
 	void Update();
 	void Render() const;
@@ -20,7 +20,8 @@ private:
 	const Player *const *const _players; // sta³a tablica
 	short* _player_order;
 	int _players_count;
-	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Liczba okr¹¿eñ", "Czas"};
+	const short _number_of_laps;
+	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Okr¹¿enie", "Czas"};
 	Timer* _race_timer;
 	
 	Utils::ResourceManager _resource_manager;

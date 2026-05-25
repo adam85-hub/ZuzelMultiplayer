@@ -28,7 +28,5 @@ public:
 
 
 	// --- Main Collision Check Loop ---
-    void Update();
-
-    
+    void Update();    
 };
