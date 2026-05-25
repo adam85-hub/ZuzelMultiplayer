@@ -19,7 +19,7 @@ public:
 	void Render();
 
 private:
-	bool _only_ai_mode = true;
+	bool _only_ai_mode = false;
 	bool _dev_mode = true;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
@@ -42,6 +42,7 @@ private:
 
 	// --- COLLISION & CHECKPOINT ---
 	CollisionManager _collision_manager;
+
 	std::unique_ptr<Utils::line[]> _barriers;
 	int _barriers_count = 0;
 

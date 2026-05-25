@@ -1,27 +1,26 @@
 #include "PlayerAI.h"
 #include <iostream>
 
-std::vector<Utils::line*> PlayerAI::_walls;
-std::vector<Utils::line*> PlayerAI::_checkpoints;
+
+Utils::line* PlayerAI::_barriers = nullptr;
+int PlayerAI::_barriers_count = 0;
+
+Utils::line* PlayerAI::_checkpoints = nullptr;
+int PlayerAI::_checkpoints_count = 0;
 
 const std::array<float, 8> PlayerAI::_offsets = { -1.5f, -0.5f, -0.25f, 0.0f, 0.25f, 0.50f, 1.5f ,2.4f};
 
-void PlayerAI::Add_walls(Utils::line* barriers_ptr, int count)
+void PlayerAI::Set_walls(Utils::line* barriers_ptr, int count)
 {
-	for (int i = 0; i < count; ++i)
-	{
-		_walls.push_back(&barriers_ptr[i]);
-	}
+    _barriers = barriers_ptr;
+    _barriers_count = count;
 }
 
-void PlayerAI::Add_checkpoints(Utils::line* checkpoints_ptr, int count)
+void PlayerAI::Set_checkpoints(Utils::line* checkpoints_ptr, int count)
 {
-    for (int i = 0; i < count; ++i)
-    {
-        _checkpoints.push_back(&checkpoints_ptr[i]);
-    }
+    _checkpoints = checkpoints_ptr;
+    _checkpoints_count = count;
 }
-
 
 float PlayerAI::calculate_distance(const Utils::line* line, float angle)
 {
@@ -57,9 +56,9 @@ void PlayerAI::update_sensors() {
         float minDistance = std::numeric_limits<float>::max();
         bool hit = false;
 
-        for (const auto& wall : _walls) {
+        for (int i = 0; i < _barriers_count; ++i) {
 
-            float dist = calculate_distance(wall, rayAngle);
+            float dist = calculate_distance(&_barriers[i], rayAngle);
 
             // Szukamy najbli¿szej œciany
             if (dist > 0 && dist < minDistance) {
@@ -78,7 +77,6 @@ void PlayerAI::Update(bool is_turning) {
     Player::Update(is_turning);
 
     this->update_sensors();
-    this->update_player_line();
     this->update_distance_to_next_checkpoint();
 	this->update_degree_to_next_checkpoint();
 };
@@ -111,8 +109,8 @@ void PlayerAI::draw_sensors() const {
 
 void PlayerAI::update_distance_to_next_checkpoint()
 {
-	Utils::line nextCheckpoint = *_checkpoints[this->Get_current_check_point_index()];
-    Utils::line points = _player_line.get_closest_points(nextCheckpoint);
+	Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+    Utils::line points = this->line_postion.get_closest_points(nextCheckpoint);
 
     Utils::vec2 colVec = points.a - points.b;
 
@@ -121,8 +119,8 @@ void PlayerAI::update_distance_to_next_checkpoint()
 
 void PlayerAI::update_degree_to_next_checkpoint()
 {
-    Utils::line nextCheckpoint = *_checkpoints[this->Get_current_check_point_index()];
-	Utils::vec2 v1 = _player_line.b - _player_line.a; // wektor kierunku gracza
+    Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+	Utils::vec2 v1 = line_postion.b - line_postion.a; // wektor kierunku gracza
     Utils::vec2 v2 = nextCheckpoint.b - nextCheckpoint.a; // wektor kierunku checkpointu
 
 	float dot = v1.dot(v2);
@@ -134,30 +132,12 @@ void PlayerAI::update_degree_to_next_checkpoint()
 	//_degree_to_next_checkpoint = angle_degrees;
 }
 
-
-
 void PlayerAI::show_stats() const
 {
-    std::cout << "isHitting: " << this->touching_wall << " Obecny CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | Kat: " << _checkpoint_angle << std::endl;
+    std::cout << "Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
 
 }
 
-void PlayerAI::update_player_line()
-{
-        Utils::vec2 center = this->position;
-        float angle = this->Get_rotation();
-
-        float halfLength = this->bike_height / 2.0f;
-
-        float dirX = cos(-angle);
-        float dirY = sin(-angle);
-
-        _player_line.a.x = center.x - (dirX * halfLength) * 1.7f;
-        _player_line.a.y = center.y - (dirY * halfLength) * 1.7f;
-
-        _player_line.b.x = center.x + (dirX * halfLength) * 1.7f;
-        _player_line.b.y = center.y + (dirY * halfLength) * 1.7f;
-}
 
 
 

@@ -46,22 +46,26 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players) :
 		al_destroy_bitmap(bike_bitmap);
 
 		//--- set colliders for players --- 
-		_collision_manager.Add_player(_players[i]);
+		if(_only_ai_mode)
+			_collision_manager.Add_player(_players[i],true);
+		else 
+			_collision_manager.Add_player(_players[i],false);
+
 	}
 
 	_score_table = std::make_unique<ScoreTable>(_players, number_of_players, &_race_timer);
 	
 	//--- dodanie barier ---
-	_collision_manager.Add_walls(_barriers.get(), _barriers_count);
+	_collision_manager.Set_barriers(_barriers.get(), _barriers_count);
 
 	// --- AI LASERS---
 	if (_only_ai_mode){
-		PlayerAI::Add_walls(_barriers.get(), _barriers_count);
-		PlayerAI::Add_checkpoints(_checkpoints.get(), _checkpoints_count);
+		PlayerAI::Set_walls(_barriers.get(), _barriers_count);
+		PlayerAI::Set_checkpoints(_checkpoints.get(), _checkpoints_count);
 	}
 
 	//--- dodanie checkpointów ---
-	_collision_manager.Add_checkpoints(_checkpoints.get(), _checkpoints_count);
+	_collision_manager.Set_checkpoints(_checkpoints.get(), _checkpoints_count);
 	Player::checkpoint_count = _checkpoints_count;
 
 	// załadowanie bitmapy trasy:

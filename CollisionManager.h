@@ -1,17 +1,25 @@
 #include "Collider.h"
 #include "Checkpoint.h"
+#include "PlayerAI.h"
 
 #include <vector>
 
 class CollisionManager {
 private:
-    std::vector<Collider*> _colliders;
+    std::vector<Collider*> _player_colliders;
+    
+    Utils::line* _barriers; //bariers table
+	int _barriers_count;
+
+	Utils::line* _checkpoints; //checkpoints table
+    int _checkpoints_count;
+
 
 
     // --- Move ---
-    void handle_collision(Collider* a, Collider* b);
-    //static Utils::line calculate_closest_points(const Utils::line& l1, const Utils::line& l2);
-
+    void handle_collision_players(Collider* a, Collider* b);
+    void handle_collision_barriers(Collider* a, Utils::line* barrier);
+    
     static Utils::vec2 calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec);
 
 public:
@@ -19,9 +27,9 @@ public:
     ~CollisionManager();
 
 	// --- Add Colidier ---
-	void Add_player(Player* player);
-    void Add_walls(Utils::line* barriers_ptr, int count);
-	void Add_checkpoints(Utils::line* checkpoint_ptr, int count);
+	void Add_player(Player* player, bool is_AI);
+    void Set_barriers(Utils::line* barriers_ptr, int count);
+	void Set_checkpoints(Utils::line* checkpoints_ptr, int count);
 
     // --- Debug ---
     void Draw_colliders();
