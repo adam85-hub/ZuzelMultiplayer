@@ -6,6 +6,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <filesystem>
 #include <fstream>
+#include "Consts.h"
+#include "ResourceManager.h"
 
 class CreateColliderScene {
 protected:

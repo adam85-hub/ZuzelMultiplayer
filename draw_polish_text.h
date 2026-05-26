@@ -32,7 +32,7 @@ namespace Utils {
 	}
 
 	static enum {
-		ALIGN_CENTER_XY = 3
+		ALIGN_CENTER_XY = 8
 	};
 
 	static int get_polish_text_width(ALLEGRO_FONT* font, std::string text) {

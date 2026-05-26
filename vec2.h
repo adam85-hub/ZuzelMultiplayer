@@ -35,6 +35,10 @@ namespace Utils {
 			return vec2(x * scalar, y * scalar);
 		}
 
+		vec2 operator/(float scalar) const {
+			return vec2(x / scalar, y / scalar);
+		}
+
 		float dot(const vec2& other) const {
 			return (x * other.x) + (y * other.y);
 		}

@@ -28,10 +28,14 @@ Player::~Player() {
 }
 
 void Player::Update(bool is_turning) {
-	if (not touching_wall)
-		_linear_velocity += acceleration(_linear_velocity);
-	else
+	if (_finished_race) {
+		is_turning = false;
+		_linear_velocity = std::max(_linear_velocity - (.0003f + 0.0007f * touching_wall) * c_FPS, 0.f);
+	}
+	else if(touching_wall)
 		_linear_velocity += wall_deceleration(_linear_velocity);
+	else
+		_linear_velocity += acceleration(_linear_velocity);
 
 	if (is_turning) {
 		_rotation = _rotation + _rotation_velocity;
@@ -87,4 +91,15 @@ void Player::Update_checkpoint_and_lap(int checkpointIndex)
 		if (_current_checkpoint_index == 0)
 			_laps_completed++;
 	}
+}
+
+int Player::Get_laps_to_display() const {
+	if (_current_checkpoint_index == 0)
+		return _laps_completed;
+	return _laps_completed + 1;
+}
+
+void Player::Finish(double time) {
+	_finished_race = true;
+	_race_time = time;
 }
