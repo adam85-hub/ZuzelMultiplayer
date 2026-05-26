@@ -109,7 +109,7 @@ void PlayerAI::draw_sensors() const {
 
 void PlayerAI::update_distance_to_next_checkpoint()
 {
-	Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+	Utils::line nextCheckpoint = _checkpoints[this->Get_current_checkpoint_index()];
     Utils::line points = this->line_postion.get_closest_points(nextCheckpoint);
 
     Utils::vec2 colVec = points.a - points.b;
@@ -119,7 +119,7 @@ void PlayerAI::update_distance_to_next_checkpoint()
 
 void PlayerAI::update_degree_to_next_checkpoint()
 {
-    Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+    Utils::line nextCheckpoint = _checkpoints[this->Get_current_checkpoint_index()];
 	Utils::vec2 v1 = line_postion.b - line_postion.a; // wektor kierunku gracza
     Utils::vec2 v2 = nextCheckpoint.b - nextCheckpoint.a; // wektor kierunku checkpointu
 
@@ -134,7 +134,7 @@ void PlayerAI::update_degree_to_next_checkpoint()
 
 void PlayerAI::show_stats() const
 {
-    std::cout << "Player distance " << this-> _player_distance << " Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
+    std::cout << "Player distance " << this-> _player_distance << " Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_checkpoint_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
 
 }
 

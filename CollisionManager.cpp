@@ -113,7 +113,7 @@ void CollisionManager::manage_collision_checkpoints(Collider* c)
     Utils::line player_line = c->Get_owner_player()->line_postion;
     float radius = c->Get_radius();
 
-    int current_checkpoint_index = c->Get_owner_player()->Get_current_check_point_index();
+    int current_checkpoint_index = c->Get_owner_player()->Get_current_checkpoint_index();
 
     if (player_line.get_distance(_checkpoints[current_checkpoint_index]) <= (radius + 0.5f)) {
         c->Get_owner_player()->Update_checkpoint_and_lap(current_checkpoint_index);

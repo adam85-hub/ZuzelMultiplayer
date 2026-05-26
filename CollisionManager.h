@@ -1,5 +1,4 @@
 #include "Collider.h"
-#include "Checkpoint.h"
 #include "PlayerAI.h"
 
 #include <vector>
