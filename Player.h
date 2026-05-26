@@ -47,6 +47,7 @@ public:
 
 	//--- Getter ---
 	float Get_rotation() const { return _rotation; }
+	float Get_velocity() const { return _linear_velocity; }
 	int Get_current_check_point_index() const { return _current_checkpoint_index; }
 	int Get_laps() const { return _laps_completed; }
 	ALLEGRO_COLOR Get_color() const { return _color; };
