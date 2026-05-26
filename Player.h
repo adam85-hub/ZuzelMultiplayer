@@ -2,6 +2,7 @@
 #include <allegro5/allegro5.h>
 
 #include "vec2.h"
+#include "line.h"
 #include <array>
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -47,9 +48,11 @@ public:
 	bool touching_wall = false;
 
 	Utils::vec2 position;
+	Utils::line line_postion; //liczenie odlego�ci od motora
 
 	//--- Getter ---
 	float Get_rotation() const { return _rotation; }
+	float Get_velocity() const { return _linear_velocity; }
 	int Get_current_checkpoint_index() const { return _current_checkpoint_index; }
 	int Get_laps() const { return _laps_completed; }
 	int Get_laps_to_display() const;

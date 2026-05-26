@@ -1,22 +1,33 @@
 #include "PlayerAI.h"
+#include <iostream>
 
-std::vector<Utils::line*> PlayerAI::_walls;
-const std::array<float, 7> PlayerAI::_offsets = { -0.5f, -0.3f, -0.1f, 0.0f, 0.1f, 0.3f, 0.5f };
 
-void PlayerAI::Add_walls(Utils::line* barriers_ptr, int count)
+Utils::line* PlayerAI::_barriers = nullptr;
+int PlayerAI::_barriers_count = 0;
+
+Utils::line* PlayerAI::_checkpoints = nullptr;
+int PlayerAI::_checkpoints_count = 0;
+
+const std::array<float, 8> PlayerAI::_offsets = { -1.5f, -0.5f, -0.25f, 0.0f, 0.25f, 0.50f, 1.5f ,2.4f};
+
+void PlayerAI::Set_walls(Utils::line* barriers_ptr, int count)
 {
-	for (int i = 0; i < count; ++i)
-	{
-		_walls.push_back(&barriers_ptr[i]);
-	}
+    _barriers = barriers_ptr;
+    _barriers_count = count;
 }
 
-float PlayerAI::calculate_distance(const Utils::line* wall, float angle)
+void PlayerAI::Set_checkpoints(Utils::line* checkpoints_ptr, int count)
+{
+    _checkpoints = checkpoints_ptr;
+    _checkpoints_count = count;
+}
+
+float PlayerAI::calculate_distance(const Utils::line* line, float angle)
 {
     Utils::vec2 dir = { cosf(-angle), sinf(-angle) };
 
-    Utils::vec2 start = wall->a;
-    Utils::vec2 end = wall->b;
+    Utils::vec2 start = line->a;
+    Utils::vec2 end = line->b;
     Utils::vec2 wallVec = { end.x - start.x, end.y - start.y };
 
     float det = dir.x * wallVec.y - dir.y * wallVec.x;
@@ -45,9 +56,9 @@ void PlayerAI::update_sensors() {
         float minDistance = std::numeric_limits<float>::max();
         bool hit = false;
 
-        for (const auto& wall : _walls) {
+        for (int i = 0; i < _barriers_count; ++i) {
 
-            float dist = calculate_distance(wall, rayAngle);
+            float dist = calculate_distance(&_barriers[i], rayAngle);
 
             // Szukamy najbli¿szej œciany
             if (dist > 0 && dist < minDistance) {
@@ -56,17 +67,25 @@ void PlayerAI::update_sensors() {
             }
         }
 
-        _sensor_distances[i] = hit ? minDistance : -1.0f;
+        _distances[i] = hit ? minDistance : -1.0f;
     }
 }
+
 
 void PlayerAI::Update(bool is_turning) {
 
     Player::Update(is_turning);
 
     this->update_sensors();
-   
+    this->update_distance_to_next_checkpoint();
+	this->update_degree_to_next_checkpoint();
 };
+
+void PlayerAI::Render() const {
+    Player::Render();
+    this->draw_sensors();
+    this->show_stats();
+}
 
 // --- Render ---
 void PlayerAI::draw_sensors() const {
@@ -77,7 +96,7 @@ void PlayerAI::draw_sensors() const {
     for (size_t i = 0; i < _offsets.size(); ++i) {
         float angle = playerRot + _offsets[i];
 
-        float dist = _sensor_distances[i];
+        float dist = _distances[i];
 
         float lineLength = (dist > 0) ? dist : 150.0f;
 
@@ -88,9 +107,35 @@ void PlayerAI::draw_sensors() const {
     }
 }
 
-void PlayerAI::Render() const {
-    Player::Render();
-    this->draw_sensors();
+void PlayerAI::update_distance_to_next_checkpoint()
+{
+	Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+    Utils::line points = this->line_postion.get_closest_points(nextCheckpoint);
+
+    Utils::vec2 colVec = points.a - points.b;
+
+    this->_checkpoint_distance=colVec.Length();
+}
+
+void PlayerAI::update_degree_to_next_checkpoint()
+{
+    Utils::line nextCheckpoint = _checkpoints[this->Get_current_check_point_index()];
+	Utils::vec2 v1 = line_postion.b - line_postion.a; // wektor kierunku gracza
+    Utils::vec2 v2 = nextCheckpoint.b - nextCheckpoint.a; // wektor kierunku checkpointu
+
+	float dot = v1.dot(v2);
+	float det = v1.x * v2.y - v1.y * v2.x;
+
+	_checkpoint_angle = atan2f(det, dot);
+
+    //float angle_degrees = _degree_to_next_checkpoint * (180.0f / M_PI);
+	//_degree_to_next_checkpoint = angle_degrees;
+}
+
+void PlayerAI::show_stats() const
+{
+    std::cout << "Player distance " << this-> _player_distance << " Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
+
 }
 
 

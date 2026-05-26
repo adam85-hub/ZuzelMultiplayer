@@ -13,18 +13,42 @@ public:
 	void Update(bool is_turning) override;
 	void Render() const override;
 
-	static void Add_walls(Utils::line* barriers_ptr, int count);
+	static void Set_walls(Utils::line* barriers_ptr, int count);
+	static void Set_checkpoints(Utils::line* checkpoints_ptr, int count);
 	
-	//Tutaj Henryk pobiera dystans
-	std::array<float, 7> _sensor_distances;
+	//--- parametry do uczenia ---
+	std::array<float, 8> _distances;
+	//veclocity x,y policzy sie z velocity i angle
+	//sin i cos policzy sie z angle
+	float _checkpoint_distance;
+	float _checkpoint_angle;//zostanie policzone sin i cos
+	float _player_distance;
+	float _player_angle;//zostanie policzone sin i cos
+	//bool touching_wall = false; jest w class Player
+	bool _is_hitting_player = false;
+	bool _is_hitting_checkpoint = false;
 
 private:
-	static std::vector<Utils::line*> _walls;
-	static const std::array<float, 7> _offsets;
+	static Utils::line* _barriers; //bariers table
+	static int _barriers_count;
+
+	static Utils::line* _checkpoints; //checkpoints table
+	static int _checkpoints_count;
+	
+	static const std::array<float, 8> _offsets;
 
 	
-	void update_sensors();
+	//--- wall detector ---
 	void draw_sensors() const;
+
+	void update_sensors();
+	float calculate_distance(const Utils::line* line, float angle);
 	
-	float calculate_distance(const Utils::line* wall, float angle);
+	// --- checkpoint detector ---
+	void update_distance_to_next_checkpoint();
+	void update_degree_to_next_checkpoint();
+
+	//--- debug ---
+	void show_stats() const;
+
 };

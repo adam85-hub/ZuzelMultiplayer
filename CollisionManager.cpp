@@ -3,54 +3,32 @@
 
 CollisionManager::~CollisionManager()
 {
-    for(auto* c : _colliders) {
+    for(auto* c : _player_colliders) {
         delete c;
 	}
 }
 
-void CollisionManager::Add_player(Player* player)
+void CollisionManager::Add_player(Player* player, bool is_AI)
 {
-    Utils::vec2 center = player->position;
-
-    float halfLength = player->bike_height / 2.0f;
-    float angle = player->Get_rotation();
-
-    float dirX = cos(-angle);
-    float dirY = sin(-angle);
-
-	Utils::vec2 a,b;
-    a.x = center.x - (dirX * halfLength) * 1.7f;
-    a.y = center.y - (dirY * halfLength) * 1.7f;
-
-    b.x = center.x + (dirX * halfLength) * 1.7f;
-    b.y = center.y + (dirY * halfLength) * 1.7f;
-
-
-    Utils::line* line = new Utils::line{ a, b };
-	_colliders.emplace_back(new Collider(ColliderType::Player, line, c_THICKNESS_HITBOX_PLAYER, player));
+    _player_colliders.emplace_back(new Collider(player, is_AI));
 }
 
-void CollisionManager::Add_walls(Utils::line* barriers_ptr, int count)
+void CollisionManager::Set_barriers(Utils::line* barriers_ptr, int count)
 {
-    for (int i = 0; i < count; ++i)
-    {
-        _colliders.emplace_back(new Collider(ColliderType::Wall, &barriers_ptr[i] ,c_THICKNESS_HITBOX_WALL));
-	}
+	_barriers = barriers_ptr;
+	_barriers_count = count;
 }
 
-void CollisionManager::Add_checkpoints(Utils::line* checkpoint_ptr, int count)
+void CollisionManager::Set_checkpoints(Utils::line* checkpoints_ptr, int count)
 {
-    for (int i = 0; i < count; ++i)
-    {
-        _colliders.emplace_back(new Checkpoint(&checkpoint_ptr[i], i, c_THICKNESS_HITBOX_CHECKPOINT));
-    }
+	_checkpoints = checkpoints_ptr;
+	_checkpoints_count = count;
 }
-
 
 // --- Debug ---
 void CollisionManager::Draw_colliders()
 {
-    for (auto* c : _colliders)
+    for (auto* c : _player_colliders)
     {
         if (c != nullptr)
         {
@@ -62,141 +40,177 @@ void CollisionManager::Draw_colliders()
 
 
 // --- Move ---
-void CollisionManager::handle_collision(Collider* a, Collider* b)
-{
-    const Utils::line& lineA = *a->Get_line();
-    const Utils::line& lineB = *b->Get_line();
+void CollisionManager::handle_collision_players(Collider* a, Collider* b)
+{   
 
-    Utils::line points = calculate_closest_points(lineA, lineB);
+
+    const Utils::line& lineA = a->Get_owner_player()->line_postion;
+    const Utils::line& lineB = b->Get_owner_player()->line_postion;
+
+    Utils::line points = lineA.get_closest_points(lineB);
 
     Utils::vec2 colVec = points.a - points.b;
 
-    //is colision
     float combinedRadius = a->Get_radius() + b->Get_radius();
     float overlap = (combinedRadius - colVec.Length()) + 0.05f;
 
     const Utils::vec2 wallVec = lineB.b - lineB.a;
     const Utils::vec2 normal = calculate_normal(colVec, wallVec);
     const Utils::vec2 pushForce = { normal.x * overlap, normal.y * overlap };
-    
+        
+    a->Get_owner_player()->Move({ pushForce.x * 0.5f, pushForce.y * 0.5f });
+    b->Get_owner_player()->Move({ pushForce.x * -0.5f, pushForce.y * -0.5f });
 
-    if (b->Get_type() == ColliderType::Wall)
-    {
-        a->Get_owner_player()->Move(pushForce);
-        a->Get_owner_player()->touching_wall = true;
+}
+
+void CollisionManager::handle_collision_barriers(Collider* a, Utils::line* barrier)
+{
+    const Utils::line& lineA = a->Get_owner_player()->line_postion;
+
+    //Znalezienie punktów kolizji
+    Utils::line points = lineA.get_closest_points(*barrier);
+
+    //Wektor kolizji: od punktu na barierze do punktu na graczu
+    Utils::vec2 colVec = points.a - points.b;
+
+    //Obliczenie overlap
+    float combinedRadius = a->Get_radius();
+    float overlap = (combinedRadius - colVec.Length()) + 0.05f;
+
+    //Obliczenie normalnej
+    const Utils::vec2 wallVec = barrier->b - barrier->a;
+    const Utils::vec2 normal = calculate_normal(colVec, wallVec);
+
+    //Wypchnięcie gracza
+    Utils::vec2 pushForce = { normal.x * overlap, normal.y * overlap };
+    a->Get_owner_player()->Move(pushForce);
+
+}
+
+// --- Manage Collision ---
+void CollisionManager::manage_collision_barriers(Collider* c)
+{
+    Utils::line player_line = c->Get_owner_player()->line_postion;
+    float radius = c->Get_radius();
+
+    // --- BARRIERS ---
+    for (int i = 0; i < _barriers_count; i++) {
+
+        bool is_overlapping = player_line.get_distance(_barriers[i]) <= (radius + 0.05f);
+
+        if (is_overlapping) {
+            c->is_colliding = true; //debug
+
+            c->Get_owner_player()->touching_wall = true;
+            handle_collision_barriers(c, &_barriers[i]);
+        }
     }
 
-	if (b->Get_type() == ColliderType::Player)
-    {
-        a->Get_owner_player()->Move({ pushForce.x * 0.5f, pushForce.y * 0.5f });
-        b->Get_owner_player()->Move({ pushForce.x * -0.5f, pushForce.y * -0.5f });
+}
+
+void CollisionManager::manage_collision_checkpoints(Collider* c)
+{
+    Utils::line player_line = c->Get_owner_player()->line_postion;
+    float radius = c->Get_radius();
+
+    int current_checkpoint_index = c->Get_owner_player()->Get_current_check_point_index();
+
+    if (player_line.get_distance(_checkpoints[current_checkpoint_index]) <= (radius + 0.5f)) {
+        c->Get_owner_player()->Update_checkpoint_and_lap(current_checkpoint_index);
+
+        if (c->Is_AI()) {//dane do AI
+            PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+            ai->_is_hitting_checkpoint = true;
+        }
     }
 
-    if(b->Get_type() == ColliderType::Checkpoint)
-    {
-        Checkpoint* cp = static_cast<Checkpoint*>(b);
+}
 
-        int index = cp->Get_checkpoint_index();
+void CollisionManager::manage_collision_player(Collider* c)
+{
+    for (auto* others : _player_colliders) {
+        if (c == others) continue; // z samym sobą nie koliduje
 
-        a->Get_owner_player()->Update_checkpoint_and_lap(index);
+        if (c->Check_collision(*others)) {
+            c->is_colliding = true;
+            others->is_colliding = true;
+
+            if (c->Is_AI()) {//dane do AI
+                PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+                ai->_is_hitting_player = true;
+            }
+
+            handle_collision_players(c, others);
+        }
     }
+}
 
+
+// --- Dates to players AI ---
+void CollisionManager::update_closest_player(Collider* c)
+{
+    PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+    if (_player_colliders.size() == 1) {
+        ai->_player_distance = 0;
+    }
+    else {
+        float min_distance = std::numeric_limits<float>::max();
+        for (const auto* others : _player_colliders) {
+            if (c == others) continue;
+
+            float distance = c->Get_owner_player()->line_postion.get_distance(others->Get_owner_player()->line_postion);
+            min_distance = std::min(min_distance, distance);
+        }
+        ai->_player_distance = min_distance;
+    }
 }
 
 // --- Main Collision Check Loop ---
 void CollisionManager::Update()
 {
-    for (auto* c : _colliders) {
-        if (c != nullptr){
-            c->is_colliding = false;//debug info
+    for (auto* c : _player_colliders) {
+        c->is_colliding = false;
+        c->Get_owner_player()->touching_wall = false;
 
-            if(c->Get_type() == ColliderType::Player) c->Update_hitbox();
-        } 
+		// reset AI Hit Data
+        if (c->Is_AI()) {
+            PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+			ai->_is_hitting_checkpoint = false;
+            ai->_is_hitting_player = false;
+        }
+
     }
 
-	for (int n = 0; n < 5; ++n) { ///brute force  zmiana parametrÃ³w moÂ¿e poprawiÃ¦ stabilnoÅ“Ã¦ kolizji
-        for (size_t i = 0; i < _colliders.size(); ++i)
-        {   
-            if (_colliders[i]->Get_type() != ColliderType::Player) continue;
+    for (int n = 0; n < 15; ++n) {
+        for (auto* c : _player_colliders) {
 
-            for (size_t j = i + 1; j < _colliders.size(); ++j)
-            {
-                if (!_colliders[i]->Check_collision(*_colliders[j]))continue;
+            c->Update_hitbox();
+			// --- BARRIERS ---
+            manage_collision_barriers(c);
 
-                    // is colliding
-                    _colliders[i]->is_colliding = true;
-                    _colliders[j]->is_colliding = true;
+            // --- CHECKPOINTS ---
+			manage_collision_checkpoints(c);
 
-                    handle_collision(_colliders[i], _colliders[j]);
+            // --- PLAYERS ---
+            manage_collision_player(c);
 
-				    _colliders[i]->Update_hitbox();
-                    if(_colliders[j]->Get_type()==ColliderType::Player) _colliders[j]->Update_hitbox();    
+			// --- THE CLOSEST PLAYER ---
+            if (c->Is_AI()) {
+                update_closest_player(c);
             }
+
         }
     }
 
 }
 
 
-
-Utils::line CollisionManager::calculate_closest_points(const Utils::line& l1, const Utils::line& l2)
-{
-    Utils::vec2 u = l1.b - l1.a;
-    Utils::vec2 v = l2.b - l2.a;
-    Utils::vec2 w = l1.a - l2.a;
-
-    float a_dot = u.dot(u);
-    float b_dot = u.dot(v);
-    float c_dot = v.dot(v);
-    float d_dot = u.dot(w);
-    float e_dot = v.dot(w);
-
-    float D = a_dot * c_dot - b_dot * b_dot;
-    float sc, sN, sD = D;
-    float tc, tN, tD = D;
-
-    if (D < 0.0001f) {
-        sN = 0.0f; sD = 1.0f; tN = e_dot; tD = c_dot;
-    }
-    else {
-        sN = (b_dot * e_dot - c_dot * d_dot);
-        tN = (a_dot * e_dot - b_dot * d_dot);
-        if (sN < 0.0f) { sN = 0.0f; tN = e_dot; tD = c_dot; }
-        else if (sN > sD) { sN = sD; tN = e_dot + b_dot; tD = c_dot; }
-    }
-
-    if (tN < 0.0f) {
-        tN = 0.0f;
-        if (-d_dot < 0.0f) sN = 0.0f;
-        else if (-d_dot > a_dot) sN = sD;
-        else { sN = -d_dot; sD = a_dot; }
-    }
-    else if (tN > tD) {
-        tN = tD;
-        if ((-d_dot + b_dot) < 0.0f) sN = 0;
-        else if ((-d_dot + b_dot) > a_dot) sN = sD;
-        else { sN = (-d_dot + b_dot); sD = a_dot; }
-    }
-
-    sc = (std::abs(sN) < 0.0001f ? 0.0f : sN / sD);
-    tc = (std::abs(tN) < 0.0001f ? 0.0f : tN / tD);
-
-    return {
-        l1.a + (u * sc),
-        l2.a + (v * tc)
-    };
-}
-
-
 Utils::vec2 CollisionManager::calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec)
 {
-    float distance = collisionVector.Length();
-    if (distance < 0.0001f) {
-        
-        float nx = -wallVec.y;
-        float ny = wallVec.x;
-        float nLen = std::sqrt(nx * nx + ny * ny);
-        return (nLen > 0.0001f) ? Utils::vec2{ nx / nLen, ny / nLen } : Utils::vec2{ 0, 0 };
+    if (collisionVector.Length() < 0.0001f)
+    {
+        return wallVec.GetPerpendicular().GetNormalized();
     }
-    return { collisionVector.x / distance, collisionVector.y / distance };
+
+    return collisionVector.GetNormalized();
 }

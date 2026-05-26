@@ -46,6 +46,7 @@ private:
 
 	// --- COLLISION & CHECKPOINT ---
 	CollisionManager _collision_manager;
+
 	std::unique_ptr<Utils::line[]> _barriers;
 	int _barriers_count = 0;
 
