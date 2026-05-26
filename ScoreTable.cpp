@@ -57,6 +57,10 @@ void ScoreTable::sort_players() {
 
 void ScoreTable::Update() {
 	sort_players();
+	_players_finished = 0;
+	for (int i = 0; i < _players_count; i++) {
+		if (_players[i]->Has_finished()) _players_finished++;
+	}
 }
 
 void ScoreTable::Render() const {
@@ -100,7 +104,7 @@ void ScoreTable::Render() const {
 		advance += _column_width[2] + _margin_col;
 		if(_players[p_index]->Has_finished())
 			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, Timer::Time_to_str(_players[p_index]->race_time));
-		else if (i == 0) {
+		else if (i == _players_finished) {
 			Utils::draw_polish_text(_font_table, white, _left_top.x + advance, y, 0, _race_timer->Get_time_str());
 		}
 	}

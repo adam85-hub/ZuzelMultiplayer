@@ -20,6 +20,7 @@ private:
 	const Player *const *const _players; // sta³a tablica
 	short* _player_order;
 	int _players_count;
+	int _players_finished = 0;
 	const short _number_of_laps;
 	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Okr¹¿enie", "Czas"};
 	Timer* _race_timer;

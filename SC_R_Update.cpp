@@ -22,11 +22,15 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		return;
 	// po starcie wyścigu:
 
+	short finished = 0;
 	for (int i = 0; i < _number_of_players; i++) {
 		bool is_turning = key_states[_turn_buttons[i]] & c_KEY_DOWN;
 		_players[i]->Update(is_turning);
 
-		if (_players[i]->Has_finished()) continue;
+		if (_players[i]->Has_finished()) {
+			finished++;
+			continue;
+		}
 		if (_players[i]->Get_laps_to_display() > _number_of_laps)
 			_players[i]->Finish(_race_timer.Get_time());
 	}
@@ -34,4 +38,9 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	//--- COLLISION/CHECKPOINT ACTION---
 	_collision_manager.Update();
 	_score_table->Update();
+
+	// koniec gry:
+	if (finished == _number_of_players) {
+		pause();
+	}
 }
