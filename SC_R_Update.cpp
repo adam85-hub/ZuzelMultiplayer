@@ -5,6 +5,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	// restart wyœcigu:
 	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
 		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players));
+		return;
 	}
 	else if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
 		_paused = !_paused;
