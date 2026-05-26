@@ -19,6 +19,15 @@ private:
     // --- Move ---
     void handle_collision_players(Collider* a, Collider* b);
     void handle_collision_barriers(Collider* a, Utils::line* barrier);
+
+	// --- Check collision ---
+    void manage_collision_barriers(Collider* a);
+    void manage_collision_checkpoints(Collider* a);
+	void manage_collision_player(Collider* a);
+
+
+	// --- Dates to players AI ---
+	void update_closest_player(Collider* c);
     
     static Utils::vec2 calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec);
 

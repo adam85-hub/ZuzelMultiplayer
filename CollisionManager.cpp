@@ -87,71 +87,123 @@ void CollisionManager::handle_collision_barriers(Collider* a, Utils::line* barri
 
 }
 
+// --- Manage Collision ---
+void CollisionManager::manage_collision_barriers(Collider* c)
+{
+    Utils::line player_line = c->Get_owner_player()->line_postion;
+    float radius = c->Get_radius();
+
+    // --- BARRIERS ---
+    for (int i = 0; i < _barriers_count; i++) {
+
+        bool is_overlapping = player_line.get_distance(_barriers[i]) <= (radius + 0.05f);
+
+        if (is_overlapping) {
+            c->is_colliding = true; //debug
+
+            c->Get_owner_player()->touching_wall = true;
+            handle_collision_barriers(c, &_barriers[i]);
+        }
+    }
+
+}
+
+void CollisionManager::manage_collision_checkpoints(Collider* c)
+{
+    Utils::line player_line = c->Get_owner_player()->line_postion;
+    float radius = c->Get_radius();
+
+    int current_checkpoint_index = c->Get_owner_player()->Get_current_check_point_index();
+
+    if (player_line.get_distance(_checkpoints[current_checkpoint_index]) <= (radius + 0.5f)) {
+        c->Get_owner_player()->Update_checkpoint_and_lap(current_checkpoint_index);
+
+        if (c->Is_AI()) {//dane do AI
+            PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+            ai->_is_hitting_checkpoint = true;
+        }
+    }
+
+}
+
+void CollisionManager::manage_collision_player(Collider* c)
+{
+    for (auto* others : _player_colliders) {
+        if (c == others) continue; // z samym sobą nie koliduje
+
+        if (c->Check_collision(*others)) {
+            c->is_colliding = true;
+            others->is_colliding = true;
+
+            if (c->Is_AI()) {//dane do AI
+                PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+                ai->_is_hitting_player = true;
+            }
+
+            handle_collision_players(c, others);
+        }
+    }
+}
+
+
+// --- Dates to players AI ---
+void CollisionManager::update_closest_player(Collider* c)
+{
+    PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
+    if (_player_colliders.size() == 1) {
+        ai->_player_distance = 0;
+    }
+    else {
+        float min_distance = std::numeric_limits<float>::max();
+        for (const auto* others : _player_colliders) {
+            if (c == others) continue;
+
+            float distance = c->Get_owner_player()->line_postion.get_distance(others->Get_owner_player()->line_postion);
+            min_distance = std::min(min_distance, distance);
+        }
+        ai->_player_distance = min_distance;
+    }
+}
+
+// --- Main Collision Check Loop ---
 void CollisionManager::Update()
 {
     for (auto* c : _player_colliders) {
         c->is_colliding = false;
         c->Get_owner_player()->touching_wall = false;
-        if (c->Is_AI()) {//dane do AI
+
+		// reset AI Hit Data
+        if (c->Is_AI()) {
             PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
 			ai->_is_hitting_checkpoint = false;
             ai->_is_hitting_player = false;
         }
+
     }
 
-    for (int n = 0; n < 5; ++n) {
+    for (int n = 0; n < 15; ++n) {
         for (auto* c : _player_colliders) {
 
             c->Update_hitbox();
-
-            Utils::line player_line = c->Get_owner_player()->line_postion;
-            float radius = c->Get_radius();
-
-            // --- BARRIERS ---
-            for (int i = 0; i < _barriers_count; i++) {
-
-                bool is_overlapping = player_line.get_distance(_barriers[i]) <= (radius + 0.05f);
-
-                if (is_overlapping) {
-                    c->is_colliding = true; //debug
-
-                    c->Get_owner_player()->touching_wall = true;
-                    handle_collision_barriers(c, &_barriers[i]);
-                }
-            }
+			// --- BARRIERS ---
+            manage_collision_barriers(c);
 
             // --- CHECKPOINTS ---
-            int current_checkpoint_index = c->Get_owner_player()->Get_current_check_point_index();
-
-            if (player_line.get_distance(_checkpoints[current_checkpoint_index]) <= (radius + 1.5f)) {
-				c->Get_owner_player()->Update_checkpoint_and_lap(current_checkpoint_index);
-
-                if (c->Is_AI()) {//dane do AI
-                    PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
-					ai->_is_hitting_checkpoint = true;
-                }
-            }
+			manage_collision_checkpoints(c);
 
             // --- PLAYERS ---
-            for (auto* others : _player_colliders) {
-                if (c == others) continue; // z samym sobą nie koliduje
-                if (c->Check_collision(*others)) {
-                    c->is_colliding = true;
-                    others->is_colliding = true;
+            manage_collision_player(c);
 
-                    if (c->Is_AI()) {//dane do AI
-                        PlayerAI* ai = static_cast<PlayerAI*>(c->Get_owner_player());
-                        ai->_is_hitting_player = true;
-                    }
-
-                    handle_collision_players(c, others);
-                }
+			// --- THE CLOSEST PLAYER ---
+            if (c->Is_AI()) {
+                update_closest_player(c);
             }
 
         }
     }
 
 }
+
 
 Utils::vec2 CollisionManager::calculate_normal(Utils::vec2 collisionVector, Utils::vec2 wallVec)
 {

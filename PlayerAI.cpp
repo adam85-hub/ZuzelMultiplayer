@@ -134,7 +134,7 @@ void PlayerAI::update_degree_to_next_checkpoint()
 
 void PlayerAI::show_stats() const
 {
-    std::cout << "Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
+    std::cout << "Player distance " << this-> _player_distance << " Wall: " << this->touching_wall << " Player: " << this->_is_hitting_player << " CP_hit: " << this->_is_hitting_checkpoint << " CP: " << this->Get_current_check_point_index() << " Dystans do CP: " << _checkpoint_distance << " | CP Kat: " << _checkpoint_angle << std::endl;
 
 }
 
