@@ -150,11 +150,10 @@
     <ClCompile Include="DQN\FNNBackpropA.cpp" />
     <ClCompile Include="DQN\FNNDQNA.cpp" />
     <ClCompile Include="DQN\FNNLayers.cpp" />
-    <ClCompile Include="DQN\main.txt" />
     <ClCompile Include="DQN\mfuncs.cpp" />
     <ClCompile Include="DQN\Neuron.cpp" />
     <ClCompile Include="DQN\NNFileManager.cpp" />
-    <ClCompile Include="DQN\State.cpp" />
+    <ClCompile Include="DQN\DQNState.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="PauseScene.cpp" />
@@ -189,7 +188,7 @@
     <ClInclude Include="DQN\mfuncs.hpp" />
     <ClInclude Include="DQN\Neuron.hpp" />
     <ClInclude Include="DQN\NNFileManager.hpp" />
-    <ClInclude Include="DQN\State.hpp" />
+    <ClInclude Include="DQN\DQNState.hpp" />
     <ClInclude Include="DQN\Transition.hpp" />
     <ClInclude Include="draw_polish_text.h" />
     <ClCompile Include="GM_free_resources.cpp" />

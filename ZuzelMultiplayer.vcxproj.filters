@@ -189,9 +189,6 @@
     <ClCompile Include="DQN\FNNLayers.cpp">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DQN\main.txt">
-      <Filter>DQN-AI\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DQN\mfuncs.cpp">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
@@ -201,7 +198,7 @@
     <ClCompile Include="DQN\NNFileManager.cpp">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DQN\State.cpp">
+    <ClCompile Include="DQN\DQNState.cpp">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DQNAManager.cpp">
@@ -338,7 +335,7 @@
     <ClInclude Include="DQN\NNFileManager.hpp">
       <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DQN\State.hpp">
+    <ClInclude Include="DQN\DQNState.hpp">
       <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DQNAManager.h">

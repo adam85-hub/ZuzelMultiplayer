@@ -1,5 +1,5 @@
 #pragma once
-#include "State.hpp"
+#include "DQNState.hpp"
 
 struct Transition {
 	std::vector<double> originalState;

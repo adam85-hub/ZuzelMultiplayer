@@ -6,7 +6,7 @@ FNNDQNA::FNNDQNA(
 	std::shared_ptr<FNN> target
 ): params(dqnparams), main(main), target(target) {}
 
-size_t FNNDQNA::act(const State& state) {
+size_t FNNDQNA::act(const DQNState& state) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));

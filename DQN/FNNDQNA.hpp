@@ -31,7 +31,7 @@ public:
 		std::shared_ptr<FNN> target
 	);
 
-	size_t act(const State& state);
+	size_t act(const DQNState& state);
 
 	void remember(
 		const std::vector<double>& state,

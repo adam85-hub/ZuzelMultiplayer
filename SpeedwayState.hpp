@@ -1,5 +1,5 @@
 #pragma once
-#include "DQN/State.hpp"
+#include "DQN/DQNState.hpp"
 #include <cmath>
 #include <array>
 
@@ -8,7 +8,7 @@ constexpr size_t MAX_VELOCITY = 8;
 constexpr size_t DISTANCE_COUNT = 8;
 constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 13;
 
-struct SpeedwayState : State {
+struct SpeedwayState : DQNState {
 	std::array<double, DISTANCE_COUNT> distances;		//Set of distances from the player to the boards at different angles
 	std::array<double, 2> velocity;						//Player X and Y velocities
 	std::array<double, 2> absAngle;						//Sin and cos of the absolute player angle (angle relative to the screen)
