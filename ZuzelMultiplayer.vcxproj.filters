@@ -46,6 +46,15 @@
     <Filter Include="Header Files\Scenes\RaceScene">
       <UniqueIdentifier>{b0562c18-6be9-467f-a52b-f1c73b0a23af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DQN-AI">
+      <UniqueIdentifier>{9ed6d356-856f-424a-9fc1-a8c9892ecd5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DQN-AI\Header Files">
+      <UniqueIdentifier>{8f1523ee-0d7a-42e3-898a-34312e5dd81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DQN-AI\Source Files">
+      <UniqueIdentifier>{44472d06-7839-4c79-9f22-b09ac501d374}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -165,6 +174,33 @@
     <ClCompile Include="SC_R_pause.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
+    <ClCompile Include="DQN\FNN.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\FNNBackpropA.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\FNNDQNA.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\FNNLayers.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\main.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\mfuncs.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\Neuron.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\NNFileManager.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQN\State.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -242,9 +278,6 @@
     <ClInclude Include="line.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Checkpoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerAI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -259,6 +292,45 @@
     </ClInclude>
     <ClInclude Include="PauseScene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateCheckpointsScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\AFunc.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\Dataset.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\FNN.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\FNNBackpropA.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\FNNDQNA.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\FNNLayers.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\LayerVectors.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\mfuncs.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\Neuron.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\Transition.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\NNFileManager.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQN\State.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
