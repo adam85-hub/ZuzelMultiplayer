@@ -21,7 +21,7 @@ DQNAssets DQNAManager::initAgent() {
 
 	DQNHyperParams params{ 0.5, 1, 0.05, 0.025, 20, 2, 1000 };
 
-	std::shared_ptr<FNNDQNA> dqnAgent = std::make_unique<FNNDQNA>(params, mainFNN, targetFNN);
+	std::shared_ptr<FNNDQNA> dqnAgent = std::make_shared<FNNDQNA>(params, mainFNN, targetFNN);
 
 	return DQNAssets{ mainFNN, targetFNN, dqnAgent };
 }
