@@ -13,8 +13,8 @@ struct DQNHyperParams { //Deep-Q-Learning parameters
 
 class FNNDQNA { //FNN Deep-Q-Learning Agent
 private:
-	FNN& main;
-	FNN& target;
+	std::shared_ptr<FNN> main;
+	std::shared_ptr<FNN> target;
 	std::deque<Transition> memory{};
 
 	DQNHyperParams params;
@@ -27,8 +27,8 @@ private:
 public:
 	FNNDQNA(
 		const DQNHyperParams& dqnparams,
-		FNN& main, 
-		FNN& target
+		std::shared_ptr<FNN> main, 
+		std::shared_ptr<FNN> target
 	);
 
 	size_t act(const State& state);

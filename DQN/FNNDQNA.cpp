@@ -2,16 +2,16 @@
 
 FNNDQNA::FNNDQNA(
 	const DQNHyperParams& dqnparams,
-	FNN& main,
-	FNN& target
+	std::shared_ptr<FNN> main,
+	std::shared_ptr<FNN> target
 ): params(dqnparams), main(main), target(target) {}
 
 size_t FNNDQNA::act(const State& state) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));
-	main.process(state.serialise());
-	std::vector<double> qValues = main.getOutput();
+	(*main).process(state.serialise());
+	std::vector<double> qValues = (*main).getOutput();
 	return mfuncs::maxIndex(qValues);
 
 }
@@ -51,14 +51,14 @@ std::vector<Transition> FNNDQNA::getMemoryBatch() {
 }
 
 void FNNDQNA::updateTargetNN() {
-	target.cloneWeights(main);
+	(*target).cloneWeights(*main);
 }
 
 double FNNDQNA::getTargetValue(const Transition& transition) {
 	double targetValue = transition.reward;
 	if (!transition.finished) {
-		target.process(transition.nextState);
-		std::vector<double> nextQValues = target.getOutput();
+		(*target).process(transition.nextState);
+		std::vector<double> nextQValues = (*target).getOutput();
 		double maxNextQ = mfuncs::max(nextQValues);
 		targetValue += params.gamma * maxNextQ;
 	}
@@ -66,6 +66,6 @@ double FNNDQNA::getTargetValue(const Transition& transition) {
 }
 
 std::vector<double> FNNDQNA::getCurrentQValues(const std::vector<double>& inputVec) {
-	main.process(inputVec);
-	return main.getOutput();
+	(*main).process(inputVec);
+	return (*main).getOutput();
 }
