@@ -69,21 +69,3 @@ std::vector<double> FNNDQNA::getCurrentQValues(const std::vector<double>& inputV
 	main.process(inputVec);
 	return main.getOutput();
 }
-
-double calculateReward(const SpeedwayState& stateBefore, size_t action, const SpeedwayState& stateAfter) {
-	double reward = 0.0;
-
-	if (stateAfter.isHittingBoard) reward -= 2.0;
-	if (stateAfter.isHittingPlayer)	reward -= 4.0;
-
-	if (stateAfter.isPassingCheckpoint) reward += 50.0;
-
-	double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-	reward += distanceImprovement * 50.0;
-
-	reward -= 0.05; //existential penalty. time is passing, agent must be quick!!
-
-	//if (action == 1 && stateAfter.isHittingBoard == false) reward -= 0.05;
-
-	return reward;
-}
