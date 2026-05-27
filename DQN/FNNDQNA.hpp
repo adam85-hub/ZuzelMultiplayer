@@ -5,9 +5,9 @@
 #include "FNNBackpropA.hpp"
 
 struct DQNHyperParams { //Deep-Q-Learning parameters
-	double gamma;									// Parameter for calculating target Q values
+	double gamma;									// Discount - Parameter for calculating target Q values
 	double epsilon, epsilonMin, epsilonDecayRate;	// Percentage of randomly chosen actions
-	size_t batchSize, stateSize, actionsCount;		// Memory size parameters for different elements
+	size_t batchSize, actionsCount;					// Memory size parameters for different elements
 	size_t memoryCapacity;							// Max memory size
 };
 

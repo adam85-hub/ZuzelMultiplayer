@@ -145,11 +145,12 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Countdown.cpp" />
+    <ClCompile Include="DQNAManager.cpp" />
     <ClCompile Include="DQN\FNN.cpp" />
     <ClCompile Include="DQN\FNNBackpropA.cpp" />
     <ClCompile Include="DQN\FNNDQNA.cpp" />
     <ClCompile Include="DQN\FNNLayers.cpp" />
-    <ClCompile Include="DQN\main.cpp" />
+    <ClCompile Include="DQN\main.txt" />
     <ClCompile Include="DQN\mfuncs.cpp" />
     <ClCompile Include="DQN\Neuron.cpp" />
     <ClCompile Include="DQN\NNFileManager.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClCompile Include="SpeedwayState.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -176,6 +178,7 @@
     <ClInclude Include="CreateCheckpointsScene.h" />
     <ClInclude Include="CreateColliderScene.h" />
     <ClInclude Include="BikeColliderScene.h" />
+    <ClInclude Include="DQNAManager.h" />
     <ClInclude Include="DQN\AFunc.hpp" />
     <ClInclude Include="DQN\Dataset.hpp" />
     <ClInclude Include="DQN\FNN.hpp" />
@@ -217,6 +220,7 @@
     <ClInclude Include="RaceModel.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
+    <ClInclude Include="SpeedwayState.hpp" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>

@@ -55,6 +55,9 @@
     <Filter Include="DQN-AI\Source Files">
       <UniqueIdentifier>{44472d06-7839-4c79-9f22-b09ac501d374}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI-Game Bridge">
+      <UniqueIdentifier>{e1e7658d-f19a-473b-9087-a1705874de42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -186,7 +189,7 @@
     <ClCompile Include="DQN\FNNLayers.cpp">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DQN\main.cpp">
+    <ClCompile Include="DQN\main.txt">
       <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DQN\mfuncs.cpp">
@@ -200,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="DQN\State.cpp">
       <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DQNAManager.cpp">
+      <Filter>AI-Game Bridge</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedwayState.cpp">
+      <Filter>AI-Game Bridge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="DQN\State.hpp">
       <Filter>DQN-AI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DQNAManager.h">
+      <Filter>AI-Game Bridge</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeedwayState.hpp">
+      <Filter>AI-Game Bridge</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@
 
 #include "Game.h"
 
+#include "DQNAManager.h"
+
 // obiekty klasy GameManager odpowiadaj¹ za uruchomienie g³ównej pêtli programu
 class GameManager {
 public:
@@ -18,6 +20,7 @@ private:
 	void set_display_scaling();
 
 	std::unique_ptr<Game> _game;
+	DQNAssets dqnAssets;
 	ALLEGRO_TIMER* _timer = nullptr;
 	ALLEGRO_EVENT_QUEUE* _event_queue = nullptr;
 	ALLEGRO_DISPLAY* _display = nullptr;
