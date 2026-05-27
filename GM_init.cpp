@@ -34,9 +34,6 @@ void GameManager::init() {
 	Utils::check_initialized(al_install_mouse(), "mouse");
 	al_hide_mouse_cursor(_display);
 
-	// tworzenie agenta DQN
-	dqnAssets = DQNAManager::initAgent();
-
 	_game = std::make_unique<Game>();
 	_game->Init();
 }

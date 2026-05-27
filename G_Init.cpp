@@ -18,4 +18,7 @@ void Game::Init() {
 		delete _currentScene;
 		_currentScene = scene;
 	});
+
+	// tworzenie agenta DQN
+	dqnAssets = DQNAManager::initAgent();
 }
