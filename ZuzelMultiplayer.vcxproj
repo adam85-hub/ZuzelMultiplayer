@@ -145,6 +145,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Countdown.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="PauseScene.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="SC_M_destructor.cpp" />
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="PauseScene.h" />
