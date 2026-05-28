@@ -1,28 +1,22 @@
 #pragma once
-#include <allegro5/events.h>
-#include <vector>
-
-#include "Scene.h"
+#include <allegro5/allegro5.h>
 #include "Consts.h"
 #include "GameCommands.h"
-#include "DQNAManager.h"
 
-// obiekt tej klasy zarz¹dza logik¹ gry, w tym np. wyœwietlanymi scenami oraz przechowuje jej stan
-class Game {
+class Game
+{
 public:
-	~Game();
-	void Init();
-	void Update(KeyStatesTable);
-	void Render();
-	void Handle_event(ALLEGRO_EVENT);
-	void Exit();
+	virtual ~Game() {};
+	virtual void Init();
+	virtual void Update(KeyStatesTable) = 0;
+	virtual void Render() const = 0;
+	virtual void Handle_event(ALLEGRO_EVENT) {};
+	virtual void Exit();
 
 	bool Is_running();
-
-private:
-	Scene* _currentScene = nullptr; // u¿ywam zwyk³ego wskaŸnika, poniewa¿ chcê mieæ precyzyjn¹ kontrolê nad d³ugoœci¹ ¿ycia tego obiektu
-	bool _isRunning;
-	DQNAssets dqnAssets;
-
+protected:
 	GameCommands _game_commands;
+private:
+	bool _is_running;
 };
+

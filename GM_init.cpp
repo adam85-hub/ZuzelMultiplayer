@@ -8,7 +8,7 @@
 #include "check_functions.h"
 #include "Consts.h"
 
-void GameManager::init() {
+void GameManager::init(Game* game) {
 	Utils::check_initialized(al_init(), "allegro");
 	Utils::check_initialized(al_install_keyboard(), "keyboard");
 	Utils::check_initialized(al_init_font_addon(), "font addon");
@@ -34,6 +34,6 @@ void GameManager::init() {
 	Utils::check_initialized(al_install_mouse(), "mouse");
 	al_hide_mouse_cursor(_display);
 
-	_game = std::make_unique<Game>();
+	_game = game;
 	_game->Init();
 }

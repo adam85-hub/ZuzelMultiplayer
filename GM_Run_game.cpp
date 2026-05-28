@@ -1,7 +1,7 @@
 #include "GameManager.h"
 
-int GameManager::Run_game() {
-	init();
+int GameManager::Run_game(Game* game) {
+	init(game);
 	run_main_loop();
 	free_resources();
 

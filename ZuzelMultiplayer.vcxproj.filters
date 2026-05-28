@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{77347012-8364-478e-aeb7-eca2e2463633}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameManager">
       <UniqueIdentifier>{2ba2ef20-222e-4a6e-9456-d0ae04f5bd6b}</UniqueIdentifier>
     </Filter>
@@ -78,24 +75,6 @@
     <ClCompile Include="GM_run_main_loop.cpp">
       <Filter>Source Files\GameManager</Filter>
     </ClCompile>
-    <ClCompile Include="G_Update.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="G_Init.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="G_Render.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="G_Exit.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="G_Is_running.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="G_Handle_event.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="SC_M_constructor.cpp">
       <Filter>Source Files\Scenes\MenuScene</Filter>
     </ClCompile>
@@ -107,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="SC_M_destructor.cpp">
       <Filter>Source Files\Scenes\MenuScene</Filter>
-    </ClCompile>
-    <ClCompile Include="G_destructor.cpp">
-      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="RM_destructor.cpp">
       <Filter>Source Files\ResourceManager</Filter>
@@ -207,9 +183,18 @@
     <ClCompile Include="SpeedwayState.cpp">
       <Filter>AI-Game Bridge</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AILearningGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="NormalGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
@@ -296,12 +281,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
-    <ClInclude Include="PauseScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateCheckpointsScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DQN\AFunc.hpp">
       <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
@@ -343,6 +322,18 @@
     </ClInclude>
     <ClInclude Include="SpeedwayState.hpp">
       <Filter>AI-Game Bridge</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateCheckpointsScene.h">
+      <Filter>Header Files\Scenes\DevOnly</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AILearningGame.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

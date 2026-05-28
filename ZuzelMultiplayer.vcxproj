@@ -142,6 +142,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AILearningGame.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Countdown.cpp" />
@@ -154,8 +155,10 @@
     <ClCompile Include="DQN\Neuron.cpp" />
     <ClCompile Include="DQN\NNFileManager.cpp" />
     <ClCompile Include="DQN\DQNState.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
+    <ClCompile Include="NormalGame.cpp" />
     <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAI.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="SC_R_Update.cpp" />
     <ClCompile Include="SpeedwayState.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClInclude Include="AILearningGame.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Countdown.h" />
@@ -195,13 +199,6 @@
     <ClCompile Include="GM_render.cpp" />
     <ClCompile Include="GM_Run_game.cpp" />
     <ClCompile Include="GM_run_main_loop.cpp" />
-    <ClCompile Include="G_destructor.cpp" />
-    <ClCompile Include="G_Exit.cpp" />
-    <ClCompile Include="G_Handle_event.cpp" />
-    <ClCompile Include="G_Init.cpp" />
-    <ClCompile Include="G_Is_running.cpp" />
-    <ClCompile Include="G_Render.cpp" />
-    <ClCompile Include="G_Update.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GM_init.cpp" />
     <ClCompile Include="RM_Track_resource.cpp" />
@@ -210,6 +207,7 @@
     <ClCompile Include="SC_M_destructor.cpp" />
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="PauseScene.h" />
@@ -227,7 +225,7 @@
     <ClInclude Include="check_functions.h" />
     <ClInclude Include="Consts.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="NormalGame.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="LOG.h" />
