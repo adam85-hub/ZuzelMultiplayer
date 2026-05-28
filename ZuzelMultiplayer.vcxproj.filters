@@ -55,6 +55,15 @@
     <Filter Include="AI-Game Bridge">
       <UniqueIdentifier>{e1e7658d-f19a-473b-9087-a1705874de42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Games">
+      <UniqueIdentifier>{b82dec37-091b-4811-8487-bbf36df71be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Games">
+      <UniqueIdentifier>{741cb56b-3566-434d-98ef-3d4f4fd70b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\RaceScene\RaceScene">
+      <UniqueIdentifier>{16da5868-9a07-486d-a2cd-c6416c736eb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -96,44 +105,11 @@
     <ClCompile Include="GM_render.cpp">
       <Filter>Source Files\GameManager</Filter>
     </ClCompile>
-    <ClCompile Include="SC_R_constructor.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
     <ClCompile Include="GM_update_key_states.cpp">
       <Filter>Source Files\GameManager</Filter>
     </ClCompile>
-    <ClCompile Include="SC_R_Update.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_Render.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_destructor.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_string_to_polygon.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_read_polygons_from_file.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
     <ClCompile Include="GM_set_display_scaling.cpp">
       <Filter>Source Files\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_add_barriers.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_add_checkpoints.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerAI.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
@@ -145,12 +121,6 @@
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Scenes\RaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SC_R_pause.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
     <ClCompile Include="DQN\FNN.cpp">
@@ -187,16 +157,52 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NormalGame.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Games</Filter>
     </ClCompile>
     <ClCompile Include="AILearningGame.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Games</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAI.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_add_barriers.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_add_checkpoints.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_constructor.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_destructor.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_pause.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_read_polygons_from_file.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_Render.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_string_to_polygon.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_Update.cpp">
+      <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NormalGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -260,17 +266,8 @@
     <ClInclude Include="RaceScene.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="line.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAI.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
@@ -326,14 +323,26 @@
     <ClInclude Include="CreateCheckpointsScene.h">
       <Filter>Header Files\Scenes\DevOnly</Filter>
     </ClInclude>
-    <ClInclude Include="PauseScene.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AILearningGame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Games</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalGame.h">
+      <Filter>Header Files\Games</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAI.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScene.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
