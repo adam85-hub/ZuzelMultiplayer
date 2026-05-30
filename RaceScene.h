@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <iostream>
 
 #include "Scene.h"
 #include "ResourceManager.h"
@@ -19,8 +20,14 @@ public:
 	void Update(KeyStatesTable);
 	void Render();
 
+	short Get_player_count() const { return _number_of_players; }
+	Player** Get_players() const { return _players; }
+	GameCommands* Get_game_commands() const { return _game_commands; }
+	short Get_lap_count() const { return _number_of_laps; }
+	unsigned int* Get_turn_buttons() { return _turn_buttons; }
+	bool Get_paused() const { return _paused; }
 private:
-	bool _only_ai_mode = false;
+	bool _only_ai_mode = true;
 	bool _dev_mode = false;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku

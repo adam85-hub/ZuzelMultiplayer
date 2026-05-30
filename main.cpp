@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "LOG.h"
-//#include "NormalGame.h"
+#include "NormalGame.h"
 #include "AILearningGame.h"
 
 int main() {

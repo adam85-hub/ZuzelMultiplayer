@@ -5,13 +5,13 @@
 #include "LOG.h"
 #include "check_functions.h"
 
-RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_laps) : 
-	Scene(gameCommands), 
+RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_laps) :
+	Scene(gameCommands),
 	_pause_scene(gameCommands, &_unpause_cmd),
 	_number_of_players(number_of_players),
 	_number_of_laps(number_of_laps),
-	_turn_buttons{ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN},
-	_start_countdown(3)
+	_turn_buttons{ ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN },
+	_start_countdown(0)
 {
 	// inicjalizacja wszystkich polygonów
 	read_polygons_from_file();
@@ -68,6 +68,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 
 	_unpause_cmd.Implement([this](bool _) -> void { unpause(); });
 
+	//_race_timer.Start();
 	_start_countdown.Start();
 	_start_countdown.Execute_on_start([this]() -> void {_race_timer.Start(); });
 }

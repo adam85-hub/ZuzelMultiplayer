@@ -22,6 +22,25 @@ void PlayerAI::Set_checkpoints(Utils::line* checkpoints_ptr, int count)
     _checkpoints_count = count;
 }
 
+std::shared_ptr<SpeedwayState> PlayerAI::Get_player_state() const {
+    std::array<double, 8> distances;
+    for (size_t i{}; i < 8; i++) {
+        distances[i] = static_cast<double>(_distances[i]);
+    }
+    return std::make_shared<SpeedwayState>(
+        distances, 
+        calculate_velocity_components(), 
+        Get_rotation(), 
+        _checkpoint_distance, 
+        _checkpoint_angle, 
+        _player_distance, 
+        _player_angle, 
+        touching_wall, 
+        _is_hitting_player, 
+        _is_hitting_checkpoint
+    );
+}
+
 float PlayerAI::calculate_distance(const Utils::line* line, float angle)
 {
     Utils::vec2 dir = { cosf(-angle), sinf(-angle) };
@@ -85,6 +104,17 @@ void PlayerAI::Render() const {
     Player::Render();
     this->draw_sensors();
     //this->show_stats();
+}
+
+std::array<double, 2> PlayerAI::calculate_velocity_components() const {
+    float angle = Get_rotation();
+
+    float dirX = cosf(-angle);
+    float dirY = sinf(-angle);
+
+    float vel = Get_velocity();
+    
+    return { vel * dirX, vel * dirY };
 }
 
 // --- Render ---

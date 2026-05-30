@@ -4,19 +4,19 @@ static inline double normaliseDist(double distance) {
 	return (distance > MAX_DISTANCE ? 1.0 : distance / MAX_DISTANCE);
 }
 
-static inline std::array<double, DISTANCE_COUNT> normaliseDist(const std::vector<double>& distancesVec) {
+static inline std::array<double, DISTANCE_COUNT> normaliseDist(const std::array<double, DISTANCE_COUNT>& distancesVec) {
 	std::array<double, DISTANCE_COUNT> distancesArr{};
 	for (size_t i{}; i < DISTANCE_COUNT; i++) distancesArr[i] = normaliseDist(distancesVec[i]);
 	return distancesArr;
 }
 
-static inline std::array<double, 2> normaliseVel(const std::vector<double>& velVec) {
+static inline std::array<double, 2> normaliseVel(const std::array<double, 2>& velVec) {
 	return std::array<double, 2>{ (velVec[0] / MAX_VELOCITY), (velVec[1] / MAX_VELOCITY) };
 }
 
 SpeedwayState::SpeedwayState(
-	const std::vector<double>& distances,
-	const std::vector<double>& velocity,
+	const std::array<double, DISTANCE_COUNT>& distances,
+	const std::array<double, 2>& velocity,
 	double absAngle,
 	double checkpointDistance,
 	double checkpointAngle,
@@ -56,22 +56,4 @@ std::vector<double> SpeedwayState::serialise() const {
 	stateVec.push_back(static_cast<double>(isHittingPlayer));
 	stateVec.push_back(static_cast<double>(isPassingCheckpoint));
 	return stateVec;
-}
-
-double calculateReward(const SpeedwayState& stateBefore, size_t action, const SpeedwayState& stateAfter) {
-	double reward = 0.0;
-
-	if (stateAfter.isHittingBoard) reward -= 2.0;
-	if (stateAfter.isHittingPlayer)	reward -= 4.0;
-
-	if (stateAfter.isPassingCheckpoint) reward += 50.0;
-
-	double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-	reward += distanceImprovement * 50.0;
-
-	reward -= 0.05; //existential penalty. time is passing, agent must be quick!!
-
-	//if (action == 1 && stateAfter.isHittingBoard == false) reward -= 0.05;
-
-	return reward;
 }

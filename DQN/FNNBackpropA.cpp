@@ -26,6 +26,7 @@ void FNNBackpropA::trainFNNStep(std::shared_ptr<FNN> fnn, const std::vector<doub
 	(*fnn).process(input);
 	errorsArr = getNeuronErrors(fnn, desiredOutput);
 	adjustFNNValues(fnn, errorsArr, learningFactor);
+	if (getConsoleOutput) std::cout << ". Iteration cost: " << (*fnn).getCost(desiredOutput) << "\n";
 }
 
 double FNNBackpropA::testFNN(std::shared_ptr<FNN> fnn, Dataset& testDataset) {

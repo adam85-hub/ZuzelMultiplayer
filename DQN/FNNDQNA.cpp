@@ -28,7 +28,7 @@ void FNNDQNA::remember(const std::vector<double>& state, size_t action, double r
 
 void FNNDQNA::replayLearn() { // Replay previous experiences and learn on the mistakes
 	if (memory.size() < params.batchSize) return; //if memory is smaller than the minimum amount to learn, return. 
-
+	std::cout << "Memory size: " << memory.size() << "\n";
 	auto batch = getMemoryBatch(); // get random batch of previous memories
 
 	for (const Transition& transition : batch) {
@@ -37,9 +37,10 @@ void FNNDQNA::replayLearn() { // Replay previous experiences and learn on the mi
 		auto currentQValues = getCurrentQValues(transition.originalState);
 		currentQValues[transition.action] = targetValue;
 
-		FNNBackpropA::trainFNNStep(main, transition.originalState, currentQValues, learningFactor);
+		FNNBackpropA::trainFNNStep(main, transition.originalState, currentQValues, learningFactor, true);
 	}
 	if (params.epsilon > params.epsilonMin) params.epsilon *= params.epsilonDecayRate;
+	memory.clear();
 }
 
 std::vector<Transition> FNNDQNA::getMemoryBatch() {

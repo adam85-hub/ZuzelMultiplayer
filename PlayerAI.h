@@ -2,8 +2,11 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "Player.h"
+#include <memory>
+#include "SpeedwayState.hpp"
 #include <vector>
 #include <array>
+#include <cmath>
 #include "line.h"
 
 class PlayerAI : public Player {
@@ -15,6 +18,8 @@ public:
 
 	static void Set_walls(Utils::line* barriers_ptr, int count);
 	static void Set_checkpoints(Utils::line* checkpoints_ptr, int count);
+
+	std::shared_ptr<SpeedwayState> Get_player_state() const;
 	
 	//--- parametry do uczenia ---
 	std::array<float, 8> _distances;
@@ -37,6 +42,7 @@ private:
 	
 	static const std::array<float, 8> _offsets;
 
+	std::array<double, 2> calculate_velocity_components() const;
 	
 	//--- wall detector ---
 	void draw_sensors() const;

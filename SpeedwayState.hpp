@@ -21,8 +21,8 @@ struct SpeedwayState : DQNState {
 	bool isPassingCheckpoint;							//Indicator of the player passing a checkpoint			
 
 	SpeedwayState(
-		const std::vector<double>& distances,
-		const std::vector<double>& velocity,
+		const std::array<double, DISTANCE_COUNT>& distances,
+		const std::array<double, 2>& velocity,
 		double absAngle,
 		double checkpointDistance,
 		double checkpointAngle,
