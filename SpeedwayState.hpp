@@ -6,7 +6,8 @@
 constexpr size_t MAX_DISTANCE = 1500;
 constexpr size_t MAX_VELOCITY = 8;
 constexpr size_t DISTANCE_COUNT = 8;
-constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 13;
+constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 12;
+constexpr size_t ACTION_COUNT = 2;
 
 struct SpeedwayState : DQNState {
 	std::array<double, DISTANCE_COUNT> distances;		//Set of distances from the player to the boards at different angles

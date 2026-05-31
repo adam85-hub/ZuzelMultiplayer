@@ -18,7 +18,7 @@ private:
 	std::deque<Transition> memory{};
 
 	DQNHyperParams params;
-	double learningFactor = 0.001;
+	double learningFactor = 0.0001;
 
 	std::vector<Transition> getMemoryBatch();
 	double getTargetValue(const Transition& transition);
@@ -30,9 +30,9 @@ public:
 		std::shared_ptr<FNN> main, 
 		std::shared_ptr<FNN> target
 	);
+	DQNHyperParams getParams() const;
 
 	size_t act(const DQNState& state);
-
 	void remember(
 		const std::vector<double>& state,
 		size_t action, 

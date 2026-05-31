@@ -4,14 +4,16 @@ FNNDQNA::FNNDQNA(
 	const DQNHyperParams& dqnparams,
 	std::shared_ptr<FNN> main,
 	std::shared_ptr<FNN> target
-): params(dqnparams), main(main), target(target) {}
+): params(dqnparams), main(std::move(main)), target(std::move(target)) {}
+
+DQNHyperParams FNNDQNA::getParams() const { return params; }
 
 size_t FNNDQNA::act(const DQNState& state) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));
-	(*main).process(state.serialise());
-	std::vector<double> qValues = (*main).getOutput();
+	main->process(state.serialise());
+	std::vector<double> qValues = main->getOutput();
 	return mfuncs::maxIndex(qValues);
 
 }
@@ -40,14 +42,13 @@ void FNNDQNA::replayLearn() { // Replay previous experiences and learn on the mi
 		FNNBackpropA::trainFNNStep(main, transition.originalState, currentQValues, learningFactor, true);
 	}
 	if (params.epsilon > params.epsilonMin) params.epsilon *= params.epsilonDecayRate;
-	memory.clear();
 }
 
 std::vector<Transition> FNNDQNA::getMemoryBatch() {
 	std::vector<Transition> batch;
 	auto indexVec = mfuncs::getNRandomUniqueIntegers(0, memory.size(), params.batchSize);
-	for (size_t i{}; i < indexVec.size(); i++)
-		batch.push_back(memory[indexVec[i]]);
+	for (auto index : indexVec)
+		batch.push_back(memory[index]);
 	return batch;
 }
 

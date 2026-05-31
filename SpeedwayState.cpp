@@ -52,7 +52,7 @@ std::vector<double> SpeedwayState::serialise() const {
 	stateVec.push_back(playerDistance);
 	for (double pa : playerAngle) stateVec.push_back(pa);
 
-	stateVec.push_back(static_cast<double>(isHittingBoard));
+	//stateVec.push_back(static_cast<double>(isHittingBoard));
 	stateVec.push_back(static_cast<double>(isHittingPlayer));
 	stateVec.push_back(static_cast<double>(isPassingCheckpoint));
 	return stateVec;
