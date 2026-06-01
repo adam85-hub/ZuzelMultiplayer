@@ -36,6 +36,11 @@ void CollisionManager::Draw_colliders()
             c->Draw_debug(color);
         }
     }
+
+    for (int i = 0; i < _checkpoints_count; i++) {
+        Utils::line* c = &_checkpoints[i];
+        al_draw_line(c->a.x, c->a.y, c->b.x, c->b.y, al_map_rgb(0, 255, 0), 2);
+    }
 }
 
 
