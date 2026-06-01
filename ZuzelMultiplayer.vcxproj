@@ -194,8 +194,7 @@
     <ClInclude Include="PauseScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAI.h" />
-    <ClInclude Include="PlayerModel.h" />
-    <ClInclude Include="RaceModel.h" />
+    <ClInclude Include="RaceStats.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="Timer.h" />
