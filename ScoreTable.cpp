@@ -8,33 +8,20 @@
 #include "vec2.h"
 
 ScoreTable::ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer) :
+	Table(c_MIDDLE, { "Miejsce", "Gracz", "Okr¹¿enie", "Czas" }, players_count),
 	_players(players),
 	_players_count(players_count),
 	_race_timer(race_timer),
 	_number_of_laps(number_of_laps)
 {
-	_font_table = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 20, 0);
-	_resource_manager.Track_resource(_font_table);
-
 	_player_order = new short[players_count];
 	for (short i = 0; i < players_count; i++)
 		_player_order[i] = i;
 
-	// wymiary:
-	_row_height = al_get_font_line_height(_font_table);
-
-	for (std::string column : _columns)
-		_column_width.push_back(Utils::get_polish_text_width(_font_table, column));
 	_column_width[1] = Utils::get_polish_text_width(_font_table, "Czerwony"); // najszerszy napis
 	_column_width[3] = Utils::get_polish_text_width(_font_table, "22:22:22");
 
-	for (float width : _column_width) {
-		_size.x += width + _margin_col;
-	}
-	_size.x -= _margin_col;
-	_size.y = (_row_height + _margin_row) * (players_count + 1) - _margin_row;
-
-	_left_top = c_MIDDLE - _size * .5f;
+	calculate_size();
 }
 
 ScoreTable::~ScoreTable()
@@ -77,14 +64,10 @@ void ScoreTable::Render() const {
 	al_draw_rectangle(_left_top.x - bg_margin_x, _left_top.y - bg_margin_y,
 		_left_top.x + _size.x + bg_margin_x, _left_top.y + _size.y + bg_margin_y, black, 15);
 
-	// wiersz nag³ówkowy:
-	float advance = 0;
-	for (int i = 0; i < _columns.size(); i++) {
-		Utils::draw_polish_text(_font_table, white, _left_top.x + advance + _margin_col * i, _left_top.y, 0, _columns[i]);
-		advance += _column_width[i];
-	}
+	draw_title_row();
 	
 	// zawartoœæ tabeli:
+	float advance = 0;
 	for (int i = 0; i < _players_count; i++) {
 		float y = _left_top.y + (_row_height + _margin_row) * (i + 1);
 		short p_index = _player_order[i];

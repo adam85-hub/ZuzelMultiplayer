@@ -168,6 +168,9 @@
     <ClCompile Include="EndScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -206,12 +209,6 @@
     <ClInclude Include="GameCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RaceModel.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerModel.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
@@ -236,12 +233,6 @@
     <ClInclude Include="RaceScene.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="line.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
@@ -265,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="EndScene.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -161,6 +161,7 @@
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="RaceStats.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
