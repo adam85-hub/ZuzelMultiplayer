@@ -7,15 +7,15 @@
 #include "draw_polish_text.h"
 #include "vec2.h"
 
-ScoreTable::ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer) :
-	Table(c_MIDDLE, { "Miejsce", "Gracz", "Okr¹¿enie", "Czas" }, players_count),
+ScoreTable::ScoreTable(Player** players, short player_count, short number_of_laps, Timer* race_timer) :
+	Table(c_MIDDLE, { "Miejsce", "Gracz", "Okr¹¿enie", "Czas" }, player_count),
 	_players(players),
-	_players_count(players_count),
+	_players_count(player_count),
 	_race_timer(race_timer),
 	_number_of_laps(number_of_laps)
 {
-	_player_order = new short[players_count];
-	for (short i = 0; i < players_count; i++)
+	_player_order = new short[player_count];
+	for (short i = 0; i < player_count; i++)
 		_player_order[i] = i;
 
 	_column_width[1] = Utils::get_polish_text_width(_font_table, "Czerwony"); // najszerszy napis
@@ -57,12 +57,10 @@ void ScoreTable::Render() const {
 	static const ALLEGRO_COLOR grey = al_map_rgb(180, 180, 180);
 
 	// t³o:
-	static const float bg_margin_x = 40;
-	static const float bg_margin_y = 20;
-	al_draw_filled_rectangle(_left_top.x - bg_margin_x, _left_top.y - bg_margin_y, 
-		_left_top.x + _size.x + bg_margin_x, _left_top.y + _size.y + bg_margin_y, bg_color);
-	al_draw_rectangle(_left_top.x - bg_margin_x, _left_top.y - bg_margin_y,
-		_left_top.x + _size.x + bg_margin_x, _left_top.y + _size.y + bg_margin_y, black, 15);
+	al_draw_filled_rectangle(_left_top.x - _table_padding_x, _left_top.y - _table_padding_y, 
+		_left_top.x + _size.x + _table_padding_x, _left_top.y + _size.y + _table_padding_y, bg_color);
+	al_draw_rectangle(_left_top.x - _table_padding_x, _left_top.y - _table_padding_y,
+		_left_top.x + _size.x + _table_padding_x, _left_top.y + _size.y + _table_padding_y, black, 15);
 
 	draw_title_row();
 	

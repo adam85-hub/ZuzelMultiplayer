@@ -42,6 +42,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 
 	// koniec gry:
 	if (finished == _number_of_players) {
-		_game_commands->switch_scene.Execute(new EndScene(_game_commands));
+		_game_commands->switch_scene.Execute(new EndScene(_game_commands, create_race_stats()));
+		return;
 	}
 }

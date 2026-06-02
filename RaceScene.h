@@ -11,6 +11,7 @@
 #include "line.h"
 #include "Countdown.h"
 #include "PauseScene.h"
+#include "RaceStats.h"
 
 class RaceScene : public Scene {
 public:
@@ -32,6 +33,7 @@ private:
 	void add_checkpoints(const std::string &str);
 	void pause();
 	void unpause();
+	RaceStats* create_race_stats() const;
 
 	Utils::ResourceManager _resource_manager;
 

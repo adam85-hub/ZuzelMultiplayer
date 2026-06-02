@@ -10,7 +10,7 @@
 class ScoreTable : public Table
 {
 public:
-	ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer);
+	ScoreTable(Player** players, short player_count, short number_of_laps, Timer* race_timer);
 	~ScoreTable();
 	void Update();
 	void Render() const;

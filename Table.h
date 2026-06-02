@@ -10,8 +10,12 @@ class Table
 {
 public:
 	Table(Utils::vec2 middle, std::vector<std::string> columns, int row_count, 
-		ALLEGRO_COLOR font_color = al_map_rgb(255, 255, 255), float margin_col = 50, float margin_row = 10);
+		ALLEGRO_COLOR font_color = al_map_rgb(255, 255, 255), float margin_col = 50, float margin_row = 10,
+		float table_padding_x = 40, float table_padding_y = 20);
 	virtual ~Table();
+
+	Utils::vec2 Get_size() const;
+	Utils::vec2 Get_top_left() const;
 protected:
 	void draw_title_row() const;
 	void calculate_size();
@@ -25,6 +29,8 @@ protected:
 	Utils::vec2 _left_top;
 	const float _margin_col;
 	const float _margin_row;
+	const float _table_padding_x;
+	const float _table_padding_y;
 	float _row_height;
 	int _row_count;
 private:

@@ -151,6 +151,7 @@
     <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAI.cpp" />
+    <ClCompile Include="ResultsTable.cpp" />
     <ClCompile Include="SC_R_add_checkpoints.cpp" />
     <ClCompile Include="ScoreTable.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="SC_R_Render.cpp" />
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
+    <ClCompile Include="SC_R_create_race_stats.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClInclude Include="Collider.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAI.h" />
     <ClInclude Include="RaceStats.h" />
+    <ClInclude Include="ResultsTable.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="Table.h" />

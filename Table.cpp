@@ -4,11 +4,13 @@
 #include "draw_polish_text.h"
 
 Table::Table(Utils::vec2 middle, std::vector<std::string> columns, int row_count, 
-	ALLEGRO_COLOR font_color, float margin_col, float margin_row) :
+	ALLEGRO_COLOR font_color, float margin_col, float margin_row, float table_padding_x, float table_padding_y) :
 	_columns(columns),
 	_row_count(row_count),
 	_margin_col(margin_col),
 	_margin_row(margin_row),
+	_table_padding_x(table_padding_x),
+	_table_padding_y(table_padding_y),
 	_font_color(font_color),
 	_middle(middle)
 {
@@ -44,4 +46,12 @@ void Table::calculate_size() {
 	_size.y = (_row_height + _margin_row) * (_row_count + 1) - _margin_row;
 
 	_left_top = _middle - _size * .5f;
+}
+
+Utils::vec2 Table::Get_size() const {
+	return Utils::vec2(_size.x + 2 * _table_padding_x, _size.y + 2 * _table_padding_y);
+}
+
+Utils::vec2 Table::Get_top_left() const {
+	return Utils::vec2(_left_top.x - _table_padding_x, _left_top.y - _table_padding_y);
 }
