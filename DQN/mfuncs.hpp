@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <cstdlib>
+#include <ctime>
+#include <random>
 
 namespace mfuncs { //Mathematical Functions
 	//get max value

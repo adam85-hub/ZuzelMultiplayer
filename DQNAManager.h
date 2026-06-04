@@ -9,7 +9,7 @@ struct DQNAssets {
 	std::shared_ptr<FNNDQNA> dqnAgent;
 	
 	size_t getAction(const std::shared_ptr<DQNState> state);
-	void update(const FNN& fnn);
+	void update(const FNN& fnn, bool clearEpsilon = false);
 };
 
 class DQNAManager { //Deep-Q-Learning Agent Manager

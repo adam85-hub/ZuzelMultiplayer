@@ -52,14 +52,24 @@ std::vector<double> mfuncs::softmax(const std::vector<double>& vec) {
 }
 
 double mfuncs::getRandomDouble(double a, double b) {
-	return a + (static_cast<double>(rand()) / static_cast<double>(RAND_MAX)) * (b - a);
+	thread_local std::random_device rd;
+	thread_local std::mt19937 gen(rd());
+
+	std::uniform_real_distribution<double> distrib(a, b);
+
+	return distrib(gen);
 }
 
 int mfuncs::getRandomInteger(int a, int b) {
-	return a + (rand() % (b - a + 1));
+	thread_local std::random_device rd;
+	thread_local std::mt19937 gen(rd());
+
+	std::uniform_int_distribution<> distrib(a, b);
+	return distrib(gen);
 }
 
 std::vector<int> mfuncs::getNRandomUniqueIntegers(int a, int b, size_t n) {
+	srand(time(NULL));
 	size_t len = b - a + 1;
 	
 	if (n < len || n <= 0) return std::vector<int>(0);

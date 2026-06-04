@@ -8,6 +8,14 @@ FNNDQNA::FNNDQNA(
 
 DQNHyperParams FNNDQNA::getParams() const { return params; }
 
+void FNNDQNA::setParams(const DQNHyperParams& params) {	this->params = params; }
+void FNNDQNA::updateNNs(std::shared_ptr<FNN> main, std::shared_ptr<FNN> target) {
+	this->main = main;
+	this->target = target;
+}
+
+std::shared_ptr<FNN> FNNDQNA::getTargetNN() const { return target; }
+
 size_t FNNDQNA::act(const DQNState& state) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
@@ -30,7 +38,7 @@ void FNNDQNA::remember(const std::vector<double>& state, size_t action, double r
 
 void FNNDQNA::replayLearn() { // Replay previous experiences and learn on the mistakes
 	if (memory.size() < params.batchSize) return; //if memory is smaller than the minimum amount to learn, return. 
-	std::cout << "Memory size: " << memory.size() << "\n";
+	//std::cout << "Memory size: " << memory.size() << "\n";
 	auto batch = getMemoryBatch(); // get random batch of previous memories
 
 	for (const Transition& transition : batch) {
@@ -53,7 +61,7 @@ std::vector<Transition> FNNDQNA::getMemoryBatch() {
 }
 
 void FNNDQNA::updateTargetNN() {
-	(*target).cloneWeights(*main);
+	target->cloneWeights(*main);
 }
 
 double FNNDQNA::getTargetValue(const Transition& transition) {

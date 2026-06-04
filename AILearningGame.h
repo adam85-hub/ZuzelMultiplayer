@@ -23,5 +23,18 @@ private:
 	std::shared_ptr<SpeedwayState> _previous_state = 0;
 	size_t _previous_action;
 	size_t _update_iterator = 0;
+	size_t _total_updates = 0;
+
+	void AI_players_act(Player** players, size_t player_count, size_t skipped_players = 0);
+	void handle_learning(
+		PlayerAI* learning_player,
+		size_t frame_skip,
+		size_t nn_learning_frame_interval,
+		size_t nn_learning_epoch_frame_size,
+		bool restart_on_board_hit = false,
+		size_t learning_player_id = 0
+	);
+	void remember_transition(PlayerAI* learning_player, std::shared_ptr<SpeedwayState> state);
+	PlayerAI* get_learning_player(Player** players, size_t learning_player_id = 0);
 };
 

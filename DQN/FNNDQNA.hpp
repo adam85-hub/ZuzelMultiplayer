@@ -31,6 +31,11 @@ public:
 		std::shared_ptr<FNN> target
 	);
 	DQNHyperParams getParams() const;
+	void setParams(const DQNHyperParams& params);
+
+	void updateNNs(std::shared_ptr<FNN> main, std::shared_ptr<FNN> target);
+
+	std::shared_ptr<FNN> getTargetNN() const;
 
 	size_t act(const DQNState& state);
 	void remember(
