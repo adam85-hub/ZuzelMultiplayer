@@ -38,6 +38,7 @@ public:
 	std::shared_ptr<FNN> getTargetNN() const;
 
 	size_t act(const DQNState& state);
+	size_t act(const std::vector<double>& stateVec);
 	void remember(
 		const std::vector<double>& state,
 		size_t action, 

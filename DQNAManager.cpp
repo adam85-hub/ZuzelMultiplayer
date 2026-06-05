@@ -1,18 +1,18 @@
 #include "DQNAManager.h"
 #include <memory>
 
-constexpr size_t HIDDEN_LAYERS_SIZE = 128;
+
 
 DQNAssets DQNAManager::initAgent() {
 	std::shared_ptr<FNN> mainFNN = std::make_shared<FNN>(), targetFNN = std::make_shared<FNN>();
-	mainFNN->addInputLayer(PARAM_COUNT);
+	mainFNN->addInputLayer(PARAM_COUNT * STATES_TO_PROCESS);
 	mainFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	mainFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	mainFNN->addOutputLayer(ACTION_COUNT);
 	mainFNN->setActivationFunction(AFunc::RELU);
 	mainFNN->setOutputLayerActivationFunction(AFunc::LINEAR);
 
-	targetFNN->addInputLayer(PARAM_COUNT);
+	targetFNN->addInputLayer(PARAM_COUNT * STATES_TO_PROCESS);
 	targetFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	targetFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	targetFNN->addOutputLayer(2);

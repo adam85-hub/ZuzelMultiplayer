@@ -17,17 +17,25 @@ void FNNDQNA::updateNNs(std::shared_ptr<FNN> main, std::shared_ptr<FNN> target) 
 std::shared_ptr<FNN> FNNDQNA::getTargetNN() const { return target; }
 
 size_t FNNDQNA::act(const DQNState& state) {
+	return act(state.serialise());
+}
+
+size_t FNNDQNA::act(const std::vector<double>& stateVec) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));
-	main->process(state.serialise());
+	main->process(stateVec);
 	std::vector<double> qValues = main->getOutput();
 	return mfuncs::maxIndex(qValues);
-
 }
 
-void FNNDQNA::remember(const std::vector<double>& state, size_t action, double reward,
-	const std::vector<double>& nextState, bool finished) {
+void FNNDQNA::remember(
+	const std::vector<double>& state, 
+	size_t action, 
+	double reward,
+	const std::vector<double>& nextState, 
+	bool finished
+) {
 
 	memory.push_back({ state, action, reward, nextState, finished });
 

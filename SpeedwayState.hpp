@@ -3,7 +3,7 @@
 #include <cmath>
 #include <array>
 
-constexpr size_t MAX_DISTANCE = 1500;
+constexpr size_t MAX_DISTANCE = 1200;
 constexpr size_t MAX_VELOCITY = 8;
 constexpr size_t DISTANCE_COUNT = 8;
 constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 12;

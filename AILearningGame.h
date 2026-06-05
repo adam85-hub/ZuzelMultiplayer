@@ -20,11 +20,14 @@ private:
 	ALLEGRO_FONT* _font;
 
 	size_t _epochs = 0;
-	std::shared_ptr<SpeedwayState> _previous_state = 0;
+	std::shared_ptr<SpeedwayState> _previous_state = nullptr;
 	size_t _previous_action;
 	size_t _update_iterator = 0;
 	size_t _total_updates = 0;
+	double _cumulative_reward = 0;
 
+	std::deque<std::vector<double>> _serialised_states;
+	std::vector<double> _previous_serialised_states;
 	void AI_players_act(Player** players, size_t player_count, size_t skipped_players = 0);
 	void handle_learning(
 		PlayerAI* learning_player,
@@ -34,7 +37,14 @@ private:
 		bool restart_on_board_hit = false,
 		size_t learning_player_id = 0
 	);
-	void remember_transition(PlayerAI* learning_player, std::shared_ptr<SpeedwayState> state);
+	void remember_transition(
+		PlayerAI* learning_player,
+		std::shared_ptr<SpeedwayState> state,
+		double reward,
+		bool restart_on_board_hit = false
+	);
 	PlayerAI* get_learning_player(Player** players, size_t learning_player_id = 0);
+	std::vector<double> get_serialised_states();
+	void save_state(std::shared_ptr<SpeedwayState> state);
 };
 

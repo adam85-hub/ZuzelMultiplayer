@@ -7,18 +7,20 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-static double calculateReward(const SpeedwayState& stateBefore, size_t action, const SpeedwayState& stateAfter) {
+static double calculateReward(const SpeedwayState& stateBefore, const SpeedwayState& stateAfter) {
 	double reward = 0.0;
 
-	if (stateAfter.isHittingBoard) return -3000.0;
+	if (stateAfter.isHittingBoard) reward -= 30.0;
 	if (stateAfter.isHittingPlayer)	reward -= 10.0;
 
-	if (stateAfter.isPassingCheckpoint) { reward += 100.0; }
+	if (stateAfter.isPassingCheckpoint) reward += 150.0;
+	else {
+		double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
+		if(distanceImprovement > 0) reward += distanceImprovement * 50.0;
+	}
+	
 
-	double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-	if(distanceImprovement > 0) reward += distanceImprovement * 4.0;
-
-	reward -= 10; //existential penalty. time is passing, agent must be quick!!
+	reward -= 0.01; //existential penalty. time is passing, agent must be quick!!
 
 	//double velocityDifference = stateAfter.velocity[0] - stateBefore.velocity[0] + stateAfter.velocity[1] - stateBefore.velocity[1];
 	//reward -= velocityDifference * 1.0;
@@ -38,7 +40,7 @@ void AILearningGame::Init() {
 	_current_scene = new RaceScene(&_game_commands, 1, 3);
 
 	_dqnAssets = DQNAManager::initAgent();
-	_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-04_22-09-43"), false);
+	//_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-05_15-37-01"), false);
 	
 	_key_states = new unsigned char[ALLEGRO_KEY_MAX];
 	_font = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 18, 0);
@@ -60,7 +62,7 @@ void AILearningGame::Update(KeyStatesTable _) {
 
 	auto learning_player = get_learning_player(players);
 
-	handle_learning(learning_player, 4, 10000, 30000, true, 0);
+	handle_learning(learning_player, 2, 10000, 30000, false, 0);
 
 	_update_iterator++;
 	_total_updates++;
@@ -69,8 +71,8 @@ void AILearningGame::Update(KeyStatesTable _) {
 
 void AILearningGame::Render() const {
 	
-	//Utils::draw_polish_text(_font, al_map_rgb(255, 255, 255), c_RENDER_WIDTH / 2, c_RENDER_HEIGHT / 2, Utils::ALIGN_CENTER_XY, "Learning...");
-	_current_scene->Render();
+	Utils::draw_polish_text(_font, al_map_rgb(255, 255, 255), c_RENDER_WIDTH / 2, c_RENDER_HEIGHT / 2, Utils::ALIGN_CENTER_XY, "Learning...");
+	//_current_scene->Render();
 }
 
 void AILearningGame::press_key(unsigned char key) {
@@ -103,16 +105,19 @@ void AILearningGame::handle_learning(
 	size_t learning_player_id
 ) {
 	auto state = learning_player->Get_player_state();
-	remember_transition(learning_player, state);
-
+	save_state(state);
+	if(_previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, *state);
+	
 	size_t action;
-	if (frame_skip == 0 || _update_iterator % frame_skip == 0)
-		action = _dqnAssets.dqnAgent->act(*state);
-	else
-		action = _previous_action;
-
-	_previous_action = action;
-	_previous_state = state;
+	if (frame_skip == 0 || _update_iterator % frame_skip == 0) {
+		if(_previous_state != nullptr) remember_transition(learning_player, state, _cumulative_reward);
+		action = _dqnAssets.dqnAgent->act(get_serialised_states());
+		_previous_state = state;
+		_previous_serialised_states = get_serialised_states();
+		_previous_action = action;
+		_cumulative_reward = 0;
+	} else action = _previous_action;
+	
 
 	//if (
 	//	(_update_iterator > 0 && _update_iterator % nn_learning_frame_interval == 0)
@@ -133,7 +138,10 @@ void AILearningGame::handle_learning(
 			
 		_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
 		
-		
+		if (_epochs > 0 && _epochs % 50 == 0) {
+			NNFileManager::saveFNN(*(_dqnAssets.dqnAgent->getTargetNN()), "C:/Users/zimor/Documents/");
+			std::cout << "SAVED FNN!\n";
+		}
 	}
 
 	//}
@@ -142,25 +150,24 @@ void AILearningGame::handle_learning(
 		_dqnAssets.dqnAgent->updateTargetNN();
 	}
 
-	 //zapis co 2000 epok
-	if (_epochs > 0 && _epochs % 5000 == 0) 
-		NNFileManager::saveFNN(*(_dqnAssets.dqnAgent->getTargetNN()), "C:/Users/zimor/Documents/");
-
 	// zmiana stanu klawiatury
 	if (action) _key_states[_current_scene->Get_turn_buttons()[learning_player_id]] |= c_KEY_DOWN;
 }
 
-void AILearningGame::remember_transition(PlayerAI* learning_player, std::shared_ptr<SpeedwayState> state) {
-	if (_previous_state != 0) {
-		bool finished = learning_player->Has_finished() || state->isHittingBoard;
-		_dqnAssets.dqnAgent->remember(
-			_previous_state->serialise(),
-			_previous_action,
-			calculateReward(*_previous_state, _previous_action, *state),
-			state->serialise(),
-			finished
-		);
-	}
+void AILearningGame::remember_transition(
+	PlayerAI* learning_player, 
+	std::shared_ptr<SpeedwayState> currentState, 
+	double reward, 
+	bool restart_on_board_hit
+) {
+	bool finished = learning_player->Has_finished() || (currentState->isHittingBoard && restart_on_board_hit);
+	_dqnAssets.dqnAgent->remember(
+		_previous_serialised_states,
+		_previous_action,
+		reward,
+		get_serialised_states(),
+		finished
+	);
 }
 
 PlayerAI* AILearningGame::get_learning_player(Player** players, size_t learning_player_id) {
@@ -171,4 +178,23 @@ PlayerAI* AILearningGame::get_learning_player(Player** players, size_t learning_
 		return nullptr;
 	}
 	return learning_player;
+}
+
+std::vector<double> AILearningGame::get_serialised_states() {
+	std::vector<double> states;
+	for (const auto& s : _serialised_states) {
+		states.insert(states.end(), s.begin(), s.end());
+	}
+	return states;
+}
+
+void AILearningGame::save_state(std::shared_ptr<SpeedwayState> state) {
+	auto stateVec = state->serialise();
+	if (_serialised_states.empty()) {
+		for (int i = 0; i < STATES_TO_PROCESS; i++)
+			_serialised_states.push_back(stateVec);
+		return;
+	}
+	if (_serialised_states.size() >= STATES_TO_PROCESS) _serialised_states.pop_front();
+	_serialised_states.push_back(stateVec);
 }
