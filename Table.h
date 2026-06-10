@@ -16,6 +16,7 @@ public:
 
 	Utils::vec2 Get_size() const;
 	Utils::vec2 Get_top_left() const;
+	Utils::vec2 Get_bottom_right() const;
 protected:
 	void draw_title_row() const;
 	void calculate_size();

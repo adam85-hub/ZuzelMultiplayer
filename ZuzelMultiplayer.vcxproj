@@ -148,6 +148,9 @@
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Option.cpp" />
+    <ClCompile Include="OptionWithValue.cpp" />
     <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAI.cpp" />
@@ -193,7 +196,10 @@
     <ClCompile Include="SC_M_Update.cpp" />
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="line.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="NewTrackScene.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="OptionWithValue.h" />
     <ClInclude Include="PauseScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAI.h" />

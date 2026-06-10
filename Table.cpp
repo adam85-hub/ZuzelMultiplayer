@@ -55,3 +55,7 @@ Utils::vec2 Table::Get_size() const {
 Utils::vec2 Table::Get_top_left() const {
 	return Utils::vec2(_left_top.x - _table_padding_x, _left_top.y - _table_padding_y);
 }
+
+Utils::vec2 Table::Get_bottom_right() const {
+	return _left_top + _size;
+}
