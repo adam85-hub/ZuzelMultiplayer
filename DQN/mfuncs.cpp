@@ -31,6 +31,12 @@ double mfuncs::ReLU(double x) {
 double mfuncs::dReLU(double x) {
 	return (x >= 0 ? 1 : 0);
 }
+double mfuncs::lReLU(double x) {
+	return max(RELU_LEAKAGE_RATE * x, x);
+}
+double mfuncs::dLReLU(double x) {
+	return (x >= 0 ? 1 : RELU_LEAKAGE_RATE);
+}
 double mfuncs::tanh(double x) {
 	return (std::exp(x) - std::exp(-x)) / (std::exp(x) + std::exp(-x));
 }

@@ -69,7 +69,7 @@ std::vector<Transition> FNNDQNA::getMemoryBatch() {
 }
 
 void FNNDQNA::updateTargetNN() {
-	target->cloneWeights(*main);
+	target->cloneWeights(main);
 }
 
 double FNNDQNA::getTargetValue(const Transition& transition) {

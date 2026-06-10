@@ -9,20 +9,20 @@ DQNAssets DQNAManager::initAgent() {
 	mainFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	mainFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	mainFNN->addOutputLayer(ACTION_COUNT);
-	mainFNN->setActivationFunction(AFunc::RELU);
+	mainFNN->setActivationFunction(AFunc::L_RELU);
 	mainFNN->setOutputLayerActivationFunction(AFunc::LINEAR);
 
 	targetFNN->addInputLayer(PARAM_COUNT * STATES_TO_PROCESS);
 	targetFNN->addLayer(HIDDEN_LAYERS_SIZE);
 	targetFNN->addLayer(HIDDEN_LAYERS_SIZE);
-	targetFNN->addOutputLayer(2);
-	targetFNN->setActivationFunction(AFunc::RELU);
+	targetFNN->addOutputLayer(ACTION_COUNT);
+	targetFNN->setActivationFunction(AFunc::L_RELU);
 	targetFNN->setOutputLayerActivationFunction(AFunc::LINEAR);
 
-	targetFNN->cloneWeights(*mainFNN);
+	targetFNN->cloneWeights(mainFNN);
 
 	// gamma | epsilon | epsilonMin | epsilonDecayRate | batchSize | actionsCount | memory
-	DQNHyperParams params{ 0.995, 1.0, 0.01, 0.9999, 64, ACTION_COUNT, 90000 };
+	DQNHyperParams params{ 0.995, 1.0, 0.05, 0.99998, 64, ACTION_COUNT, 90000 };
 
 	std::shared_ptr<FNNDQNA> dqnAgent = std::make_shared<FNNDQNA>(params, mainFNN, targetFNN);
 

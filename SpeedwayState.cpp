@@ -36,7 +36,11 @@ SpeedwayState::SpeedwayState(
 	isHittingBoard(isHittingBoard),
 	isHittingPlayer(isHittingPlayer),
 	isPassingCheckpoint(isPassingCheckpoint)
-{}
+{
+	double velocityAngle = std::atan2(velocity[1], velocity[0]);
+	double slipAngle = velocityAngle - absAngle;
+	this->slipAngle = { std::sin(slipAngle), std::cos(slipAngle) };
+}
 
 std::vector<double> SpeedwayState::serialise() const {
 	std::vector<double> stateVec{};
@@ -52,8 +56,10 @@ std::vector<double> SpeedwayState::serialise() const {
 	stateVec.push_back(playerDistance);
 	for (double pa : playerAngle) stateVec.push_back(pa);
 
-	//stateVec.push_back(static_cast<double>(isHittingBoard));
+	for (double sa : slipAngle) stateVec.push_back(sa);
+
+	stateVec.push_back(static_cast<double>(isHittingBoard));
 	stateVec.push_back(static_cast<double>(isHittingPlayer));
-	stateVec.push_back(static_cast<double>(isPassingCheckpoint));
+	//stateVec.push_back(static_cast<double>(isPassingCheckpoint));
 	return stateVec;
 }

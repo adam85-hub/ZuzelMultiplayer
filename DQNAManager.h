@@ -4,7 +4,7 @@
 #include "SpeedwayState.hpp"
 
 constexpr size_t HIDDEN_LAYERS_SIZE = 128;
-constexpr size_t STATES_TO_PROCESS = 3;
+constexpr size_t STATES_TO_PROCESS = 8;
 
 struct DQNAssets {
 	std::shared_ptr<FNN> main;

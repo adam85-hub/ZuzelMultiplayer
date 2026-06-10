@@ -6,7 +6,7 @@
 constexpr size_t MAX_DISTANCE = 1200;
 constexpr size_t MAX_VELOCITY = 8;
 constexpr size_t DISTANCE_COUNT = 8;
-constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 12;
+constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 14;
 constexpr size_t ACTION_COUNT = 2;
 
 struct SpeedwayState : DQNState {
@@ -17,6 +17,7 @@ struct SpeedwayState : DQNState {
 	std::array<double, 2> checkpointAngle;				//Sin and cos of the angle at which the checkpoint-player distance is the smallest
 	double playerDistance;								//Distance from the player to the nearest other player
 	std::array<double, 2> playerAngle;					//Sin and cos of the angle between the player and the nearest other player
+	std::array<double, 2> slipAngle;					//Relative velocity angle		
 	bool isHittingBoard;								//Indicator of the player hitting the boards
 	bool isHittingPlayer;								//Indicator of the player hitting other player
 	bool isPassingCheckpoint;							//Indicator of the player passing a checkpoint			

@@ -7,23 +7,37 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-static double calculateReward(const SpeedwayState& stateBefore, const SpeedwayState& stateAfter) {
+static double calculateReward(const SpeedwayState& stateBefore, size_t action, const SpeedwayState& stateAfter) {
 	double reward = 0.0;
 
-	if (stateAfter.isHittingBoard) reward -= 30.0;
+	if (stateAfter.isHittingBoard) {
+		if (action == 1) reward -= 10.0;
+		else reward -= 20.0;
+	}
 	if (stateAfter.isHittingPlayer)	reward -= 10.0;
 
-	if (stateAfter.isPassingCheckpoint) reward += 150.0;
+	if (stateAfter.isPassingCheckpoint || stateBefore.isPassingCheckpoint) reward += 150.0;
 	else {
 		double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-		if(distanceImprovement > 0) reward += distanceImprovement * 50.0;
+		reward += distanceImprovement * 50.0;
 	}
-	
 
-	reward -= 0.01; //existential penalty. time is passing, agent must be quick!!
+	//if (stateBefore.isHittingBoard && action == 1) reward += 20.0;
 
-	//double velocityDifference = stateAfter.velocity[0] - stateBefore.velocity[0] + stateAfter.velocity[1] - stateBefore.velocity[1];
-	//reward -= velocityDifference * 1.0;
+	if ((stateAfter.distances[0] < 0.05 || stateAfter.distances[6] < 0.05) && action == 0) reward -= 5.0;
+	if ((stateAfter.distances[2] < 0.05 
+			|| stateAfter.distances[3] < 0.05 
+			|| stateAfter.distances[4] < 0.05)	
+		&& action == 0) reward -= 5.0;
+	//if (stateBefore.distances[3] + stateBefore.distances[4] + stateBefore.distances[2] > 2 && action == 1) reward -= 5.0;
+
+	reward -= 0.1; //existential penalty. time is passing, agent must be quick!!
+
+	//double speedBefore = std::hypot(stateBefore.velocity[0], stateBefore.velocity[1]);
+	//double speedAfter = std::hypot(stateAfter.velocity[0], stateAfter.velocity[1]);
+
+	//double speedDrop = speedBefore - speedAfter;
+	//if (speedDrop > 0.0) reward -= speedDrop * 1.0;
 	
 	//if (action == 1 && stateAfter.isHittingBoard == false && stateBefore.isHittingBoard == false) reward -= 4.0;
 
@@ -40,7 +54,7 @@ void AILearningGame::Init() {
 	_current_scene = new RaceScene(&_game_commands, 1, 3);
 
 	_dqnAssets = DQNAManager::initAgent();
-	//_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-05_15-37-01"), false);
+	//_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-07_21-59-37_EPOKA300"), false);
 	
 	_key_states = new unsigned char[ALLEGRO_KEY_MAX];
 	_font = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 18, 0);
@@ -58,7 +72,7 @@ void AILearningGame::Update(KeyStatesTable _) {
 	auto players = _current_scene->Get_players();
 	auto player_count = _current_scene->Get_player_count();
 
-	AI_players_act(players, player_count, 1); // skipujemy pierwszego gracza, on ma sie uczyc.
+	//AI_players_act(players, player_count, 1); // skipujemy pierwszego gracza, on ma sie uczyc.
 
 	auto learning_player = get_learning_player(players);
 
@@ -106,7 +120,7 @@ void AILearningGame::handle_learning(
 ) {
 	auto state = learning_player->Get_player_state();
 	save_state(state);
-	if(_previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, *state);
+	if(_previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, _previous_action, *state);
 	
 	size_t action;
 	if (frame_skip == 0 || _update_iterator % frame_skip == 0) {
@@ -116,6 +130,8 @@ void AILearningGame::handle_learning(
 		_previous_serialised_states = get_serialised_states();
 		_previous_action = action;
 		_cumulative_reward = 0;
+
+		_dqnAssets.dqnAgent->replayLearn();
 	} else action = _previous_action;
 	
 
@@ -124,8 +140,7 @@ void AILearningGame::handle_learning(
 	//	|| _current_scene->Get_paused()
 	//	|| (restart_on_board_hit && state->isHittingBoard)
 	//) {
-	_dqnAssets.dqnAgent->replayLearn();
-
+	
 	if (
 		_update_iterator == nn_learning_epoch_frame_size
 		|| _current_scene->Get_paused()
@@ -138,7 +153,7 @@ void AILearningGame::handle_learning(
 			
 		_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
 		
-		if (_epochs > 0 && _epochs % 50 == 0) {
+		if (_epochs > 0 && _epochs % 500 == 0) {
 			NNFileManager::saveFNN(*(_dqnAssets.dqnAgent->getTargetNN()), "C:/Users/zimor/Documents/");
 			std::cout << "SAVED FNN!\n";
 		}
@@ -146,7 +161,7 @@ void AILearningGame::handle_learning(
 
 	//}
 
-	if (_total_updates > 0 && _total_updates % 5000 == 0) {
+	if (_total_updates > 0 && _total_updates % 30000 == 0) {
 		_dqnAssets.dqnAgent->updateTargetNN();
 	}
 
