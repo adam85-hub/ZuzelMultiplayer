@@ -4,6 +4,7 @@ RaceStats* RaceScene::create_race_stats() const {
 	RaceStats* stats = new RaceStats;
 
 	stats->player_count = _number_of_players;
+	stats->lap_count = _number_of_laps;
 
 	stats->player_order = new int[_number_of_players];
 	for (int i = 0; i < _number_of_players; i++)

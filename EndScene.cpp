@@ -1,6 +1,8 @@
 #include "EndScene.h"
 #include "draw_polish_text.h"
 #include <allegro5/allegro_ttf.h>
+#include "MenuScene.h"
+#include "RaceScene.h"
 
 EndScene::EndScene(GameCommands* game_commands, RaceStats* race_stats) : 
 	Scene(game_commands),
@@ -9,18 +11,27 @@ EndScene::EndScene(GameCommands* game_commands, RaceStats* race_stats) :
 {
 	_font_title = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 5, 0);
 	_title_height = al_get_font_line_height(_font_title);
-	_font_menu = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 20, 0);
-	_menu_line_height = al_get_font_line_height(_font_menu) + 20;
+
+	_menu = std::make_unique<Menu>(Utils::vec2(c_RENDER_WIDTH/2, _results_table.Get_bottom_right().y + c_RENDER_HEIGHT/18));
+
+	_menu->Add_option(new Option("Zagraj ponownie", [this]() {
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _race_stats->player_count, _race_stats->lap_count));
+		}));
+	_menu->Add_option(new Option("Powrót do menu", [this]() {
+		_game_commands->switch_scene.Execute(new MenuScene(_game_commands));
+		}));
+	_menu->Add_option(new Option("WyjdŸ z gry", [this]() {
+		_game_commands->exit.Execute(true);
+		}));
 }
 
 EndScene::~EndScene() {
 	al_destroy_font(_font_title);
-	al_destroy_font(_font_menu);
 	delete _race_stats;
 }
 
 void EndScene::Update(KeyStatesTable key_states) {
-
+	_menu->Update(key_states);
 }
 
 void EndScene::Render() {
@@ -31,11 +42,5 @@ void EndScene::Render() {
 
 	_results_table.Render();
 
-	float menu_top = _results_table.Get_bottom_right().y + 40.f;
-
-	for (int i = 0; i < _option_count; i++) {
-		ALLEGRO_COLOR color = i == _selected_option ? c_SELECTED_OPTION : white;
-		Utils::draw_polish_text(_font_menu, color, c_RENDER_WIDTH / 2, menu_top + _menu_line_height * i,
-			ALLEGRO_ALIGN_CENTER, _options[i]);
-	}
+	_menu->Render();
 }

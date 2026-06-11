@@ -1,6 +1,9 @@
 #pragma once
+#include <memory>
+
 #include "Scene.h"
 #include "ResultsTable.h"
+#include "Menu.h"
 
 #include <allegro5/allegro_font.h>
 
@@ -13,14 +16,10 @@ public:
 	void Render() override;
 private:
 	ALLEGRO_FONT* _font_title;
-	ALLEGRO_FONT* _font_menu;
 	ResultsTable _results_table;
 	RaceStats* _race_stats;
+	std::unique_ptr<Menu> _menu;
 
 	float _title_height;
-	float _menu_line_height;
-	int _selected_option = 0;
-	static constexpr int _option_count = 2;
-	std::string _options[_option_count] = { "Zagraj ponownie", "Powrót do menu" };
 };
 
