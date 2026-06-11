@@ -19,6 +19,6 @@ private:
 	const float _title_top = c_RENDER_HEIGHT / 3;
 	Utils::ResourceManager _resource_manager;
 	ALLEGRO_FONT* _font_title;
-	ALLEGRO_COLOR _color_background = al_map_rgba(30, 30, 30, 210);
+	ALLEGRO_COLOR _color_background = al_map_rgba(30, 30, 30, 225);
 };	
 
