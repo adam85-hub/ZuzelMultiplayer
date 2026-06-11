@@ -14,7 +14,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		return;
 	}
 	
-	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
+	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED or key_states[ALLEGRO_KEY_ESCAPE] & c_KEY_PRESSED) {
 		pause();
 	}
 	

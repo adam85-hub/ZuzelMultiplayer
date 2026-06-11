@@ -34,7 +34,7 @@ PauseScene::~PauseScene() {
 }
 
 void PauseScene::Update(KeyStatesTable key_states) {
-	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
+	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED or key_states[ALLEGRO_KEY_ESCAPE] & c_KEY_PRESSED) {
 		_unpause_cmd->Execute(true);
 	}
 

@@ -26,11 +26,6 @@ void GameManager::run_main_loop() {
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
 			case ALLEGRO_EVENT_KEY_DOWN:
-				if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) { // only for debug
-					_game->Exit();
-					break;
-				}
-
 				update_key_states(key_states, event.type, event.keyboard.keycode);
 				break;
 			case ALLEGRO_EVENT_DISPLAY_CLOSE: 

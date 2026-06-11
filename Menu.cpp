@@ -21,7 +21,7 @@ Menu::~Menu() {
 void Menu::Update(KeyStatesTable key_states) {
 	if (key_states[ALLEGRO_KEY_UP] & c_KEY_PRESSED and _selected_option > 0)
 		_selected_option--;
-	else if (key_states[ALLEGRO_KEY_DOWN] & c_KEY_PRESSED and _selected_option < _options.size())
+	else if (key_states[ALLEGRO_KEY_DOWN] & c_KEY_PRESSED and _selected_option < _options.size()-1)
 		_selected_option++;
 	
 	if (key_states[ALLEGRO_KEY_LEFT] & c_KEY_PRESSED)
