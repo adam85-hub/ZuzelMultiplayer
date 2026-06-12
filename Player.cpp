@@ -75,7 +75,7 @@ float Player::wall_deceleration(float velocity) {
 	if (velocity <= 2.f)
 		return .0f;
 
-	return -0.08f;
+	return -0.04f;
 }
 
 void Player::Move(Utils::vec2 force)
