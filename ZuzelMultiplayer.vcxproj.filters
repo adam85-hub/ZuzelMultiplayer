@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Scenes\RaceScene">
       <UniqueIdentifier>{b0562c18-6be9-467f-a52b-f1c73b0a23af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{92ccb9ef-0811-4918-a118-146e61d40abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{81b3eaab-a526-46b8-ac04-39cd9e773ff1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -144,9 +150,6 @@
     <ClCompile Include="SC_R_add_checkpoints.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
@@ -159,17 +162,35 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
-    <ClCompile Include="PauseScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SC_R_pause.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
     <ClCompile Include="EndScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="SC_R_create_race_stats.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAI.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionWithValue.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultsTable.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Table.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,8 +287,20 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
+    <ClInclude Include="ResultsTable.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Table.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionWithValue.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
