@@ -26,6 +26,8 @@ size_t FNNDQNA::act(const std::vector<double>& stateVec) {
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));
 	main->process(stateVec);
 	std::vector<double> qValues = main->getOutput();
+	//size_t action = mfuncs::maxIndex(qValues);
+	//std::cout << "Epsilon: " << params.epsilon << " | Q_PROSTO: " << qValues[0] << " | Q_SKRET: " << qValues[1] << " | AKCJA: " << action << "\n";
 	return mfuncs::maxIndex(qValues);
 }
 

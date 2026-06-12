@@ -86,18 +86,19 @@ void PlayerAI::update_sensors() {
             }
         }
 
-        _distances[i] = hit ? minDistance : -1.0f;
+        _distances[i] = hit ? minDistance : 1200.0f;
     }
 }
 
 
 void PlayerAI::Update(bool is_turning) {
-
     Player::Update(is_turning);
-
+    
     this->update_sensors();
     this->update_distance_to_next_checkpoint();
 	this->update_degree_to_next_checkpoint();
+    _player_state = Get_player_state();
+    _previous_position = position;
 };
 
 void PlayerAI::Render() const {
@@ -107,14 +108,10 @@ void PlayerAI::Render() const {
 }
 
 std::array<double, 2> PlayerAI::calculate_velocity_components() const {
-    float angle = Get_rotation();
+    float velX = position.x - _previous_position.x;
+    float velY = -(position.y - _previous_position.y);
 
-    float dirX = cosf(-angle);
-    float dirY = sinf(-angle);
-
-    float vel = Get_velocity();
-    
-    return { vel * dirX, vel * dirY };
+    return { velX, velY };
 }
 
 // --- Render ---
@@ -149,14 +146,15 @@ void PlayerAI::update_distance_to_next_checkpoint()
 
 void PlayerAI::update_degree_to_next_checkpoint()
 {
-    Utils::line nextCheckpoint = _checkpoints[this->Get_current_checkpoint_index()];
-	Utils::vec2 v1 = line_postion.b - line_postion.a; // wektor kierunku gracza
-    Utils::vec2 v2 = nextCheckpoint.b - nextCheckpoint.a; // wektor kierunku checkpointu
+    Utils::line nextCP = _checkpoints[this->Get_current_checkpoint_index()];
+    Utils::vec2 cpCenter = { (nextCP.a.x + nextCP.b.x) / 2.0f, (nextCP.a.y + nextCP.b.y) / 2.0f };
 
-	float dot = v1.dot(v2);
-	float det = v1.x * v2.y - v1.y * v2.x;
+    Utils::vec2 toGoal = cpCenter - this->position;
 
-	_checkpoint_angle = atan2f(det, dot);
+    float angleToGoalGlobal = atan2f(-toGoal.y, toGoal.x);
+    float playerAngle = this->Get_rotation();
+
+    _checkpoint_angle = angleToGoalGlobal - playerAngle;
 
     //float angle_degrees = _degree_to_next_checkpoint * (180.0f / M_PI);
 	//_degree_to_next_checkpoint = angle_degrees;

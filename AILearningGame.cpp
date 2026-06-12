@@ -11,8 +11,8 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, c
 	double reward = 0.0;
 
 	if (stateAfter.isHittingBoard) {
-		if (action == 1) reward -= 10.0;
-		else reward -= 20.0;
+		if (action == 1) reward -= 100.0;
+		else reward -= 150.0;
 	}
 	if (stateAfter.isHittingPlayer)	reward -= 10.0;
 
@@ -29,6 +29,7 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, c
 			|| stateAfter.distances[3] < 0.05 
 			|| stateAfter.distances[4] < 0.05)	
 		&& action == 0) reward -= 5.0;
+	if (std::asin(stateAfter.checkpointAngle[0]) < 0.1) reward += 5.0;
 	//if (stateBefore.distances[3] + stateBefore.distances[4] + stateBefore.distances[2] > 2 && action == 1) reward -= 5.0;
 
 	reward -= 0.1; //existential penalty. time is passing, agent must be quick!!
@@ -54,7 +55,7 @@ void AILearningGame::Init() {
 	_current_scene = new RaceScene(&_game_commands, 1, 3);
 
 	_dqnAssets = DQNAManager::initAgent();
-	//_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-07_21-59-37_EPOKA300"), false);
+	//_dqnAssets.update(NNFileManager::loadFNN("C:/Users/zimor/Documents/neural_network_2026-06-11_00-44-44"), true);
 	
 	_key_states = new unsigned char[ALLEGRO_KEY_MAX];
 	_font = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 18, 0);
@@ -76,7 +77,7 @@ void AILearningGame::Update(KeyStatesTable _) {
 
 	auto learning_player = get_learning_player(players);
 
-	handle_learning(learning_player, 2, 10000, 30000, false, 0);
+	handle_learning(learning_player, 2, 10000, 30000, true, 0);
 
 	_update_iterator++;
 	_total_updates++;
@@ -85,8 +86,8 @@ void AILearningGame::Update(KeyStatesTable _) {
 
 void AILearningGame::Render() const {
 	
-	Utils::draw_polish_text(_font, al_map_rgb(255, 255, 255), c_RENDER_WIDTH / 2, c_RENDER_HEIGHT / 2, Utils::ALIGN_CENTER_XY, "Learning...");
-	//_current_scene->Render();
+	//Utils::draw_polish_text(_font, al_map_rgb(255, 255, 255), c_RENDER_WIDTH / 2, c_RENDER_HEIGHT / 2, Utils::ALIGN_CENTER_XY, "Learning...");
+	_current_scene->Render();
 }
 
 void AILearningGame::press_key(unsigned char key) {
@@ -104,7 +105,7 @@ void AILearningGame::AI_players_act(Player** players, size_t player_count, size_
 			_current_scene->Update(_key_states);
 			return;
 		}
-		std::shared_ptr<SpeedwayState> state = playerAi->Get_player_state();
+		std::shared_ptr<SpeedwayState> state = playerAi->_player_state;
 		size_t action = _dqnAssets.getAction(state);
 		if (action) _key_states[_current_scene->Get_turn_buttons()[i]] |= c_KEY_DOWN;
 	}
@@ -118,15 +119,14 @@ void AILearningGame::handle_learning(
 	bool restart_on_board_hit,
 	size_t learning_player_id
 ) {
-	auto state = learning_player->Get_player_state();
-	save_state(state);
+	auto state = learning_player->_player_state;
+	if(state != nullptr) save_state(state);
 	if(_previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, _previous_action, *state);
 	
 	size_t action;
 	if (frame_skip == 0 || _update_iterator % frame_skip == 0) {
 		if(_previous_state != nullptr) remember_transition(learning_player, state, _cumulative_reward);
 		action = _dqnAssets.dqnAgent->act(get_serialised_states());
-		_previous_state = state;
 		_previous_serialised_states = get_serialised_states();
 		_previous_action = action;
 		_cumulative_reward = 0;
@@ -134,6 +134,7 @@ void AILearningGame::handle_learning(
 		_dqnAssets.dqnAgent->replayLearn();
 	} else action = _previous_action;
 	
+	_previous_state = state;
 
 	//if (
 	//	(_update_iterator > 0 && _update_iterator % nn_learning_frame_interval == 0)
@@ -153,7 +154,7 @@ void AILearningGame::handle_learning(
 			
 		_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
 		
-		if (_epochs > 0 && _epochs % 500 == 0) {
+		if (_epochs > 0 && _epochs % 1000 == 0) {
 			NNFileManager::saveFNN(*(_dqnAssets.dqnAgent->getTargetNN()), "C:/Users/zimor/Documents/");
 			std::cout << "SAVED FNN!\n";
 		}

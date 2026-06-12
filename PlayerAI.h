@@ -32,8 +32,10 @@ public:
 	//bool touching_wall = false; jest w class Player
 	bool _is_hitting_player = false;
 	bool _is_hitting_checkpoint = false;
+	std::shared_ptr<SpeedwayState> _player_state;
 
 private:
+	Utils::vec2 _previous_position{ 0,0 };
 	static Utils::line* _barriers; //bariers table
 	static int _barriers_count;
 

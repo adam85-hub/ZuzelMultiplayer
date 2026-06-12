@@ -18,7 +18,7 @@ private:
 	std::deque<Transition> memory{};
 
 	DQNHyperParams params;
-	double learningFactor = 0.0001;
+	double learningFactor = 0.001;
 
 	std::vector<Transition> getMemoryBatch();
 	double getTargetValue(const Transition& transition);

@@ -5,7 +5,7 @@
 #include <ctime>
 #include <random>
 
-constexpr double RELU_LEAKAGE_RATE = 0.01;
+constexpr double RELU_LEAKAGE_RATE = 0.05;
 
 namespace mfuncs { //Mathematical Functions
 	//get max value
