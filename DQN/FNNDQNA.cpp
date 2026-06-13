@@ -16,19 +16,25 @@ void FNNDQNA::updateNNs(std::shared_ptr<FNN> main, std::shared_ptr<FNN> target) 
 
 std::shared_ptr<FNN> FNNDQNA::getTargetNN() const { return target; }
 
-size_t FNNDQNA::act(const DQNState& state) {
-	return act(state.serialise());
+size_t FNNDQNA::act(const DQNState& state, bool getConsoleOutput) {
+	return act(state.serialise(), getConsoleOutput);
 }
 
-size_t FNNDQNA::act(const std::vector<double>& stateVec) {
+size_t FNNDQNA::act(const std::vector<double>& stateVec, bool getConsoleOutput) {
 	double rand = mfuncs::getRandomDouble(0.0, 1.0);
 	if (rand <= params.epsilon)
 		return static_cast<size_t>(mfuncs::getRandomInteger(0, params.actionsCount - 1));
 	main->process(stateVec);
 	std::vector<double> qValues = main->getOutput();
-	//size_t action = mfuncs::maxIndex(qValues);
-	//std::cout << "Epsilon: " << params.epsilon << " | Q_PROSTO: " << qValues[0] << " | Q_SKRET: " << qValues[1] << " | AKCJA: " << action << "\n";
-	return mfuncs::maxIndex(qValues);
+	size_t action = mfuncs::maxIndex(qValues);
+	if (getConsoleOutput) {
+		std::cout << "Epsilon: " << params.epsilon;
+		for (size_t i{}; i < params.actionsCount; i++) {
+			std::cout << " | Q_" << i << ": " << qValues[0];
+		}
+		std::cout << " | ACTION: " << action << "\n";
+	}
+	return action;
 }
 
 void FNNDQNA::remember(
@@ -77,15 +83,22 @@ void FNNDQNA::updateTargetNN() {
 double FNNDQNA::getTargetValue(const Transition& transition) {
 	double targetValue = transition.reward;
 	if (!transition.finished) {
-		(*target).process(transition.nextState);
-		std::vector<double> nextQValues = (*target).getOutput();
-		double maxNextQ = mfuncs::max(nextQValues);
+		//Double DQN
+		main->process(transition.nextState);
+		std::vector<double> mainNextQValues = main->getOutput();
+		size_t bestActionNextState = mfuncs::maxIndex(mainNextQValues);
+
+		target->process(transition.nextState);
+		std::vector<double> nextQValues = target->getOutput();
+
+		//double maxNextQ = mfuncs::max(nextQValues);
+		double maxNextQ = nextQValues[bestActionNextState];
 		targetValue += params.gamma * maxNextQ;
 	}
 	return targetValue;
 }
 
 std::vector<double> FNNDQNA::getCurrentQValues(const std::vector<double>& inputVec) {
-	(*main).process(inputVec);
-	return (*main).getOutput();
+	main->process(inputVec);
+	return main->getOutput();
 }

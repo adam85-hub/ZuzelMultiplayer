@@ -3,18 +3,19 @@
 #include <cmath>
 #include <array>
 
-constexpr size_t MAX_DISTANCE = 1200;
+constexpr size_t MAX_DISTANCE = 300;
 constexpr size_t MAX_VELOCITY = 8;
 constexpr size_t DISTANCE_COUNT = 8;
-constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 14;
+constexpr size_t PARAM_COUNT = DISTANCE_COUNT + 12;
 constexpr size_t ACTION_COUNT = 2;
 
 struct SpeedwayState : DQNState {
 	std::array<double, DISTANCE_COUNT> distances;		//Set of distances from the player to the boards at different angles
 	std::array<double, 2> velocity;						//Player X and Y velocities
-	std::array<double, 2> absAngle;						//Sin and cos of the absolute player angle (angle relative to the screen)
+	//std::array<double, 2> absAngle;						//Sin and cos of the absolute player angle (angle relative to the screen)
 	double checkpointDistance;							//Distance from the player to the checkpoint
-	std::array<double, 2> checkpointAngle;				//Sin and cos of the angle at which the checkpoint-player distance is the smallest
+	//std::array<double, 2> checkpointAngle;				//Sin and cos of the angle at which the checkpoint-player distance is the smallest
+	std::array<double, 2> relativeCheckpointAngle;
 	double playerDistance;								//Distance from the player to the nearest other player
 	std::array<double, 2> playerAngle;					//Sin and cos of the angle between the player and the nearest other player
 	std::array<double, 2> slipAngle;					//Relative velocity angle		

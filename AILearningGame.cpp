@@ -7,50 +7,65 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 1000;
-constexpr bool HEADLESS = true;
-constexpr bool RESTART_ON_BOARD_HIT = true;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 312;
+constexpr size_t NN_EPOCH_FRAME_DURATION = 10000;
 
-constexpr bool LOAD_FNN = false;
-const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-11_00-44-44";
+constexpr bool HEADLESS = false;
+constexpr bool RESTART_ON_BOARD_HIT = false;
+constexpr bool RESTART_ON_WRONG_DIRECTION = false;
 
-static double calculateReward(const SpeedwayState& stateBefore, size_t action, const SpeedwayState& stateAfter) {
+constexpr bool LOAD_FNN = true;
+constexpr bool RESET_EPSILON = true;
+const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-14_00-22-38_EPOKA30312";
+
+// cosine of the vehicle-checkpoint angle, that when surpassed (|angle| > 135*), means that the vehicle is driving in the opposite way
+constexpr double LIMIT_ANGLE = -0.707; 
+
+static double calculateReward(const SpeedwayState& stateBefore, size_t action, SpeedwayState& stateAfter) {
 	double reward = 0.0;
 
 	// punishment for hitting the board. is smaller if the agent tried to turn
 	//if (RESTART_ON_BOARD_HIT && stateAfter.isHittingBoard) return -500.0;
 	if (stateAfter.isHittingBoard) {
-		if (action == 1) reward -= 100.0;
-		else reward -= 150.0;
+		//if (action == 1) reward -= 100.0;
+		//else reward -= 150.0;
+		reward -= 150.0;
 	}
+	//if (stateAfter.relativeCheckpointAngle[1] < LIMIT_ANGLE) reward -= 150.0;
 
 	//punishment for hitting a player
-	if (stateAfter.isHittingPlayer)	reward -= 10.0;
+	if (stateAfter.isHittingPlayer)	reward -= 20.0;
 
-	//reward for passing the checkpoint
-	if (stateAfter.isPassingCheckpoint || stateBefore.isPassingCheckpoint) reward += 150.0;
-	else { //reward/punishment for driving towards/away from the checkpoint
+	//reward for passing the checkpoint (only for the first time)
+	if (stateAfter.isPassingCheckpoint && !stateBefore.isPassingCheckpoint) {
+		reward += 150.0;
+		//std::cout << "!!! CHECKPOINT ZALICZONY !!!\n";
+	}
+	else if (!stateBefore.isPassingCheckpoint) { //reward/punishment for driving towards/away from the checkpoint
 		double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-		reward += distanceImprovement * 50.0;
+		reward += distanceImprovement * 2.0;
 	}
 
 	//punishment for not turning when side is close to the board
-	if ((stateAfter.distances[0] < 0.05 || stateAfter.distances[6] < 0.05) && action == 0) reward -= 5.0;
+	//if ((stateAfter.distances[0] < 0.05 || stateAfter.distances[6] < 0.05) && action == 0) reward -= 5.0;
 
 	//punishment for not turning when approaching board from the front
-	if ((stateAfter.distances[2] < 0.05 
-			|| stateAfter.distances[3] < 0.05 
-			|| stateAfter.distances[4] < 0.05)	
-		&& action == 0) reward -= 5.0;
+	//if ((stateAfter.distances[2] < 0.05 
+	//		|| stateAfter.distances[3] < 0.05 
+	//		|| stateAfter.distances[4] < 0.05)	
+	//	&& action == 0) reward -= 5.0;
 
 	//reward for being oriented towards the checkpoint
-	if (std::asin(stateAfter.checkpointAngle[0]) < 0.1) reward += 5.0;
+	//if (std::asin(stateAfter.checkpointAngle[0]) < 0.1) reward += 5.0;
 
 	//punishment for turning on a straight
 	//if (stateBefore.distances[3] + stateBefore.distances[4] + stateBefore.distances[2] > 2 && action == 1) reward -= 5.0;
 
 	//existential penalty. time is passing, agent must be quick!!
 	reward -= 0.1;
+
+	//penalty for AFKing
+	if (stateAfter.velocity[0] < 0.2 && stateAfter.velocity[1] < 0.2) reward -= 2.0;
 
 	//penalty for slowing down
 	//double speedBefore = std::hypot(stateBefore.velocity[0], stateBefore.velocity[1]);
@@ -74,7 +89,7 @@ void AILearningGame::Init() {
 	_current_scene = new RaceScene(&_game_commands, 1, 3);
 
 	_dqnAssets = DQNAManager::initAgent();
-	if(LOAD_FNN) _dqnAssets.update(NNFileManager::loadFNN(FNN_LOAD_PATH), true);
+	if(LOAD_FNN) _dqnAssets.update(NNFileManager::loadFNN(FNN_LOAD_PATH), RESET_EPSILON);
 	
 	_key_states = new unsigned char[ALLEGRO_KEY_MAX];
 	_font = al_load_ttf_font(c_MAIN_FONT_PATH, c_RENDER_HEIGHT / 18, 0);
@@ -96,7 +111,7 @@ void AILearningGame::Update(KeyStatesTable _) {
 
 	auto learning_player = get_learning_player(players);
 
-	handle_learning(learning_player, 2, 10000, 30000, RESTART_ON_BOARD_HIT, 0);
+	handle_learning(learning_player, 2, NN_EPOCH_FRAME_DURATION, RESTART_ON_BOARD_HIT, RESTART_ON_WRONG_DIRECTION, 0);
 
 	_update_iterator++;
 	_total_updates++;
@@ -132,15 +147,16 @@ void AILearningGame::AI_players_act(Player** players, size_t player_count, size_
 void AILearningGame::handle_learning(
 	PlayerAI* learning_player, 
 	size_t frame_skip,
-	size_t nn_learning_frame_interval, 
+	//size_t nn_learning_frame_interval, 
 	size_t nn_learning_epoch_frame_size,
 	bool restart_on_board_hit,
+	bool restart_on_wrong_direction,
 	size_t learning_player_id
 ) {
 	auto state = learning_player->Get_player_state();
 	
 	if (state == nullptr) std::cout << "STATE = NULLPTR!\n";
-	else if (state->isHittingBoard) std::cout << "STATE IS HITTING BOARD!!\n";
+	//else if (state->isHittingBoard) std::cout << "STATE IS HITTING BOARD!!\n";
 
 	if(state != nullptr) save_state(state);
 	if(state != nullptr && _previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, _previous_action, *state);
@@ -148,11 +164,18 @@ void AILearningGame::handle_learning(
 	size_t action;
 
 	bool is_decision_frame = frame_skip == 0 || _update_iterator % frame_skip == 0;
-	bool is_terminal_hit = state != nullptr && restart_on_board_hit && state->isHittingBoard;
+	bool is_board_hit = state != nullptr && restart_on_board_hit && state->isHittingBoard;
+	bool is_wrong_direction = state != nullptr && restart_on_wrong_direction && state->relativeCheckpointAngle[1] < LIMIT_ANGLE;
+	bool is_terminal_hit = is_board_hit || is_wrong_direction;
 
 	if (is_decision_frame || is_terminal_hit) {
-		if(_previous_state != nullptr) remember_transition(learning_player, state, _cumulative_reward);
-		action = _dqnAssets.dqnAgent->act(get_serialised_states());
+		if(_previous_state != nullptr) remember_transition(learning_player, state, _cumulative_reward, restart_on_board_hit, restart_on_wrong_direction);
+		if (!is_terminal_hit) {
+			action = _dqnAssets.dqnAgent->act(get_serialised_states());
+		}
+		else {
+			action = _previous_action; // W terminalnym stanie nie ma sensu pytać sieci o zdanie
+		}
 		_previous_serialised_states = get_serialised_states();
 		_previous_action = action;
 		_cumulative_reward = 0;
@@ -179,6 +202,7 @@ void AILearningGame::handle_learning(
 		_previous_state = nullptr;
 		_epochs++;
 		std::cout << "Epoch: " << _epochs << "\n";
+		_serialised_states.clear();
 			
 		_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
 		
@@ -202,9 +226,12 @@ void AILearningGame::remember_transition(
 	PlayerAI* learning_player, 
 	std::shared_ptr<SpeedwayState> currentState, 
 	double reward, 
-	bool restart_on_board_hit
+	bool restart_on_board_hit,
+	bool restart_on_wrong_direction
 ) {
-	bool finished = learning_player->Has_finished() || (currentState->isHittingBoard && restart_on_board_hit);
+	bool finished = learning_player->Has_finished() 
+		|| (currentState->isHittingBoard && restart_on_board_hit) 
+		|| (currentState->relativeCheckpointAngle[1] < LIMIT_ANGLE && restart_on_wrong_direction);
 	_dqnAssets.dqnAgent->remember(
 		_previous_serialised_states,
 		_previous_action,

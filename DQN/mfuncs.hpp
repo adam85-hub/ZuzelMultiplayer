@@ -7,6 +7,8 @@
 
 constexpr double RELU_LEAKAGE_RATE = 0.05;
 
+static std::mt19937 randomEngine(std::random_device{}());
+
 namespace mfuncs { //Mathematical Functions
 	//get max value
 	double max(double a, double b);

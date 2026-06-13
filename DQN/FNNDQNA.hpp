@@ -37,8 +37,8 @@ public:
 
 	std::shared_ptr<FNN> getTargetNN() const;
 
-	size_t act(const DQNState& state);
-	size_t act(const std::vector<double>& stateVec);
+	size_t act(const DQNState& state, bool getConsoleOutput = false);
+	size_t act(const std::vector<double>& stateVec, bool getConsoleOutput = false);
 	void remember(
 		const std::vector<double>& state,
 		size_t action, 

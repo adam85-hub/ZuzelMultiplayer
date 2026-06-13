@@ -68,7 +68,8 @@ std::vector<std::vector<double>> FNNBackpropA::getNeuronErrors(std::shared_ptr<F
 				//errors[layer][neuron] = 2 * (currentNeuronValue - desiredOutput[neuron]) * derivative(currentNeuronValue); - for sigmoid activation
 				//errors[layer][neuron] = currentNeuronValue - desiredOutput[neuron]; for softmax
 				double rawError = currentNeuronValue - desiredOutput[neuron];
-				errors[layer][neuron] = std::clamp(rawError, -1.0, 1.0);
+				//errors[layer][neuron] = std::clamp(rawError, -1.0, 1.0);
+				errors[layer][neuron] = rawError;
 			}
 			else {
 				nextLayerErrorSum = 0;

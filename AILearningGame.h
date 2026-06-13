@@ -32,16 +32,18 @@ private:
 	void handle_learning(
 		PlayerAI* learning_player,
 		size_t frame_skip,
-		size_t nn_learning_frame_interval,
+		//size_t nn_learning_frame_interval,
 		size_t nn_learning_epoch_frame_size,
 		bool restart_on_board_hit = false,
+		bool restart_on_wrong_direction = false,
 		size_t learning_player_id = 0
 	);
 	void remember_transition(
 		PlayerAI* learning_player,
-		std::shared_ptr<SpeedwayState> state,
+		std::shared_ptr<SpeedwayState> currentState,
 		double reward,
-		bool restart_on_board_hit = false
+		bool restart_on_board_hit,
+		bool restart_on_wrong_direction
 	);
 	PlayerAI* get_learning_player(Player** players, size_t learning_player_id = 0);
 	std::vector<double> get_serialised_states();
