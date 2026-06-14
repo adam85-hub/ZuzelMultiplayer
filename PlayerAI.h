@@ -12,6 +12,7 @@ public:
 	~PlayerAI() override = default;
 	void Update(bool is_turning) override;
 	void Render() const override;
+	bool Is_ai() const override { return true; }
 
 	static void Set_walls(Utils::line* barriers_ptr, int count);
 	static void Set_checkpoints(Utils::line* checkpoints_ptr, int count);

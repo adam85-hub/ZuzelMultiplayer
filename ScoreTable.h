@@ -23,4 +23,6 @@ private:
 	int _players_finished = 0;
 	const short _number_of_laps;
 	Timer* _race_timer;
+
+	ALLEGRO_BITMAP* _robot_bitmap;
 };

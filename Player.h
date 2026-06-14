@@ -14,6 +14,7 @@ public:
 	virtual ~Player();
 	virtual void Update(bool is_turning);
 	virtual void Render() const;
+	virtual bool Is_ai() const { return false; }
 
 	void Move(Utils::vec2 v);
 	void Update_checkpoint_and_lap(int checkpointIndex);
