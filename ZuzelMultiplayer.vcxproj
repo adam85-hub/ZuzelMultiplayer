@@ -150,6 +150,7 @@
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Option.cpp" />
+    <ClCompile Include="OptionWithBinding.cpp" />
     <ClCompile Include="OptionWithValue.cpp" />
     <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NewTrackScene.h" />
     <ClInclude Include="Option.h" />
+    <ClInclude Include="OptionWithBinding.h" />
     <ClInclude Include="OptionWithValue.h" />
     <ClInclude Include="PauseScene.h" />
     <ClInclude Include="Player.h" />
@@ -219,7 +221,6 @@
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="LOG.h" />
-    <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="NotImplementedException.h" />
     <ClInclude Include="RaceScene.h" />
