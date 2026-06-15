@@ -22,7 +22,7 @@ DQNAssets DQNAManager::initAgent() {
 	targetFNN->cloneWeights(mainFNN);
 
 	// gamma | epsilon | epsilonMin | epsilonDecayRate | batchSize | actionsCount | memory
-	DQNHyperParams params{ 0.995, 1.0, 0.05, 0.999995, 256, ACTION_COUNT, 10000 };
+	DQNHyperParams params{ 0.995, 1.0, 0.05, 0.999995, 256, ACTION_COUNT, 60000 };
 
 	std::shared_ptr<FNNDQNA> dqnAgent = std::make_shared<FNNDQNA>(params, mainFNN, targetFNN);
 
@@ -36,10 +36,12 @@ size_t DQNAssets::getAction(const std::shared_ptr<DQNState> state) {
 void DQNAssets::update(const FNN& fnn, bool clearEpsilon) {
 	main->cloneWeights(fnn);
 	target->cloneWeights(fnn);
-	if (clearEpsilon) {
-		auto params = dqnAgent->getParams();
-		params.epsilon = params.epsilonMin;
-		dqnAgent->setParams(params);
-	}
+	if (clearEpsilon) this->clearEpsilon();
 	dqnAgent->updateNNs(main, target);
+}
+
+void DQNAssets::clearEpsilon() {
+	auto params = dqnAgent->getParams();
+	params.epsilon = params.epsilonMin;
+	dqnAgent->setParams(params);
 }

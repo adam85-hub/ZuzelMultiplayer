@@ -4,6 +4,8 @@
 #include <deque>
 #include "FNNBackpropA.hpp"
 
+constexpr size_t SUPERVISED_LEARNING_EPOCH_COUNT = 3;
+
 struct DQNHyperParams { //Deep-Q-Learning parameters
 	double gamma;									// Discount - Parameter for calculating target Q values
 	double epsilon, epsilonMin, epsilonDecayRate;	// Percentage of randomly chosen actions
@@ -48,4 +50,5 @@ public:
 	);
 	void replayLearn();
 	void updateTargetNN();
+	void supervisedLearning(const std::vector<DemonstrativeTransition>& demonstrations);
 };

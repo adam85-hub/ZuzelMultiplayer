@@ -29,9 +29,7 @@ size_t FNNDQNA::act(const std::vector<double>& stateVec, bool getConsoleOutput) 
 	size_t action = mfuncs::maxIndex(qValues);
 	if (getConsoleOutput) {
 		std::cout << "Epsilon: " << params.epsilon;
-		for (size_t i{}; i < params.actionsCount; i++) {
-			std::cout << " | Q_" << i << ": " << qValues[0];
-		}
+		for (size_t i{}; i < params.actionsCount; i++) std::cout << " | Q_" << i << ": " << qValues[i];
 		std::cout << " | ACTION: " << action << "\n";
 	}
 	return action;
@@ -78,6 +76,25 @@ std::vector<Transition> FNNDQNA::getMemoryBatch() {
 
 void FNNDQNA::updateTargetNN() {
 	target->cloneWeights(main);
+}
+
+void FNNDQNA::supervisedLearning(const std::vector<DemonstrativeTransition>& demonstrations) {
+	for (int epoch = 0; epoch < SUPERVISED_LEARNING_EPOCH_COUNT; epoch++) {
+		for (const auto& transition : demonstrations) {
+
+			std::vector<double> currentQ = getCurrentQValues(transition.state);
+
+			for (size_t i{}; i < params.actionsCount; i++) {
+				if (i == transition.action) currentQ[i] = 150.0;
+				else currentQ[i] = -100.0;
+			}
+
+			FNNBackpropA::trainFNNStep(main, transition.state, currentQ, 0.001, true);
+		}
+	}
+
+	updateTargetNN();
+	std::cout << "Klonowanie zakonczone.\n";
 }
 
 double FNNDQNA::getTargetValue(const Transition& transition) {

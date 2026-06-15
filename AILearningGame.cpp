@@ -7,8 +7,8 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 312;
-constexpr size_t NN_EPOCH_FRAME_DURATION = 10000;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 100;
+constexpr size_t NN_EPOCH_FRAME_DURATION = 30000;
 
 constexpr bool HEADLESS = false;
 constexpr bool RESTART_ON_BOARD_HIT = false;
@@ -16,7 +16,9 @@ constexpr bool RESTART_ON_WRONG_DIRECTION = false;
 
 constexpr bool LOAD_FNN = true;
 constexpr bool RESET_EPSILON = true;
-const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-14_00-22-38_EPOKA30312";
+const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-15_20-44-40";
+
+static bool SUPERVISED_LEARNING = false;
 
 // cosine of the vehicle-checkpoint angle, that when surpassed (|angle| > 135*), means that the vehicle is driving in the opposite way
 constexpr double LIMIT_ANGLE = -0.707; 
@@ -29,7 +31,7 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, S
 	if (stateAfter.isHittingBoard) {
 		//if (action == 1) reward -= 100.0;
 		//else reward -= 150.0;
-		reward -= 150.0;
+		reward -= 100.0;
 	}
 	//if (stateAfter.relativeCheckpointAngle[1] < LIMIT_ANGLE) reward -= 150.0;
 
@@ -43,7 +45,7 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, S
 	}
 	else if (!stateBefore.isPassingCheckpoint) { //reward/punishment for driving towards/away from the checkpoint
 		double distanceImprovement = stateBefore.checkpointDistance - stateAfter.checkpointDistance;
-		reward += distanceImprovement * 2.0;
+		reward += distanceImprovement * 20.0;
 	}
 
 	//punishment for not turning when side is close to the board
@@ -110,12 +112,13 @@ void AILearningGame::Update(KeyStatesTable _) {
 	//AI_players_act(players, player_count, 1); // skipujemy pierwszego gracza, on ma sie uczyc.
 
 	auto learning_player = get_learning_player(players);
-
+	if (SUPERVISED_LEARNING) _key_states[_current_scene->Get_turn_buttons()[0]] = _[_current_scene->Get_turn_buttons()[0]];
 	handle_learning(learning_player, 2, NN_EPOCH_FRAME_DURATION, RESTART_ON_BOARD_HIT, RESTART_ON_WRONG_DIRECTION, 0);
 
 	_update_iterator++;
 	_total_updates++;
-	_current_scene->Update(_key_states);
+	if (SUPERVISED_LEARNING && !_key_states[ALLEGRO_KEY_R]) _current_scene->Update(_);
+	else _current_scene->Update(_key_states);
 }
 
 void AILearningGame::Render() const {
@@ -155,15 +158,40 @@ void AILearningGame::handle_learning(
 ) {
 	auto state = learning_player->Get_player_state();
 	
-	if (state == nullptr) std::cout << "STATE = NULLPTR!\n";
+	//if (state == nullptr) std::cout << "STATE = NULLPTR!\n";
 	//else if (state->isHittingBoard) std::cout << "STATE IS HITTING BOARD!!\n";
 
-	if(state != nullptr) save_state(state);
+	if (state != nullptr) save_state(state);
+
+	bool is_decision_frame = frame_skip == 0 || _update_iterator % frame_skip == 0;
+
+	if (SUPERVISED_LEARNING) {
+		if (is_decision_frame) {
+			size_t human_action = (_key_states[_current_scene->Get_turn_buttons()[0]] & c_KEY_DOWN) ? 1 : 0;
+			_demonstrative_transitions.push_back({ get_serialised_states(), human_action });
+		}
+		if (_epochs == 3) {
+			_dqnAssets.dqnAgent->supervisedLearning(_demonstrative_transitions);
+
+			_epochs = 0;
+			SUPERVISED_LEARNING = false;
+			_demonstrative_transitions.clear();
+			_dqnAssets.clearEpsilon();
+
+			_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
+			return;
+		}
+		if (state != nullptr && _current_scene->Get_paused()) {
+			_epochs++;
+			_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
+		}
+		return;
+	}
+
 	if(state != nullptr && _previous_state != nullptr) _cumulative_reward += calculateReward(*_previous_state, _previous_action, *state);
 	
 	size_t action;
 
-	bool is_decision_frame = frame_skip == 0 || _update_iterator % frame_skip == 0;
 	bool is_board_hit = state != nullptr && restart_on_board_hit && state->isHittingBoard;
 	bool is_wrong_direction = state != nullptr && restart_on_wrong_direction && state->relativeCheckpointAngle[1] < LIMIT_ANGLE;
 	bool is_terminal_hit = is_board_hit || is_wrong_direction;
@@ -174,7 +202,7 @@ void AILearningGame::handle_learning(
 			action = _dqnAssets.dqnAgent->act(get_serialised_states());
 		}
 		else {
-			action = _previous_action; // W terminalnym stanie nie ma sensu pytać sieci o zdanie
+			action = _previous_action; // w terminalnym stanie nie ma sensu pytać sieci o zdanie
 		}
 		_previous_serialised_states = get_serialised_states();
 		_previous_action = action;
@@ -207,6 +235,7 @@ void AILearningGame::handle_learning(
 		_key_states[ALLEGRO_KEY_R] |= c_KEY_PRESSED; // force restart
 		
 		if (_epochs > 0 && _epochs % NN_SAVE_EPOCH_INTERVAL == 0) {
+			_dqnAssets.dqnAgent->updateTargetNN();
 			NNFileManager::saveFNN(*(_dqnAssets.dqnAgent->getTargetNN()), "C:/Users/zimor/Documents/");
 			std::cout << "SAVED FNN!\n";
 		}

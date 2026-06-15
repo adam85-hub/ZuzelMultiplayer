@@ -8,3 +8,8 @@ struct Transition {
 	std::vector<double> nextState;
 	bool finished;
 };
+
+struct DemonstrativeTransition {
+	std::vector<double> state;
+	size_t action;
+};

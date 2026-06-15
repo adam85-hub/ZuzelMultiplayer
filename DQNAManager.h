@@ -3,7 +3,7 @@
 #include "DQN/FNNDQNA.hpp"
 #include "SpeedwayState.hpp"
 
-constexpr size_t HIDDEN_LAYERS_SIZE = 128;
+constexpr size_t HIDDEN_LAYERS_SIZE = 256;
 constexpr size_t STATES_TO_PROCESS = 8;
 
 struct DQNAssets {
@@ -13,6 +13,7 @@ struct DQNAssets {
 	
 	size_t getAction(const std::shared_ptr<DQNState> state);
 	void update(const FNN& fnn, bool clearEpsilon = false);
+	void clearEpsilon();
 };
 
 class DQNAManager { //Deep-Q-Learning Agent Manager

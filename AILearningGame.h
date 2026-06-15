@@ -28,6 +28,9 @@ private:
 
 	std::deque<std::vector<double>> _serialised_states;
 	std::vector<double> _previous_serialised_states;
+	
+	std::vector<DemonstrativeTransition> _demonstrative_transitions;
+
 	void AI_players_act(Player** players, size_t player_count, size_t skipped_players = 0);
 	void handle_learning(
 		PlayerAI* learning_player,
