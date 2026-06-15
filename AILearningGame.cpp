@@ -7,7 +7,7 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 100;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 50;
 constexpr size_t NN_EPOCH_FRAME_DURATION = 30000;
 
 constexpr bool HEADLESS = false;
@@ -15,8 +15,8 @@ constexpr bool RESTART_ON_BOARD_HIT = false;
 constexpr bool RESTART_ON_WRONG_DIRECTION = false;
 
 constexpr bool LOAD_FNN = true;
-constexpr bool RESET_EPSILON = true;
-const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-15_20-44-40";
+constexpr bool RESET_EPSILON = false;
+const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-15_21-18-26_MODEL256_40sek";
 
 static bool SUPERVISED_LEARNING = false;
 
@@ -29,9 +29,9 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, S
 	// punishment for hitting the board. is smaller if the agent tried to turn
 	//if (RESTART_ON_BOARD_HIT && stateAfter.isHittingBoard) return -500.0;
 	if (stateAfter.isHittingBoard) {
-		//if (action == 1) reward -= 100.0;
-		//else reward -= 150.0;
-		reward -= 100.0;
+		if (action == 1) reward -= 100.0;
+		else reward -= 150.0;
+		//reward -= 100.0;
 	}
 	//if (stateAfter.relativeCheckpointAngle[1] < LIMIT_ANGLE) reward -= 150.0;
 
@@ -49,13 +49,13 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, S
 	}
 
 	//punishment for not turning when side is close to the board
-	//if ((stateAfter.distances[0] < 0.05 || stateAfter.distances[6] < 0.05) && action == 0) reward -= 5.0;
+	if ((stateAfter.distances[0] < 0.05 || stateAfter.distances[6] < 0.05) && action == 0) reward -= 5.0;
 
 	//punishment for not turning when approaching board from the front
-	//if ((stateAfter.distances[2] < 0.05 
-	//		|| stateAfter.distances[3] < 0.05 
-	//		|| stateAfter.distances[4] < 0.05)	
-	//	&& action == 0) reward -= 5.0;
+	if ((stateAfter.distances[2] < 0.05 
+			|| stateAfter.distances[3] < 0.05 
+			|| stateAfter.distances[4] < 0.05)	
+		&& action == 0) reward -= 5.0;
 
 	//reward for being oriented towards the checkpoint
 	//if (std::asin(stateAfter.checkpointAngle[0]) < 0.1) reward += 5.0;
