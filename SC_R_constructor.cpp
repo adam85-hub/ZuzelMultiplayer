@@ -5,9 +5,9 @@
 #include "LOG.h"
 #include "check_functions.h"
 
-RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_laps) :
-	Scene(gameCommands),
-	_pause_scene(gameCommands, &_unpause_cmd),
+RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_laps) : 
+	Scene(gameCommands), 
+	_pause_scene(gameCommands, &_unpause_cmd, number_of_players, number_of_laps),
 	_number_of_players(number_of_players),
 	_number_of_laps(number_of_laps),
 	_turn_buttons{ ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN },

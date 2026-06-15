@@ -63,6 +63,11 @@
     </Filter>
     <Filter Include="Source Files\Scenes\RaceScene\RaceScene">
       <UniqueIdentifier>{16da5868-9a07-486d-a2cd-c6416c736eb2}</UniqueIdentifier>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{92ccb9ef-0811-4918-a118-146e61d40abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{81b3eaab-a526-46b8-ac04-39cd9e773ff1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="GM_set_display_scaling.cpp">
       <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_add_barriers.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_add_checkpoints.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
@@ -168,6 +179,15 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
+    <ClCompile Include="SC_R_pause.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EndScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SC_R_create_race_stats.cpp">
+      <Filter>Source Files\Scenes\RaceScene</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerAI.cpp">
       <Filter>Source Files\Scenes\RaceScene</Filter>
     </ClCompile>
@@ -197,9 +217,23 @@
     </ClCompile>
     <ClCompile Include="SC_R_Update.cpp">
       <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    <ClCompile Include="Option.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionWithValue.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="PauseScene.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultsTable.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,12 +269,6 @@
     </ClInclude>
     <ClInclude Include="GameCommands.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaceModel.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerModel.h">
-      <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scenes</Filter>
@@ -320,6 +348,12 @@
     <ClInclude Include="SpeedwayState.hpp">
       <Filter>AI-Game Bridge</Filter>
     </ClInclude>
+    <ClInclude Include="PauseScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAI.h">
+      <Filter>Header Files\Scenes\RaceScene</Filter>
+    </ClInclude>
     <ClInclude Include="CreateCheckpointsScene.h">
       <Filter>Header Files\Scenes\DevOnly</Filter>
     </ClInclude>
@@ -335,6 +369,12 @@
     <ClInclude Include="PlayerAI.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
+    <ClInclude Include="EndScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
@@ -343,6 +383,21 @@
     </ClInclude>
     <ClInclude Include="PauseScene.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultsTable.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionWithValue.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

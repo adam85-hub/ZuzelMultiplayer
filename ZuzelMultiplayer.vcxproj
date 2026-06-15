@@ -159,9 +159,15 @@
     <ClCompile Include="GM_set_display_scaling.cpp" />
     <ClCompile Include="GM_update_key_states.cpp" />
     <ClCompile Include="NormalGame.cpp" />
+    <ClCompile Include="EndScene.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Option.cpp" />
+    <ClCompile Include="OptionWithBinding.cpp" />
+    <ClCompile Include="OptionWithValue.cpp" />
     <ClCompile Include="PauseScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAI.cpp" />
+    <ClCompile Include="ResultsTable.cpp" />
     <ClCompile Include="SC_R_add_checkpoints.cpp" />
     <ClCompile Include="ScoreTable.cpp" />
     <ClCompile Include="SC_R_constructor.cpp" />
@@ -173,6 +179,8 @@
     <ClCompile Include="SC_R_string_to_polygon.cpp" />
     <ClCompile Include="SC_R_Update.cpp" />
     <ClCompile Include="SpeedwayState.cpp" />
+    <ClCompile Include="SC_R_create_race_stats.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClInclude Include="AILearningGame.h" />
     <ClInclude Include="Collider.h" />
@@ -208,16 +216,22 @@
     <ClCompile Include="SC_M_Render.cpp" />
     <ClCompile Include="SC_M_Update.cpp" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="line.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="NewTrackScene.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="OptionWithBinding.h" />
+    <ClInclude Include="OptionWithValue.h" />
     <ClInclude Include="PauseScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAI.h" />
-    <ClInclude Include="PlayerModel.h" />
-    <ClInclude Include="RaceModel.h" />
+    <ClInclude Include="RaceStats.h" />
+    <ClInclude Include="ResultsTable.h" />
     <ClInclude Include="round.h" />
     <ClInclude Include="ScoreTable.h" />
     <ClInclude Include="SpeedwayState.hpp" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vec2.h" />
   </ItemGroup>
@@ -229,7 +243,6 @@
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="LOG.h" />
-    <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="NotImplementedException.h" />
     <ClInclude Include="RaceScene.h" />

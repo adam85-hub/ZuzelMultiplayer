@@ -1,16 +1,16 @@
 #pragma once
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
-#include <array>
 
+#include "Table.h"
 #include "Player.h"
 #include "ResourceManager.h"
 #include "Timer.h"
 
-class ScoreTable
+class ScoreTable : public Table
 {
 public:
-	ScoreTable(Player** players, short players_count, short number_of_laps, Timer* race_timer);
+	ScoreTable(Player** players, short player_count, short number_of_laps, Timer* race_timer);
 	~ScoreTable();
 	void Update();
 	void Render() const;
@@ -22,16 +22,7 @@ private:
 	int _players_count;
 	int _players_finished = 0;
 	const short _number_of_laps;
-	std::vector<std::string> _columns = {"Miejsce", "Gracz", "Okr¹¿enie", "Czas"};
 	Timer* _race_timer;
-	
-	Utils::ResourceManager _resource_manager;
-	ALLEGRO_FONT* _font_table;
 
-	std::vector<float> _column_width;
-	Utils::vec2 _size;
-	Utils::vec2 _left_top;
-	const float _margin_col = 50;
-	const float _margin_row = 10;
-	float _row_height;
+	ALLEGRO_BITMAP* _robot_bitmap;
 };

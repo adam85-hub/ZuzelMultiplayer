@@ -1,4 +1,5 @@
 #include "RaceScene.h"
+#include "EndScene.h"
 #include "Consts.h"
 
 void RaceScene::Update(KeyStatesTable key_states) {
@@ -14,7 +15,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		return;
 	}
 	
-	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED) {
+	if (key_states[ALLEGRO_KEY_P] & c_KEY_PRESSED or key_states[ALLEGRO_KEY_ESCAPE] & c_KEY_PRESSED) {
 		pause();
 	}
 	
@@ -42,6 +43,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 
 	// koniec gry:
 	if (finished == _number_of_players) {
-		pause();
+		_game_commands->switch_scene.Execute(new EndScene(_game_commands, create_race_stats()));
+		return;
 	}
 }
