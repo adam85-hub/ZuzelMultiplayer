@@ -103,7 +103,7 @@ void AILearningGame::Init() {
 	});
 }
 
-void AILearningGame::Update(KeyStatesTable _) {
+void AILearningGame::Update(KeyStatesTable key_states) {
 	memset(_key_states, 0, ALLEGRO_KEY_MAX); // reset stanu klawiatury
 
 	auto players = _current_scene->Get_players();
@@ -112,12 +112,12 @@ void AILearningGame::Update(KeyStatesTable _) {
 	//AI_players_act(players, player_count, 1); // skipujemy pierwszego gracza, on ma sie uczyc.
 
 	auto learning_player = get_learning_player(players);
-	if (SUPERVISED_LEARNING) _key_states[_current_scene->Get_turn_buttons()[0]] = _[_current_scene->Get_turn_buttons()[0]];
+	if (SUPERVISED_LEARNING) _key_states[_current_scene->Get_turn_buttons()[0]] = key_states[_current_scene->Get_turn_buttons()[0]];
 	handle_learning(learning_player, 2, NN_EPOCH_FRAME_DURATION, RESTART_ON_BOARD_HIT, RESTART_ON_WRONG_DIRECTION, 0);
 
 	_update_iterator++;
 	_total_updates++;
-	if (SUPERVISED_LEARNING && !_key_states[ALLEGRO_KEY_R]) _current_scene->Update(_);
+	if (SUPERVISED_LEARNING && !_key_states[ALLEGRO_KEY_R]) _current_scene->Update(key_states);
 	else _current_scene->Update(_key_states);
 }
 
