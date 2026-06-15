@@ -5,8 +5,8 @@
 
 int main() {
 	GameManager gameManager;
-	//NormalGame game;
-	AILearningGame game;
+	NormalGame game;
+	//AILearningGame game;
 
 	try {
 		return gameManager.Run_game(&game);

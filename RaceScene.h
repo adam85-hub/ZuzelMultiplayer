@@ -28,7 +28,7 @@ public:
 	unsigned int* Get_turn_buttons() { return _turn_buttons; }
 	bool Get_paused() const { return _paused; }
 private:
-	bool _only_ai_mode = true;
+	bool _ai_training_mode = true;
 	bool _dev_mode = false;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku

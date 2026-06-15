@@ -28,7 +28,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 		bike_bitmap = al_load_bitmap(path_to_bitmap.string().c_str());
 		Utils::check_resource_loaded(bike_bitmap, path_to_bitmap.string());
 
-		if(_only_ai_mode)
+		if(_ai_training_mode)
 			_players[i] = new PlayerAI(initial_position, bike_bitmap);
 		else
 			_players[i] = new Player(initial_position, bike_bitmap);
@@ -38,7 +38,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 		al_destroy_bitmap(bike_bitmap);
 
 		//--- set colliders for players --- 
-		if(_only_ai_mode)
+		if(_ai_training_mode)
 			_collision_manager.Add_player(_players[i],true);
 		else 
 			_collision_manager.Add_player(_players[i],false);
@@ -51,7 +51,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 	_collision_manager.Set_barriers(_barriers.get(), _barriers_count);
 
 	// --- AI LASERS---
-	if (_only_ai_mode){
+	if (_ai_training_mode){
 		PlayerAI::Set_walls(_barriers.get(), _barriers_count);
 		PlayerAI::Set_checkpoints(_checkpoints.get(), _checkpoints_count);
 	}

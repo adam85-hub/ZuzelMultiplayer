@@ -63,6 +63,7 @@
     </Filter>
     <Filter Include="Source Files\Scenes\RaceScene\RaceScene">
       <UniqueIdentifier>{16da5868-9a07-486d-a2cd-c6416c736eb2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{92ccb9ef-0811-4918-a118-146e61d40abb}</UniqueIdentifier>
     </Filter>
@@ -217,6 +218,7 @@
     </ClCompile>
     <ClCompile Include="SC_R_Update.cpp">
       <Filter>Source Files\Scenes\RaceScene\RaceScene</Filter>
+    </ClCompile>
     <ClCompile Include="Option.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
