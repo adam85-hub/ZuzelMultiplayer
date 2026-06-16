@@ -7,18 +7,18 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 577;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 24;
 constexpr size_t NN_EPOCH_FRAME_DURATION = 30000;
 
-constexpr bool HEADLESS = true;
+constexpr bool HEADLESS = false;
 constexpr bool RESTART_ON_BOARD_HIT = false;
 constexpr bool RESTART_ON_WRONG_DIRECTION = false;
 
 constexpr bool LOAD_FNN = true;
-constexpr bool RESET_EPSILON = false;
-const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-16_13-06-35";
+constexpr bool RESET_EPSILON = true;
+const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-16_16-42-42_epoka576_50sekund";
 
-static bool SUPERVISED_LEARNING = false;
+static bool SUPERVISED_LEARNING = true;
 
 // cosine of the vehicle-checkpoint angle, that when surpassed (|angle| > 135*), means that the vehicle is driving in the opposite way
 constexpr double LIMIT_ANGLE = -0.707; 

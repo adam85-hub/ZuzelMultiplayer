@@ -89,7 +89,7 @@ void FNNDQNA::supervisedLearning(const std::vector<DemonstrativeTransition>& dem
 				else currentQ[i] = -100.0;
 			}
 
-			FNNBackpropA::trainFNNStep(main, transition.state, currentQ, 0.0005, true);
+			FNNBackpropA::trainFNNStep(main, transition.state, currentQ, 0.001, true);
 		}
 	}
 

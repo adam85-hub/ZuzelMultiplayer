@@ -16,7 +16,7 @@ void GameManager::init(Game* game) {
 	Utils::check_initialized(al_init_image_addon(), "image addon");
 	Utils::check_initialized(al_init_primitives_addon(), "primitives addon");
 
-	_timer = al_create_timer(1.0 / (c_FPS * 100));
+	_timer = al_create_timer(1.0 / (c_FPS * 2));
 	Utils::check_created(_timer, "timer");
 
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
