@@ -7,16 +7,16 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 50;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 577;
 constexpr size_t NN_EPOCH_FRAME_DURATION = 30000;
 
-constexpr bool HEADLESS = false;
+constexpr bool HEADLESS = true;
 constexpr bool RESTART_ON_BOARD_HIT = false;
 constexpr bool RESTART_ON_WRONG_DIRECTION = false;
 
 constexpr bool LOAD_FNN = true;
 constexpr bool RESET_EPSILON = false;
-const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-15_21-18-26_MODEL256_40sek";
+const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-16_13-06-35";
 
 static bool SUPERVISED_LEARNING = false;
 
@@ -29,8 +29,8 @@ static double calculateReward(const SpeedwayState& stateBefore, size_t action, S
 	// punishment for hitting the board. is smaller if the agent tried to turn
 	//if (RESTART_ON_BOARD_HIT && stateAfter.isHittingBoard) return -500.0;
 	if (stateAfter.isHittingBoard) {
-		if (action == 1) reward -= 100.0;
-		else reward -= 150.0;
+		if (action == 1) reward -= 80.0;
+		else reward -= 100.0;
 		//reward -= 100.0;
 	}
 	//if (stateAfter.relativeCheckpointAngle[1] < LIMIT_ANGLE) reward -= 150.0;
