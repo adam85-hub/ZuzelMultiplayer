@@ -20,6 +20,7 @@ const ALLEGRO_COLOR c_WHITE = al_map_rgb(255, 255, 255);
 constexpr float c_THICKNESS_HITBOX_PLAYER = 11.f;
 
 #define c_MAIN_FONT_PATH "Assets/Jersey10_Regular.ttf"
+#define c_FNN_PATH "Assets/"
 
 #define c_KEY_SEEN 1
 #define c_KEY_DOWN 2

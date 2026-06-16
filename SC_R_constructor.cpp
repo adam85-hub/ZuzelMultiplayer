@@ -4,6 +4,7 @@
 #include "vec2.h"
 #include "LOG.h"
 #include "check_functions.h"
+#include "DQN/NNFileManager.hpp"
 
 RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short number_of_ais, short number_of_laps) :
 	Scene(gameCommands), 
@@ -13,7 +14,8 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 	_number_of_ais(number_of_ais),
 	_total_player_count(number_of_players + number_of_ais),
 	_turn_buttons{ ALLEGRO_KEY_LCTRL, ALLEGRO_KEY_SPACE, ALLEGRO_KEY_RCTRL, ALLEGRO_KEY_DOWN },
-	_start_countdown(0)
+	_start_countdown(0),
+	_decision_agent(NNFileManager::loadFNN(c_FNN_PATH), 2, 0.1)
 {
 	// inicjalizacja wszystkich polygonów
 	read_polygons_from_file();
@@ -76,4 +78,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 	//_race_timer.Start();
 	_start_countdown.Start();
 	_start_countdown.Execute_on_start([this]() -> void {_race_timer.Start(); });
+
+	//FNN fnn = NNFileManager::loadFNN(c_FNN_PATH);
+	//_decision_agent = std::make_unique<DecisionAgent>(fnn, 2, 0.1);
 }

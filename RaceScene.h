@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <deque>
 
 #include "Scene.h"
 #include "ResourceManager.h"
@@ -13,7 +14,7 @@
 #include "Countdown.h"
 #include "PauseScene.h"
 #include "RaceStats.h"
-#include <deque>
+#include "DecisionAgent.hpp"
 
 class RaceScene : public Scene {
 public:
@@ -72,5 +73,6 @@ private:
 	bool _paused = false;
 
 	// DQNA:
+	DecisionAgent _decision_agent;
 	std::vector<std::deque<std::shared_ptr<SpeedwayState>>> _states;
 };
