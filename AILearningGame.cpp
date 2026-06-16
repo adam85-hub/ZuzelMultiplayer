@@ -88,7 +88,7 @@ AILearningGame::~AILearningGame() {
 
 void AILearningGame::Init() {
 	Game::Init();
-	_current_scene = new RaceScene(&_game_commands, 1, 3);
+	_current_scene = new RaceScene(&_game_commands, 1, 0, 3);
 
 	_dqnAssets = DQNAManager::initAgent();
 	if(LOAD_FNN) _dqnAssets.update(NNFileManager::loadFNN(FNN_LOAD_PATH), RESET_EPSILON);

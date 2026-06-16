@@ -8,7 +8,7 @@
 class PauseScene : public Scene
 {
 public:
-	PauseScene(GameCommands*, Utils::Command<bool>*, int, int);
+	PauseScene(GameCommands*, Utils::Command<bool>*, int, int, int);
 	~PauseScene();
 	void Update(KeyStatesTable key_states) override;
 	void Render() override;

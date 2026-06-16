@@ -15,7 +15,8 @@ EndScene::EndScene(GameCommands* game_commands, RaceStats* race_stats) :
 	_menu = std::make_unique<Menu>(Utils::vec2(c_RENDER_WIDTH/2, _results_table.Get_bottom_right().y + c_RENDER_HEIGHT/18));
 
 	_menu->Add_option(new Option("Zagraj ponownie", [this]() {
-		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _race_stats->player_count, _race_stats->lap_count));
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, 
+			_race_stats->player_count, _race_stats->ai_count, _race_stats->lap_count));
 		}));
 	_menu->Add_option(new Option("Powrót do menu", [this]() {
 		_game_commands->switch_scene.Execute(new MenuScene(_game_commands));

@@ -6,7 +6,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	// restart wyœcigu:
 	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
 		std::cout << "RESTART!!\n";
-		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players, _number_of_laps));
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _number_of_players, _number_of_ais, _number_of_laps));
 		return;
 	}
 
@@ -25,8 +25,11 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	// po starcie wyścigu:
 
 	short finished = 0;
-	for (int i = 0; i < _number_of_players; i++) {
+	for (int i = 0; i < _total_player_count; i++) {
 		bool is_turning = key_states[_turn_buttons[i]] & c_KEY_DOWN;
+		// tutaj nadpisane is_turning jeżeli gracz jest AI
+		// dostanę size_t będący 1 jeżeli gracz ma skręcić
+
 		_players[i]->Update(is_turning);
 
 		if (_players[i]->Has_finished()) {
@@ -42,7 +45,7 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	_score_table->Update();
 
 	// koniec gry:
-	if (finished == _number_of_players) {
+	if (finished == _total_player_count) {
 		_game_commands->switch_scene.Execute(new EndScene(_game_commands, create_race_stats()));
 		return;
 	}

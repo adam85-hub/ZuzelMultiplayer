@@ -16,19 +16,18 @@
 
 class RaceScene : public Scene {
 public:
-	RaceScene(GameCommands*, short number_of_players, short number_of_laps);
+	RaceScene(GameCommands*, short number_of_players, short number_of_ais, short number_of_laps);
 	~RaceScene();
 	void Update(KeyStatesTable);
 	void Render();
 
-	short Get_player_count() const { return _number_of_players; }
+	short Get_player_count() const { return _total_player_count; }
 	Player** Get_players() const { return _players; }
-	GameCommands* Get_game_commands() const { return _game_commands; }
 	short Get_lap_count() const { return _number_of_laps; }
 	unsigned int* Get_turn_buttons() { return _turn_buttons; }
 	bool Get_paused() const { return _paused; }
 private:
-	bool _ai_training_mode = true;
+	bool _ai_training_mode = false;
 	bool _dev_mode = false;
   
 	// usuwa poligony jeżeli nie są nullptr i wczytuje nowe z pliku
@@ -46,6 +45,8 @@ private:
 
 	const short _number_of_laps;
 	const short _number_of_players;
+	const short _number_of_ais;
+	const short _total_player_count;
 	Player** _players;
 	
 	std::unique_ptr<ScoreTable> _score_table;

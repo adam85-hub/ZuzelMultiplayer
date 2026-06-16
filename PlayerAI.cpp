@@ -103,7 +103,7 @@ void PlayerAI::Update(bool is_turning) {
 
 void PlayerAI::Render() const {
     Player::Render();
-    this->draw_sensors();
+    //this->draw_sensors();
     //this->show_stats();
 }
 

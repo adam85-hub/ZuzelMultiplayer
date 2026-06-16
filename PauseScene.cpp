@@ -6,7 +6,7 @@
 #include "MenuScene.h"
 #include "RaceScene.h"
 
-PauseScene::PauseScene(GameCommands* gameCommands, Utils::Command<bool>* unpause_cmd, int player_count, int lap_count) : 
+PauseScene::PauseScene(GameCommands* gameCommands, Utils::Command<bool>* unpause_cmd, int player_count, int ai_count, int lap_count) : 
 	Scene(gameCommands),
 	_unpause_cmd(unpause_cmd)
 {
@@ -18,8 +18,8 @@ PauseScene::PauseScene(GameCommands* gameCommands, Utils::Command<bool>* unpause
 	_menu->Add_option(new Option("Wznów wyœcig", [this]() {
 		_unpause_cmd->Execute(true);
 		}));
-	_menu->Add_option(new Option("Restartuj wyœcig", [this, player_count, lap_count]() {
-		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, player_count, lap_count));
+	_menu->Add_option(new Option("Restartuj wyœcig", [this, player_count, ai_count, lap_count]() {
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, player_count, ai_count, lap_count));
 		}));
 	_menu->Add_option(new Option("Powrót do menu", [this]() {
 		_game_commands->switch_scene.Execute(new MenuScene(_game_commands));

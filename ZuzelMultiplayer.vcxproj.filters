@@ -28,9 +28,6 @@
     <Filter Include="Source Files\ResourceManager">
       <UniqueIdentifier>{af3c6265-eb4e-49d5-bf0a-52a6699dd71e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Models">
-      <UniqueIdentifier>{bcf6e628-600e-45d7-a0f3-311491584263}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{e8bf77bc-0e5a-4bd8-b3dc-e31749625e62}</UniqueIdentifier>
     </Filter>
@@ -237,6 +234,9 @@
     <ClCompile Include="Table.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="OptionWithBinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -259,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuModel.h">
-      <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="draw_polish_text.h">
       <Filter>Header Files\Utils</Filter>
@@ -298,9 +295,6 @@
     </ClInclude>
     <ClInclude Include="line.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreTable.h">
-      <Filter>Header Files\Scenes\RaceScene</Filter>
     </ClInclude>
     <ClInclude Include="Countdown.h">
       <Filter>Header Files\Scenes\RaceScene</Filter>
@@ -399,6 +393,12 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="OptionWithValue.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionWithBinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

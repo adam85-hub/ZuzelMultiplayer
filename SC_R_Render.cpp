@@ -6,7 +6,7 @@
 void RaceScene::Render() {
 	al_draw_scaled_bitmap(_race_track, 0, 0, al_get_bitmap_width(_race_track), al_get_bitmap_height(_race_track), 0, 0, c_RENDER_WIDTH, c_RENDER_HEIGHT, 0);
 
-	for (int i = 0; i < _number_of_players; i++) {
+	for (int i = 0; i < _total_player_count; i++) {
 		_players[i]->Render();
 	}
 

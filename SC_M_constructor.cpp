@@ -17,7 +17,8 @@ MenuScene::MenuScene(GameCommands* gameCommands) :
 	OptionWithValue* number_of_players = new OptionWithValue("Liczba graczy", 2, 1, 4);
 
 	_menu->Add_option(new Option("Rozpocznij grê", [this]() {
-		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, _menu->Get_option_value(1), _menu->Get_option_value(3)));
+		_game_commands->switch_scene.Execute(new RaceScene(_game_commands, 
+			_menu->Get_option_value(1), _menu->Get_option_value(2), _menu->Get_option_value(3)));
 		}));
 	_menu->Add_option(number_of_players);
 	_menu->Add_option(new OptionWithBinding("Liczba AI", number_of_players, 2, 0, 4));
