@@ -50,7 +50,7 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 	}
 
 	for (int i = 0; i < _number_of_ais; i++)
-		_states.push_back(std::deque<std::shared_ptr<SpeedwayState>>());
+		_states.push_back(std::deque<std::vector<double>>());
 
 	_score_table = std::make_unique<ScoreTable>(_players, _total_player_count, number_of_laps, &_race_timer);
 	
@@ -78,7 +78,4 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 	//_race_timer.Start();
 	_start_countdown.Start();
 	_start_countdown.Execute_on_start([this]() -> void {_race_timer.Start(); });
-
-	//FNN fnn = NNFileManager::loadFNN(c_FNN_PATH);
-	//_decision_agent = std::make_unique<DecisionAgent>(fnn, 2, 0.1);
 }

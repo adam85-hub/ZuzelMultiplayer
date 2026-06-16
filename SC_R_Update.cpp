@@ -2,6 +2,14 @@
 #include "EndScene.h"
 #include "Consts.h"
 
+std::vector<double> join_serialised_states(const std::deque<std::vector<double>>& serialized_states) {
+	std::vector<double> states;
+	for (const auto& s : serialized_states) {
+		states.insert(states.end(), s.begin(), s.end());
+	}
+	return states;
+}
+
 void RaceScene::Update(KeyStatesTable key_states) {
 	// restart wyœcigu:
 	if (key_states[ALLEGRO_KEY_R] & c_KEY_PRESSED) {
@@ -31,11 +39,15 @@ void RaceScene::Update(KeyStatesTable key_states) {
 		
 		// decyzja agenta AI i kolejka stateów:
 		if (_players[i]->Is_ai()) {
-			_states[ai_index].push_back(static_cast<PlayerAI*>(_players[i])->Get_player_state());
-			if (_states[ai_index].size() > 8)
+			_states[ai_index].push_back(static_cast<PlayerAI*>(_players[i])->Get_player_state()->serialise());
+			if (_states[ai_index].size() > 8) {
 				_states[ai_index].pop_front();
+				is_turning = _decision_agent.act(join_serialised_states(_states[ai_index]));
+			}
+			else
+				is_turning = 0;
 
-			// decyzja
+			ai_index++;
 		}
 
 		_players[i]->Update(is_turning);

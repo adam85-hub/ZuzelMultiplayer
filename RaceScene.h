@@ -74,5 +74,5 @@ private:
 
 	// DQNA:
 	DecisionAgent _decision_agent;
-	std::vector<std::deque<std::shared_ptr<SpeedwayState>>> _states;
+	std::vector<std::deque<std::vector<double>>> _states;
 };
