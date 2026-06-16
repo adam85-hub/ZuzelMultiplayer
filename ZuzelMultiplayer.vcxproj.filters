@@ -237,6 +237,9 @@
     <ClCompile Include="OptionWithBinding.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="DecisionAgent.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -400,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="OptionWithBinding.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DecisionAgent.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
