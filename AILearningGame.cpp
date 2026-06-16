@@ -7,7 +7,7 @@
 #include "Consts.h"
 #include "DQN/NNFileManager.hpp"
 
-constexpr size_t NN_SAVE_EPOCH_INTERVAL = 24;
+constexpr size_t NN_SAVE_EPOCH_INTERVAL = 64;
 constexpr size_t NN_EPOCH_FRAME_DURATION = 30000;
 
 constexpr bool HEADLESS = false;
@@ -170,7 +170,7 @@ void AILearningGame::handle_learning(
 			size_t human_action = (_key_states[_current_scene->Get_turn_buttons()[0]] & c_KEY_DOWN) ? 1 : 0;
 			_demonstrative_transitions.push_back({ get_serialised_states(), human_action });
 		}
-		if (_epochs == 3) {
+		if (_epochs == 5) {
 			_dqnAssets.dqnAgent->supervisedLearning(_demonstrative_transitions);
 
 			_epochs = 0;
