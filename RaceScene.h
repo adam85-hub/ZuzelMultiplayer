@@ -13,6 +13,7 @@
 #include "Countdown.h"
 #include "PauseScene.h"
 #include "RaceStats.h"
+#include <deque>
 
 class RaceScene : public Scene {
 public:
@@ -69,4 +70,7 @@ private:
 	Utils::Command<bool> _unpause_cmd;
 	PauseScene _pause_scene;
 	bool _paused = false;
+
+	// DQNA:
+	std::vector<std::deque<std::shared_ptr<SpeedwayState>>> _states;
 };

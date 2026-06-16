@@ -25,10 +25,18 @@ void RaceScene::Update(KeyStatesTable key_states) {
 	// po starcie wyścigu:
 
 	short finished = 0;
+	short ai_index = 0;
 	for (int i = 0; i < _total_player_count; i++) {
 		bool is_turning = key_states[_turn_buttons[i]] & c_KEY_DOWN;
-		// tutaj nadpisane is_turning jeżeli gracz jest AI
-		// dostanę size_t będący 1 jeżeli gracz ma skręcić
+		
+		// decyzja agenta AI i kolejka stateów:
+		if (_players[i]->Is_ai()) {
+			_states[ai_index].push_back(static_cast<PlayerAI*>(_players[i])->Get_player_state());
+			if (_states[ai_index].size() > 8)
+				_states[ai_index].pop_front();
+
+			// decyzja
+		}
 
 		_players[i]->Update(is_turning);
 

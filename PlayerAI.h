@@ -9,6 +9,9 @@
 #include <cmath>
 #include "line.h"
 
+class CollisionManager;
+class AILearningGame;
+
 class PlayerAI : public Player {
 public:
 	PlayerAI(Utils::vec2 initial_position, ALLEGRO_BITMAP* bike_bitmap) : Player(initial_position, bike_bitmap) {}
@@ -20,27 +23,16 @@ public:
 	static void Set_walls(Utils::line* barriers_ptr, int count);
 	static void Set_checkpoints(Utils::line* checkpoints_ptr, int count);
 
-	std::shared_ptr<SpeedwayState> Get_player_state() const;
-	
-	//--- parametry do uczenia ---
-	std::array<float, 8> _distances;
-	//veclocity x,y policzy sie z velocity i angle
-	//sin i cos policzy sie z angle
-	float _checkpoint_distance;
-	float _checkpoint_angle;//zostanie policzone sin i cos
-	float _player_distance;
-	float _player_angle;//zostanie policzone sin i cos
-	//bool touching_wall = false; jest w class Player
-	bool _is_hitting_player = false;
-	bool _is_hitting_checkpoint = false;
-	std::shared_ptr<SpeedwayState> _player_state;
+	std::shared_ptr<SpeedwayState> Get_player_state() const;	
 
+	friend class CollisionManager;
+	friend class AILearningGame;
 private:
 	Utils::vec2 _previous_position{ 0,0 };
-	static Utils::line* _barriers; //bariers table
+	static Utils::line* _barriers; // bariers table
 	static int _barriers_count;
 
-	static Utils::line* _checkpoints; //checkpoints table
+	static Utils::line* _checkpoints; // checkpoints table
 	static int _checkpoints_count;
 	
 	static const std::array<float, 8> _offsets;
@@ -60,4 +52,16 @@ private:
 	//--- debug ---
 	void show_stats() const;
 
+	//--- parametry do uczenia ---
+	std::array<float, 8> _distances;
+	//veclocity x,y policzy sie z velocity i angle
+	//sin i cos policzy sie z angle
+	float _checkpoint_distance;
+	float _checkpoint_angle;//zostanie policzone sin i cos
+	float _player_distance;
+	float _player_angle;//zostanie policzone sin i cos
+	//bool touching_wall = false; jest w class Player
+	bool _is_hitting_player = false;
+	bool _is_hitting_checkpoint = false;
+	std::shared_ptr<SpeedwayState> _player_state;
 };

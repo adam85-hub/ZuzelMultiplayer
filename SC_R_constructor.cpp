@@ -47,6 +47,9 @@ RaceScene::RaceScene(GameCommands* gameCommands, short number_of_players, short 
 
 	}
 
+	for (int i = 0; i < _number_of_ais; i++)
+		_states.push_back(std::deque<std::shared_ptr<SpeedwayState>>());
+
 	_score_table = std::make_unique<ScoreTable>(_players, _total_player_count, number_of_laps, &_race_timer);
 	
 	//--- dodanie barier ---
