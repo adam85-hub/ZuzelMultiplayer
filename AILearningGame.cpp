@@ -18,7 +18,7 @@ constexpr bool LOAD_FNN = true;
 constexpr bool RESET_EPSILON = true;
 const std::string FNN_LOAD_PATH = "C:/Users/zimor/Documents/neural_network_2026-06-16_16-42-42_epoka576_50sekund";
 
-static bool SUPERVISED_LEARNING = true;
+static bool SUPERVISED_LEARNING = false;
 
 // cosine of the vehicle-checkpoint angle, that when surpassed (|angle| > 135*), means that the vehicle is driving in the opposite way
 constexpr double LIMIT_ANGLE = -0.707; 
