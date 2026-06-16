@@ -146,6 +146,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Countdown.cpp" />
+    <ClCompile Include="DecisionAgent.cpp" />
     <ClCompile Include="DQNAManager.cpp" />
     <ClCompile Include="DQN\FNN.cpp" />
     <ClCompile Include="DQN\FNNBackpropA.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="CreateCheckpointsScene.h" />
     <ClInclude Include="CreateColliderScene.h" />
     <ClInclude Include="BikeColliderScene.h" />
+    <ClInclude Include="DecisionAgent.hpp" />
     <ClInclude Include="DQNAManager.h" />
     <ClInclude Include="DQN\AFunc.hpp" />
     <ClInclude Include="DQN\Dataset.hpp" />

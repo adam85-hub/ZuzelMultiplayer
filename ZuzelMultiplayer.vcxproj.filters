@@ -235,7 +235,10 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="OptionWithBinding.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DecisionAgent.cpp">
+      <Filter>DQN-AI\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,11 +398,14 @@
     <ClInclude Include="OptionWithValue.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="OptionWithBinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreTable.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionWithBinding.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DecisionAgent.hpp">
+      <Filter>DQN-AI\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
