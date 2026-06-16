@@ -48,6 +48,14 @@ void ScoreTable::sort_players() {
 		const Player* a = _players[ai];
 		const Player* b = _players[bi];
 
+		if (a->Has_finished() and b->Has_finished())
+			return a->race_time < b->race_time;
+
+		if (a->Has_finished())
+			return true;
+		else if (b->Has_finished())
+			return false;
+
 		if (a->Get_laps() != b->Get_laps()) {
 			return a->Get_laps() > b->Get_laps();
 		}
